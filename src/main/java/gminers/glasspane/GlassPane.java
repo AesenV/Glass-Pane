@@ -90,8 +90,7 @@ public abstract class GlassPane
 	 * Note: the screen displayed is the same as that returned by getScreenMirror.
 	 */
 	public final void show() {
-		getScreenMirror().setModalUnderlays(null);
-		getScreenMirror().setModal(null);
+		unsetModality();
 		_show();
 	}
 	
@@ -99,12 +98,15 @@ public abstract class GlassPane
 	 * Pushes this GlassPane onto the current GuiScreen's overlay stack.
 	 */
 	public final void overlay() {
+		unsetModality();
 		// just add ourselves to the overlay list. this will put us on top since overlays are rendered in insertion-order. if modders need
 		// something more complex, they can access currentOverlays directly.
 		
 		// yes, i am approving directly touching currentOverlays if you need it. just don't expect your code to work between Glass Pane
 		// versions. it's in the internal package for a reason.
 		GlassPaneMod.inst.currentOverlays.add(this);
+		// fire an overlay event
+		fireEvent(PaneOverlayEvent.class, this);
 		// and now let's get the current screen size
 		final Minecraft mc = Minecraft.getMinecraft();
 		// avoid creating a ScaledResolution if we can
@@ -117,14 +119,13 @@ public abstract class GlassPane
 			setWidth(res.getScaledWidth());
 			setHeight(res.getScaledHeight());
 		}
-		// fire an overlay event
-		fireEvent(PaneOverlayEvent.class, this);
 	}
 	
 	/**
 	 * Pushes this GlassPane onto the global overlay stack.
 	 */
 	public final void stickyOverlay() {
+		unsetModality();
 		GlassPaneMod.inst.currentStickyOverlays.add(this);
 		// and now let's get the current screen size
 		final Minecraft mc = Minecraft.getMinecraft();
@@ -363,6 +364,8 @@ public abstract class GlassPane
 			focusedComponent = null;
 		}
 		takingOver = false;
+		setWidth(1); 
+		setHeight(1);
 	}
 	
 	/**
@@ -477,6 +480,14 @@ public abstract class GlassPane
 		} else {
 			throw new IllegalArgumentException(screenOrPane.getName() + " is not supported by autoOverride!");
 		}
+	}
+
+	/**
+	 * Internal method used by GlassPaneMod. Do not touch. Beware of dog.
+	 */
+	public void unsetModality() {
+		getScreenMirror().setModal(null);
+		getScreenMirror().setModalUnderlays(null);
 	}
 	
 }

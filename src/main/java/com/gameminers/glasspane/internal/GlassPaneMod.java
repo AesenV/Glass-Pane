@@ -88,7 +88,9 @@ public class GlassPaneMod {
 	@SubscribeEvent
 	public void onGuiShown(final GuiOpenEvent e) {
 		// first, clear the current overlays.
-		currentOverlays.clear();
+		for (GlassPane gp : currentOverlays) {
+			gp.hide();
+		}
 		// save the gui into a var, as we might be replacing it
 		Object orig = e.gui;
 		if (orig == null) {
@@ -139,15 +141,12 @@ public class GlassPaneMod {
 		if (possibleOverrides.size() > 1) {
 			// sort the overrides so that the first object has the most narrow class specification
 			Collections.sort(possibleOverrides, classComparator);
-			// and apply index 0
+		}
+		// and apply index 0, if it exists
+		if (!possibleOverrides.isEmpty()) {
 			e.gui = possibleOverrides.get(0).getValue().getScreenMirror();
 			final GlassPane pane = possibleOverrides.get(0).getValue();
-			pane.fireEvent(PaneDisplayEvent.class, pane);
-			pane.fireEvent(PaneOverrideEvent.class, pane, orig);
-		} else if (possibleOverrides.size() == 1) {
-			// if there's only one possibility, apply it without further ado
-			e.gui = possibleOverrides.get(0).getValue().getScreenMirror();
-			final GlassPane pane = possibleOverrides.get(0).getValue();
+			pane.unsetModality();
 			pane.fireEvent(PaneDisplayEvent.class, pane);
 			pane.fireEvent(PaneOverrideEvent.class, pane, orig);
 		}
@@ -178,11 +177,8 @@ public class GlassPaneMod {
 		if (applyingOverlays.size() >= 1) {
 			final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft().gameSettings,
 					Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
-			for (final GlassPane pane : applyingOverlays) {
-				pane.setWidth(res.getScaledWidth());
-				pane.setHeight(res.getScaledHeight());
-				currentOverlays.add(pane);
-				pane.fireEvent(PaneOverlayEvent.class, pane);
+			for (final GlassPane overpane : applyingOverlays) {
+				overpane.overlay();
 			}
 		}
 	}
