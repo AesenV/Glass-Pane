@@ -52,7 +52,7 @@ import cpw.mods.fml.common.gameevent.TickEvent;
  * @author Aesen Vismea
  * 
  */
-@Mod(name = "Glass Pane", modid = "GlassPane", version = "0.2.1 `Aluminosilicate' Beta", dependencies="required-after:KitchenSink")
+@Mod(name = "Glass Pane", modid = "GlassPane", version = "0.2.3 `Aluminosilicate' Beta", dependencies="required-after:KitchenSink")
 @Log4j2
 public class GlassPaneMod {
 	@Instance("GlassPane") public static GlassPaneMod	inst;
