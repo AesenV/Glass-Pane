@@ -18,6 +18,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.val;
 
 import com.google.common.collect.Lists;
@@ -42,20 +43,31 @@ import cpw.mods.fml.common.gameevent.TickEvent.Type;
  *
  */
 public class PaneEaser implements Closeable {
-	private final Object toEase;
-	private final Map<String, Byte> byteTargets = Maps.newHashMap();
-	private final Map<String, Short> shortTargets = Maps.newHashMap();
+	protected final Object toEase;
+	protected Map<String, Byte> byteTargets = Maps.newHashMap();
+	protected Map<String, Short> shortTargets = Maps.newHashMap();
 	
-	private final Map<String, Integer> integerTargets = Maps.newHashMap();
-	private final Map<String, Long> longTargets = Maps.newHashMap();
-	
-	
-	
-	private final Map<String, Float> floatTargets = Maps.newHashMap();
-	private final Map<String, Double> doubleTargets = Maps.newHashMap();
+	protected Map<String, Integer> integerTargets = Maps.newHashMap();
+	protected Map<String, Long> longTargets = Maps.newHashMap();
 	
 	
-	private final Map<String, FieldAccessor> accessors = Maps.newHashMap();
+	
+	protected Map<String, Float> floatTargets = Maps.newHashMap();
+	protected Map<String, Double> doubleTargets = Maps.newHashMap();
+	
+	
+	protected Map<String, FieldAccessor> accessors = Maps.newHashMap();
+	
+	@Getter
+	@Setter
+	protected double speed = 4D;
+	@Getter
+	@Setter
+	protected boolean autoClose;
+	
+	protected boolean closed = false;
+	
+	protected List<Runnable> closeListeners = Lists.newArrayList();
 	
 	
 	public PaneEaser(Object toEase) {
@@ -65,104 +77,119 @@ public class PaneEaser implements Closeable {
 	
 	@SubscribeEvent
 	public void onTick(TickEvent e) {
-		if (e.type == Type.CLIENT && e.phase == Phase.START) {
-			{
-				Iterator<Entry<String, Byte>> iter = byteTargets.entrySet().iterator();
-				while (iter.hasNext()) {
-					val en = iter.next();
-					FieldAccessor<Byte> accessor = getAccessor(en.getKey());
-					val current = accessor.get();
-					val val = (byte)adjust(current, en.getValue());
-					if (current.equals(val)) {
-						iter.remove();
+		if (closed) return;
+		if (e.type == Type.CLIENT) {
+			if (e.phase == Phase.START) {
+				{
+					Iterator<Entry<String, Byte>> iter = byteTargets.entrySet().iterator();
+					while (iter.hasNext()) {
+						val en = iter.next();
+						FieldAccessor<Byte> accessor = getAccessor(en.getKey(), byte.class);
+						val current = accessor.get();
+						val val = (byte)adjust(current, en.getValue());
+						if (current.equals(val)) {
+							iter.remove();
+						}
+						accessor.set(val);
 					}
-					accessor.set(val);
 				}
-			}
-			{
-				Iterator<Entry<String, Short>> iter = shortTargets.entrySet().iterator();
-				while (iter.hasNext()) {
-					val en = iter.next();
-					FieldAccessor<Short> accessor = getAccessor(en.getKey());
-					val current = accessor.get();
-					val val = (short)adjust(current, en.getValue());
-					if (current.equals(val)) {
-						iter.remove();
+				{
+					Iterator<Entry<String, Short>> iter = shortTargets.entrySet().iterator();
+					while (iter.hasNext()) {
+						val en = iter.next();
+						FieldAccessor<Short> accessor = getAccessor(en.getKey(), short.class);
+						val current = accessor.get();
+						val val = (short)adjust(current, en.getValue());
+						if (current.equals(val)) {
+							iter.remove();
+						}
+						accessor.set(val);
 					}
-					accessor.set(val);
 				}
-			}
-			{
-				Iterator<Entry<String, Integer>> iter = integerTargets.entrySet().iterator();
-				while (iter.hasNext()) {
-					val en = iter.next();
-					FieldAccessor<Integer> accessor = getAccessor(en.getKey());
-					val current = accessor.get();
-					val val = (int)adjust(current, en.getValue());
-					if (current.equals(val)) {
-						iter.remove();
+				{
+					Iterator<Entry<String, Integer>> iter = integerTargets.entrySet().iterator();
+					while (iter.hasNext()) {
+						val en = iter.next();
+						FieldAccessor<Integer> accessor = getAccessor(en.getKey(), int.class);
+						val current = accessor.get();
+						val val = (int)adjust(current, en.getValue());
+						if (current.equals(val)) {
+							iter.remove();
+						}
+						accessor.set(val);
 					}
-					accessor.set(val);
 				}
-			}
-			{
-				Iterator<Entry<String, Long>> iter = longTargets.entrySet().iterator();
-				while (iter.hasNext()) {
-					val en = iter.next();
-					FieldAccessor<Long> accessor = getAccessor(en.getKey());
-					val current = accessor.get();
-					val val = (long)adjust(current, en.getValue());
-					if (current.equals(val)) {
-						iter.remove();
+				{
+					Iterator<Entry<String, Long>> iter = longTargets.entrySet().iterator();
+					while (iter.hasNext()) {
+						val en = iter.next();
+						FieldAccessor<Long> accessor = getAccessor(en.getKey(), long.class);
+						val current = accessor.get();
+						val val = (long)adjust(current, en.getValue());
+						if (current.equals(val)) {
+							iter.remove();
+						}
+						accessor.set(val);
 					}
-					accessor.set(val);
 				}
-			}
-			
-			
-			
-			
-			
-			{
-				Iterator<Entry<String, Float>> iter = floatTargets.entrySet().iterator();
-				while (iter.hasNext()) {
-					val en = iter.next();
-					FieldAccessor<Float> accessor = getAccessor(en.getKey());
-					val current = accessor.get();
-					val val = (float)adjust(current, en.getValue());
-					if (current.equals(val)) {
-						iter.remove();
+				
+				
+				
+				
+				
+				{
+					Iterator<Entry<String, Float>> iter = floatTargets.entrySet().iterator();
+					while (iter.hasNext()) {
+						val en = iter.next();
+						FieldAccessor<Float> accessor = getAccessor(en.getKey(), float.class);
+						val current = accessor.get();
+						val val = (float)adjust(current, en.getValue());
+						if (current.equals(val)) {
+							iter.remove();
+						}
+						accessor.set(val);
 					}
-					accessor.set(val);
 				}
-			}
-			{
-				Iterator<Entry<String, Double>> iter = doubleTargets.entrySet().iterator();
-				while (iter.hasNext()) {
-					val en = iter.next();
-					FieldAccessor<Double> accessor = getAccessor(en.getKey());
-					val current = accessor.get();
-					val val = (double)adjust(current, en.getValue());
-					if (current.equals(val)) {
-						iter.remove();
+				{
+					Iterator<Entry<String, Double>> iter = doubleTargets.entrySet().iterator();
+					while (iter.hasNext()) {
+						val en = iter.next();
+						FieldAccessor<Double> accessor = getAccessor(en.getKey(), double.class);
+						val current = accessor.get();
+						val val = (double)adjust(current, en.getValue());
+						if (current.equals(val)) {
+							iter.remove();
+						}
+						accessor.set(val);
 					}
-					accessor.set(val);
+				}
+			} else {
+				if (autoClose &&
+						byteTargets.isEmpty() &&
+						shortTargets.isEmpty() &&
+						integerTargets.isEmpty() &&
+						longTargets.isEmpty() &&
+						floatTargets.isEmpty() &&
+						doubleTargets.isEmpty()) {
+					close();
 				}
 			}
 		}
 	}
 
-	private double adjust(double current, double target) {
-		double adjustment = (target > current ? target-current : current-target);
-		if (adjustment > 1 || adjustment < -1) {
-			adjustment = Math.max(1, (adjustment/4D));
+	protected double adjust(double current, double target) {
+		double adjustment = target-current;
+		if (adjustment > 1) {
+			adjustment = Math.max(1, adjustment/speed);
+		} else if (adjustment < -1) {
+			adjustment = Math.min(-1, adjustment/speed);
 		}
 		return current+adjustment;
 	}
 
-	private FieldAccessor getAccessor(String key) {
+	protected FieldAccessor getAccessor(String key, Class<?> setterClass) {
 		if (!accessors.containsKey(key)) {
-			accessors.put(key, new FriendlyFieldAccessor(toEase, toEase.getClass(), key));
+			accessors.put(key, new FriendlyFieldAccessor(toEase, toEase.getClass(), setterClass, key));
 		}
 		return accessors.get(key);
 	}
@@ -201,9 +228,30 @@ public class PaneEaser implements Closeable {
 		doubleTargets.remove(value);
 	}
 	
+	public void registerCloseListener(Runnable r) {
+		closeListeners.add(r);
+	}
+	
+	public void unregisterCloseListener(Runnable r) {
+		closeListeners.remove(r);
+	}
+	
 	@Override
 	public void close() {
+		if (closed) return;
 		FMLCommonHandler.instance().bus().unregister(this);
+		for (Runnable r : closeListeners) {
+			r.run();
+		}
+		closeListeners = null;
+		byteTargets = null;
+		shortTargets = null;
+		integerTargets = null;
+		longTargets = null;
+		
+		floatTargets = null;
+		doubleTargets = null;
+		closed = true;
 	}
 }
 

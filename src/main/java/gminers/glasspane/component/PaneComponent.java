@@ -177,6 +177,15 @@ public abstract class PaneComponent
 	 */
 	FontRenderer																						tooltipFontRenderer		= Minecraft
 																																		.getMinecraft().fontRenderer;
+	/**
+	 * The distance to translate the position of this component on the X axis, in 'big' pixels.
+	 */
+	protected float translateX = 0f;
+	/**
+	 * The distance to translate the position of this component on the Y axis, in 'big' pixels.
+	 */
+	protected float translateY = 0f;
+	
 	@Getter(NONE) @Setter(NONE) protected static final ResourceLocation									RESOURCE				= new ResourceLocation(
 																																		"glasspane",
 																																		"wadjets.png");
@@ -284,7 +293,7 @@ public abstract class PaneComponent
 				GL11.glEnable(GL11.GL_SCISSOR_TEST);
 			}
 			// translate to this component's coordinates
-			GL11.glTranslatef(x, y, zIndex);
+			GL11.glTranslatef(x+translateX, y+translateY, zIndex);
 		} else if (((GlassPane) this).isScreenClearedBeforeDrawing() && currentScreenIsThis()) {
 			GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);

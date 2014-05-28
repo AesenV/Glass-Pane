@@ -57,7 +57,7 @@ public abstract class GlassPane
 	 * Whether or not the revert() method can be used.
 	 */
 	@Getter @Setter private boolean						revertAllowed				= false;
-	private static final ResourceLocation				defaultShadowboxTex			= new ResourceLocation(
+	protected static final ResourceLocation				defaultShadowboxTex			= new ResourceLocation(
 																							"textures/gui/options_background.png");
 	/**
 	 * The shadowbox (background) used by this GlassPane.
