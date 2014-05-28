@@ -93,7 +93,7 @@ public class PaneLabel
 		this.renderer = renderer;
 	}
 	
-	protected int getLineCount() {
+	public int getLineCount() {
 		if (text.trim().isEmpty()) {
 			return 0;
 		}
@@ -104,7 +104,7 @@ public class PaneLabel
 		}
 	}
 	
-	protected int getLongestLineWidth() {
+	public int getLongestLineWidth() {
 		if (text.contains("\n")) {
 			int work = 0;
 			for (final String s : text.split("\n")) {

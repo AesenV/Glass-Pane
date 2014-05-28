@@ -2,8 +2,10 @@ package gminers.glasspane.event;
 
 
 import gminers.glasspane.component.PaneComponent;
+import gminers.glasspane.component.PaneContainer;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
@@ -18,6 +20,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true)
 @ToString
+@Getter
 public class PaneComponentPreRenderEvent
 		extends PaneEvent {
 	public static final Class<?>[]	SIGNATURE	= {

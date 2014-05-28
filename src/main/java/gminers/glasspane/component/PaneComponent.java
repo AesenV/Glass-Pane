@@ -317,11 +317,13 @@ public abstract class PaneComponent
 		GL11.glPushMatrix();
 		if (hoverTime >= 30 && tooltip != null) {
 			// render a tooltip if we should
+			GL11.glDisable(GL11.GL_SCISSOR_TEST);
 			GL11.glTranslatef(0, 0, 5f);
 			Rendering.drawHoveringText(tooltipSplit, mouseX, mouseY,
 					getParent().getWidth(),
 					getGlassPane().getHeight(),
 					tooltipFontRenderer);
+			GL11.glEnable(GL11.GL_SCISSOR_TEST);
 		}
 		GL11.glPopMatrix();
 	}
