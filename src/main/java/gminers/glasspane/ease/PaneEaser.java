@@ -2,6 +2,7 @@ package gminers.glasspane.ease;
 
 import gminers.kitchensink.Strings;
 
+import java.awt.Color;
 import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -18,9 +19,11 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.val;
 
+import com.gameminers.glasspane.internal.PaneEaserManager;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.math.BigIntegerMath;
@@ -38,7 +41,7 @@ import cpw.mods.fml.common.gameevent.TickEvent.Type;
  * "But Aesen, why not use Trident?"<br/>
  * Trident is too damn complicated, so I implemented my own, super easy to use, reflection-based easer built for use in Forge.<br/>
  * <br/>
- * Implements Closeable because it registers itself as a Forge EventBus listener.
+ * Implements Closeable because it adds itself to an external map for ticking.
  * @author Aesen Vismea
  *
  */
@@ -46,10 +49,11 @@ public class PaneEaser implements Closeable {
 	protected final Object toEase;
 	protected Map<String, Byte> byteTargets = Maps.newHashMap();
 	protected Map<String, Short> shortTargets = Maps.newHashMap();
-	
 	protected Map<String, Integer> integerTargets = Maps.newHashMap();
 	protected Map<String, Long> longTargets = Maps.newHashMap();
 	
+	
+	protected Map<String, Integer> colorTargets = Maps.newHashMap();
 	
 	
 	protected Map<String, Float> floatTargets = Maps.newHashMap();
@@ -70,119 +74,102 @@ public class PaneEaser implements Closeable {
 	protected List<Runnable> closeListeners = Lists.newArrayList();
 	
 	
-	public PaneEaser(Object toEase) {
+	public PaneEaser(@NonNull Object toEase) {
 		this.toEase = toEase;
-		FMLCommonHandler.instance().bus().register(this);
+		PaneEaserManager.easers.put(toEase, this);;
 	}
 	
-	@SubscribeEvent
-	public void onTick(TickEvent e) {
+	private <T extends Number> void ease(Iterator<Entry<String, T>> iter, Class<?> primitive) {
+		while (iter.hasNext()) {
+			Entry<String, T> en = iter.next();
+			FieldAccessor<T> accessor = getAccessor(en.getKey(), primitive);
+			T current = accessor.get();
+			System.out.println("easing "+current.getClass().getSimpleName().toLowerCase());
+			T val = (T) numerfy(adjust(current.doubleValue(), en.getValue().doubleValue()), current.getClass());
+			if (current.equals(val)) {
+				iter.remove();
+			}
+			accessor.set(val);
+		}
+	}
+	
+	private Number numerfy(double val, Class<? extends Number> clazz) {
+		if (clazz == Byte.class) {
+			return Byte.valueOf((byte)val);
+		} else if (clazz == Short.class) {
+			return Short.valueOf((short)val);
+		} else if (clazz == Integer.class) {
+			return Integer.valueOf((int)val);
+		} else if (clazz == Long.class) {
+			return Long.valueOf((long)val);
+		} else if (clazz == Float.class) {
+			return Float.valueOf((float)val);
+		} else if (clazz == Double.class) {
+			return Double.valueOf(val);
+		}
+		return null;
+	}
+
+	public void onTick(Phase phase) {
+		System.out.println("easer got tick");
 		if (closed) return;
-		if (e.type == Type.CLIENT) {
-			if (e.phase == Phase.START) {
-				{
-					Iterator<Entry<String, Byte>> iter = byteTargets.entrySet().iterator();
-					while (iter.hasNext()) {
-						val en = iter.next();
-						FieldAccessor<Byte> accessor = getAccessor(en.getKey(), byte.class);
-						val current = accessor.get();
-						val val = (byte)adjust(current, en.getValue());
-						if (current.equals(val)) {
-							iter.remove();
-						}
-						accessor.set(val);
+		System.out.println("not closed");
+		if (phase == Phase.START) {
+			System.out.println("start phase, easing");
+			ease(byteTargets.entrySet().iterator(), byte.class);
+			ease(shortTargets.entrySet().iterator(), short.class);
+			ease(integerTargets.entrySet().iterator(), int.class);
+			ease(longTargets.entrySet().iterator(), long.class);
+			ease(floatTargets.entrySet().iterator(), float.class);
+			ease(doubleTargets.entrySet().iterator(), double.class);
+			{
+				Iterator<Entry<String, Integer>> iter = colorTargets.entrySet().iterator();
+				while (iter.hasNext()) {
+					System.out.println("easing color");
+					val en = iter.next();
+					System.out.println(en);
+					FieldAccessor<Integer> accessor = getAccessor(en.getKey(), int.class);
+					val current = accessor.get();
+					System.out.println("current: "+current);
+					System.out.println("target: "+en.getValue());
+					if (current.equals(en.getValue())) {
+						System.out.println("equal. stop");
+						iter.remove();
+					} else {
+						Color targetCol = new Color(en.getValue(), true);
+						Color col = new Color(current, true);
+						float r = (float) Math.min(255, adjust(col.getRed(), targetCol.getRed()));
+						float g = (float) Math.min(255, adjust(col.getGreen(), targetCol.getGreen()));
+						float b = (float) Math.min(255, adjust(col.getBlue(), targetCol.getBlue()));
+						float a = (float) Math.min(255, adjust(col.getAlpha(), targetCol.getAlpha()));
+						System.out.println(r+", "+g+", "+b+", "+a);
+						accessor.set(new Color(r/255f, g/255f, b/255f, a/255f).getRGB());
 					}
 				}
-				{
-					Iterator<Entry<String, Short>> iter = shortTargets.entrySet().iterator();
-					while (iter.hasNext()) {
-						val en = iter.next();
-						FieldAccessor<Short> accessor = getAccessor(en.getKey(), short.class);
-						val current = accessor.get();
-						val val = (short)adjust(current, en.getValue());
-						if (current.equals(val)) {
-							iter.remove();
-						}
-						accessor.set(val);
-					}
-				}
-				{
-					Iterator<Entry<String, Integer>> iter = integerTargets.entrySet().iterator();
-					while (iter.hasNext()) {
-						val en = iter.next();
-						FieldAccessor<Integer> accessor = getAccessor(en.getKey(), int.class);
-						val current = accessor.get();
-						val val = (int)adjust(current, en.getValue());
-						if (current.equals(val)) {
-							iter.remove();
-						}
-						accessor.set(val);
-					}
-				}
-				{
-					Iterator<Entry<String, Long>> iter = longTargets.entrySet().iterator();
-					while (iter.hasNext()) {
-						val en = iter.next();
-						FieldAccessor<Long> accessor = getAccessor(en.getKey(), long.class);
-						val current = accessor.get();
-						val val = (long)adjust(current, en.getValue());
-						if (current.equals(val)) {
-							iter.remove();
-						}
-						accessor.set(val);
-					}
-				}
-				
-				
-				
-				
-				
-				{
-					Iterator<Entry<String, Float>> iter = floatTargets.entrySet().iterator();
-					while (iter.hasNext()) {
-						val en = iter.next();
-						FieldAccessor<Float> accessor = getAccessor(en.getKey(), float.class);
-						val current = accessor.get();
-						val val = (float)adjust(current, en.getValue());
-						if (current.equals(val)) {
-							iter.remove();
-						}
-						accessor.set(val);
-					}
-				}
-				{
-					Iterator<Entry<String, Double>> iter = doubleTargets.entrySet().iterator();
-					while (iter.hasNext()) {
-						val en = iter.next();
-						FieldAccessor<Double> accessor = getAccessor(en.getKey(), double.class);
-						val current = accessor.get();
-						val val = (double)adjust(current, en.getValue());
-						if (current.equals(val)) {
-							iter.remove();
-						}
-						accessor.set(val);
-					}
-				}
-			} else {
-				if (autoClose &&
-						byteTargets.isEmpty() &&
-						shortTargets.isEmpty() &&
-						integerTargets.isEmpty() &&
-						longTargets.isEmpty() &&
-						floatTargets.isEmpty() &&
-						doubleTargets.isEmpty()) {
-					close();
-				}
+			}
+		} else {
+			System.out.println("end tick, checking if we should close");
+			if (autoClose &&
+					byteTargets.isEmpty() &&
+					shortTargets.isEmpty() &&
+					integerTargets.isEmpty() &&
+					longTargets.isEmpty() &&
+					floatTargets.isEmpty() &&
+					doubleTargets.isEmpty() &&
+					colorTargets.isEmpty()) {
+				System.out.println("auto-closing");
+				close();
 			}
 		}
 	}
 
 	protected double adjust(double current, double target) {
+		System.out.println("adjusting "+current+" towards "+target);
 		double adjustment = target-current;
-		if (adjustment > 1) {
-			adjustment = Math.max(1, adjustment/speed);
-		} else if (adjustment < -1) {
-			adjustment = Math.min(-1, adjustment/speed);
+		if (adjustment > 0.01) {
+			adjustment = Math.max(0.01, adjustment/speed);
+		} else if (adjustment < -0.01) {
+			adjustment = Math.min(-0.01, adjustment/speed);
 		}
 		return current+adjustment;
 	}
@@ -199,26 +186,38 @@ public class PaneEaser implements Closeable {
 	}
 
 	public void easeByte(String value, byte target) {
+		System.out.println("ease byte "+value+" to "+target);
 		byteTargets.put(value, target);
 	}
 	public void easeShort(String value, short target) {
+		System.out.println("ease short "+value+" to "+target);
 		shortTargets.put(value, target);
 	}
 	public void easeInteger(String value, int target) {
+		System.out.println("ease int "+value+" to "+target);
 		integerTargets.put(value, target);
 	}
 	public void easeLong(String value, long target) {
+		System.out.println("ease long "+value+" to "+target);
 		longTargets.put(value, target);
 	}
 	
+	public void easeColorInt(String value, int target) {
+		System.out.println("ease color "+value+" to "+target);
+		colorTargets.put(value, target);
+	}
+	
 	public void easeFloat(String value, float target) {
+		System.out.println("ease float "+value+" to "+target);
 		floatTargets.put(value, target);
 	}
 	public void easeDouble(String value, double target) {
+		System.out.println("ease double "+value+" to "+target);
 		doubleTargets.put(value, target);
 	}
 	
 	public void cancelEase(String value) {
+		System.out.println("cancel ease "+value);
 		byteTargets.remove(value);
 		shortTargets.remove(value);
 		integerTargets.remove(value);
@@ -226,20 +225,24 @@ public class PaneEaser implements Closeable {
 		
 		floatTargets.remove(value);
 		doubleTargets.remove(value);
+		colorTargets.remove(value);
 	}
 	
 	public void registerCloseListener(Runnable r) {
+		System.out.println("register close listener");
 		closeListeners.add(r);
 	}
 	
 	public void unregisterCloseListener(Runnable r) {
+		System.out.println("unregister close listener");
 		closeListeners.remove(r);
 	}
 	
 	@Override
 	public void close() {
 		if (closed) return;
-		FMLCommonHandler.instance().bus().unregister(this);
+		System.out.println("close");
+		PaneEaserManager.easers.remove(toEase);
 		for (Runnable r : closeListeners) {
 			r.run();
 		}

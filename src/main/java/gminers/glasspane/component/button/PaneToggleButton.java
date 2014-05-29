@@ -20,7 +20,7 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @FieldDefaults(level = AccessLevel.PROTECTED)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 @Getter
 public class PaneToggleButton

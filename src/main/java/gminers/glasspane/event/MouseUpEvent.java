@@ -18,7 +18,7 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 @Getter
 public class MouseUpEvent

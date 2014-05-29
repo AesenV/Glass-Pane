@@ -29,7 +29,7 @@ import org.lwjgl.opengl.GL11;
 
 
 @FieldDefaults(level = AccessLevel.PROTECTED)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 public class PaneTextField
 		extends PaneLabel

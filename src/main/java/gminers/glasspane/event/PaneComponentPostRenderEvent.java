@@ -17,7 +17,7 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 @Getter
 public class PaneComponentPostRenderEvent

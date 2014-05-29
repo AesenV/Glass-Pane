@@ -18,7 +18,7 @@ import lombok.experimental.FieldDefaults;
  */
 @Getter
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 public class ComponentRemovedEvent
 		extends PaneEvent {

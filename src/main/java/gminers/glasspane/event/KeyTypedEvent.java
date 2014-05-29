@@ -19,7 +19,7 @@ import org.lwjgl.input.Keyboard;
  * 
  */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 @Getter
 public class KeyTypedEvent

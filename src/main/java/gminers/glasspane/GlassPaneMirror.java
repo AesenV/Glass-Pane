@@ -32,7 +32,6 @@ import com.gameminers.glasspane.internal.GlassPaneMod;
  * 
  */
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
 public final class GlassPaneMirror
 		extends GuiScreen {

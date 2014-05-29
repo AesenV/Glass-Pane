@@ -40,13 +40,8 @@ import com.google.common.collect.Lists;
  * If you need to get a GuiScreen mirror of a GlassPane, use {@link #getScreenMirror}.
  * 
  * @author Aesen Vismea
- * @since v0.1
- * @version v0.1
  */
 @ToString
-@EqualsAndHashCode(exclude = {
-		"screenMirror"
-}, callSuper = true)
 public abstract class GlassPane
 		extends PaneContainer {
 	/**

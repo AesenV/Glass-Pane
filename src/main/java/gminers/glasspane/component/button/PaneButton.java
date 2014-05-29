@@ -13,7 +13,7 @@ import gminers.kitchensink.Rendering;
 import java.util.List;
 
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,7 +36,7 @@ import com.google.common.collect.Lists;
  * 
  */
 @FieldDefaults(level = AccessLevel.PROTECTED)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 @Getter
 @Setter

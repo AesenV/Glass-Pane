@@ -60,10 +60,6 @@ import com.google.common.collect.Maps;
 		"listeners",
 		"parent"
 })
-@EqualsAndHashCode(callSuper = true, exclude = {
-		"listeners",
-		"parent"
-})
 @Getter
 @Setter
 // TODO: this class is a bit oversized, needs refactoring

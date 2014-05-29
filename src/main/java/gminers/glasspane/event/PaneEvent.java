@@ -20,7 +20,7 @@ import lombok.experimental.NonFinal;
  */
 @Getter
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@EqualsAndHashCode
+
 @ToString
 @RequiredArgsConstructor
 public abstract class PaneEvent {

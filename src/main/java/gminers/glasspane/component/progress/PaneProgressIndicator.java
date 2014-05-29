@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GL11;
  * @see PaneProgressRing
  */
 @FieldDefaults(level = AccessLevel.PROTECTED)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 @Getter
 @Setter

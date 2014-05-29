@@ -17,7 +17,7 @@ import lombok.experimental.FieldDefaults;
  */
 @Getter
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 public class WinchEvent
 		extends PaneEvent {

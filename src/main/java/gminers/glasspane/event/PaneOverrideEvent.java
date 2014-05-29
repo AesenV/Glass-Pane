@@ -18,7 +18,7 @@ import net.minecraft.client.gui.GuiScreen;
  */
 @Getter
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
+
 @ToString
 public class PaneOverrideEvent
 		extends PaneEvent {
