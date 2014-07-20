@@ -110,7 +110,7 @@ public abstract class GlassPane
 			setHeight(mc.currentScreen.height);
 		} else {
 			// well, there's no screen currently displayed. we'll just use a ScaledResolution
-			final ScaledResolution res = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+			final ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			setWidth(res.getScaledWidth());
 			setHeight(res.getScaledHeight());
 		}
@@ -130,7 +130,7 @@ public abstract class GlassPane
 			setHeight(mc.currentScreen.height);
 		} else {
 			// well, there's no screen currently displayed. we'll just use a ScaledResolution
-			final ScaledResolution res = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+			final ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			setWidth(res.getScaledWidth());
 			setHeight(res.getScaledHeight());
 		}
@@ -173,13 +173,11 @@ public abstract class GlassPane
 	 * Uses this GlassPane to completely take over Minecraft's rendering. This can be used to display a GlassPane before Minecraft is
 	 * fully initialized.<br/>
 	 * <br/>
-	 * This method will block until another thread calls {@link #hide}. It is recommended to call this method from Minecraft's main thread,
-	 * both to prevent thread safety issues with rendering, and to prevent Minecraft from finishing init while your takeover screen is
-	 * displaying.
+	 * This method will block until another thread calls {@link #hide}. It is required to call this method from Minecraft's main thread,
+	 * since the OpenGL context is only accessible from that thread.
 	 * 
 	 * @throws IllegalStateException
 	 *             if Minecraft has finished initializing
-	 * @see GlassPaneInitScreen
 	 */
 	// TODO - Update this for new MouseUp, Wheel, etc events
 	public final void takeover() {
@@ -192,7 +190,7 @@ public abstract class GlassPane
 		takingOver = true;
 		// enter a loop
 		final Minecraft mc = Minecraft.getMinecraft();
-		ScaledResolution res = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+		ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 		int scaleFactor = res.getScaleFactor();
 		fireEvent(PaneDisplayEvent.class, this);
 		while (takingOver) {
@@ -237,7 +235,7 @@ public abstract class GlassPane
 			}
 			// render
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			res = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+			res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			scaleFactor = res.getScaleFactor();
 			setWidth(res.getScaledWidth());
 			setHeight(res.getScaledHeight());
@@ -291,7 +289,7 @@ public abstract class GlassPane
 					mc.displayWidth = newWidth <= 0 ? 1 : newWidth;
 					mc.displayHeight = newHeight <= 0 ? 1 : newHeight;
 					
-					final ScaledResolution res1 = new ScaledResolution(mc.gameSettings, newWidth, newHeight);
+					final ScaledResolution res1 = new ScaledResolution(mc, newWidth, newHeight);
 					setWidth(res1.getScaledWidth());
 					setHeight(res1.getScaledHeight());
 					
@@ -359,8 +357,6 @@ public abstract class GlassPane
 			focusedComponent = null;
 		}
 		takingOver = false;
-		setWidth(1); 
-		setHeight(1);
 	}
 	
 	/**

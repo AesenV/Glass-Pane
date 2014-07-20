@@ -20,7 +20,6 @@ import org.lwjgl.opengl.GL11;
  * 
  * @author Aesen Vismea
  * @see PaneProgressBar
- * @see PaneExactProgressBar
  * @see PaneProgressRing
  */
 @FieldDefaults(level = AccessLevel.PROTECTED)

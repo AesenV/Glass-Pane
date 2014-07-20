@@ -22,19 +22,14 @@ import cpw.mods.fml.common.gameevent.TickEvent.Type;
 
 public class PaneEaserManager {
 	public static Map<Object, PaneEaser> easers = Collections.synchronizedMap(new HashMap<Object, PaneEaser>());
-	private PaneEaserManager() {}
-	static {
-		FMLCommonHandler.instance().bus().register(new PaneEaserManager());
-	}
+	PaneEaserManager() {}
 	@SubscribeEvent
 	public void onTick(TickEvent e) {
 		if (e.type != Type.CLIENT) return;
-		System.out.println("easer manager tick");
 		Minecraft.getMinecraft().mcProfiler.startSection("paneEaser");
 		for (PaneEaser pe : easers.values().toArray(new PaneEaser[easers.size()])) {
 			Minecraft.getMinecraft().mcProfiler.startSection(Integer.toHexString(pe.hashCode()));
 			try {
-				System.out.println("tick easer "+Integer.toHexString(pe.hashCode()));
 				pe.onTick(e.phase);
 			} catch (Throwable t) {
 				t.printStackTrace();

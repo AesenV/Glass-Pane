@@ -84,7 +84,6 @@ public class PaneEaser implements Closeable {
 			Entry<String, T> en = iter.next();
 			FieldAccessor<T> accessor = getAccessor(en.getKey(), primitive);
 			T current = accessor.get();
-			System.out.println("easing "+current.getClass().getSimpleName().toLowerCase());
 			T val = (T) numerfy(adjust(current.doubleValue(), en.getValue().doubleValue()), current.getClass());
 			if (current.equals(val)) {
 				iter.remove();
@@ -111,11 +110,8 @@ public class PaneEaser implements Closeable {
 	}
 
 	public void onTick(Phase phase) {
-		System.out.println("easer got tick");
 		if (closed) return;
-		System.out.println("not closed");
 		if (phase == Phase.START) {
-			System.out.println("start phase, easing");
 			ease(byteTargets.entrySet().iterator(), byte.class);
 			ease(shortTargets.entrySet().iterator(), short.class);
 			ease(integerTargets.entrySet().iterator(), int.class);
@@ -125,15 +121,10 @@ public class PaneEaser implements Closeable {
 			{
 				Iterator<Entry<String, Integer>> iter = colorTargets.entrySet().iterator();
 				while (iter.hasNext()) {
-					System.out.println("easing color");
 					val en = iter.next();
-					System.out.println(en);
 					FieldAccessor<Integer> accessor = getAccessor(en.getKey(), int.class);
 					val current = accessor.get();
-					System.out.println("current: "+current);
-					System.out.println("target: "+en.getValue());
 					if (current.equals(en.getValue())) {
-						System.out.println("equal. stop");
 						iter.remove();
 					} else {
 						Color targetCol = new Color(en.getValue(), true);
@@ -142,13 +133,11 @@ public class PaneEaser implements Closeable {
 						float g = (float) Math.min(255, adjust(col.getGreen(), targetCol.getGreen()));
 						float b = (float) Math.min(255, adjust(col.getBlue(), targetCol.getBlue()));
 						float a = (float) Math.min(255, adjust(col.getAlpha(), targetCol.getAlpha()));
-						System.out.println(r+", "+g+", "+b+", "+a);
 						accessor.set(new Color(r/255f, g/255f, b/255f, a/255f).getRGB());
 					}
 				}
 			}
 		} else {
-			System.out.println("end tick, checking if we should close");
 			if (autoClose &&
 					byteTargets.isEmpty() &&
 					shortTargets.isEmpty() &&
@@ -157,19 +146,17 @@ public class PaneEaser implements Closeable {
 					floatTargets.isEmpty() &&
 					doubleTargets.isEmpty() &&
 					colorTargets.isEmpty()) {
-				System.out.println("auto-closing");
 				close();
 			}
 		}
 	}
 
 	protected double adjust(double current, double target) {
-		System.out.println("adjusting "+current+" towards "+target);
 		double adjustment = target-current;
-		if (adjustment > 0.01) {
-			adjustment = Math.max(0.01, adjustment/speed);
-		} else if (adjustment < -0.01) {
-			adjustment = Math.min(-0.01, adjustment/speed);
+		if (adjustment > 0.05) {
+			adjustment = Math.max(0.05, adjustment/speed);
+		} else if (adjustment < -0.05) {
+			adjustment = Math.min(-0.05, adjustment/speed);
 		}
 		return current+adjustment;
 	}
@@ -186,38 +173,30 @@ public class PaneEaser implements Closeable {
 	}
 
 	public void easeByte(String value, byte target) {
-		System.out.println("ease byte "+value+" to "+target);
 		byteTargets.put(value, target);
 	}
 	public void easeShort(String value, short target) {
-		System.out.println("ease short "+value+" to "+target);
 		shortTargets.put(value, target);
 	}
 	public void easeInteger(String value, int target) {
-		System.out.println("ease int "+value+" to "+target);
 		integerTargets.put(value, target);
 	}
 	public void easeLong(String value, long target) {
-		System.out.println("ease long "+value+" to "+target);
 		longTargets.put(value, target);
 	}
 	
 	public void easeColorInt(String value, int target) {
-		System.out.println("ease color "+value+" to "+target);
 		colorTargets.put(value, target);
 	}
 	
 	public void easeFloat(String value, float target) {
-		System.out.println("ease float "+value+" to "+target);
 		floatTargets.put(value, target);
 	}
 	public void easeDouble(String value, double target) {
-		System.out.println("ease double "+value+" to "+target);
 		doubleTargets.put(value, target);
 	}
 	
 	public void cancelEase(String value) {
-		System.out.println("cancel ease "+value);
 		byteTargets.remove(value);
 		shortTargets.remove(value);
 		integerTargets.remove(value);
@@ -229,19 +208,16 @@ public class PaneEaser implements Closeable {
 	}
 	
 	public void registerCloseListener(Runnable r) {
-		System.out.println("register close listener");
 		closeListeners.add(r);
 	}
 	
 	public void unregisterCloseListener(Runnable r) {
-		System.out.println("unregister close listener");
 		closeListeners.remove(r);
 	}
 	
 	@Override
 	public void close() {
 		if (closed) return;
-		System.out.println("close");
 		PaneEaserManager.easers.remove(toEase);
 		for (Runnable r : closeListeners) {
 			r.run();

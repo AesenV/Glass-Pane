@@ -11,13 +11,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
 apply plugin: 'forge'
 
-version = "0.2.3"
+version = "0.3"
 group= "com.gameminers.glasspane" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "GlassPane"
 
@@ -37,7 +37,7 @@ task delombokJavadocs(type: Javadoc, dependsOn: delombok) {
 
 
 minecraft {
-    version = "1.7.2-10.12.0.1047"
+    version = "1.7.10-10.13.0.1187"
     assetDir = "eclipse/assets"
 }
 processResources
@@ -60,6 +60,6 @@ dependencies {
 		'org.projectlombok:lombok:1.12.6'
 	)
 	compile files (
-		"../KitchenSink/build/libs/KitchenSink-0.1.jar"
+		"../KitchenSink/latest-dev.jar"
 	)
 }

@@ -123,8 +123,6 @@ public final class GlassPaneMirror
 		shown = false;
 		mirrored.fireEvent(PaneHideEvent.class, mirrored);
 		mirrored.setFocusedComponent(null);
-		mirrored.setWidth(1);
-		mirrored.setHeight(1);
 	}
 	
 	public boolean isModal() {

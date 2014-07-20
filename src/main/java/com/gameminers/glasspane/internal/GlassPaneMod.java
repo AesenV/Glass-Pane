@@ -52,7 +52,7 @@ import cpw.mods.fml.common.gameevent.TickEvent;
  * @author Aesen Vismea
  * 
  */
-@Mod(name = "Glass Pane", modid = "GlassPane", version = "0.2.3 `Aluminosilicate' Beta", dependencies="required-after:KitchenSink")
+@Mod(name = "Glass Pane", modid = "GlassPane", version = "0.3 `Aluminosilicate' Beta", dependencies="required-after:KitchenSink")
 @Log4j2
 public class GlassPaneMod {
 	@Instance("GlassPane") public static GlassPaneMod	inst;
@@ -69,6 +69,9 @@ public class GlassPaneMod {
 	public void init(final FMLInitializationEvent e) {
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(this);
+		PaneEaserManager pem = new PaneEaserManager();
+		FMLCommonHandler.instance().bus().register(pem);
+		MinecraftForge.EVENT_BUS.register(pem);
 		overrideExemptions.add(GuiIngame.class);
 	}
 	
@@ -175,7 +178,7 @@ public class GlassPaneMod {
 		}
 		// apply the overlays
 		if (applyingOverlays.size() >= 1) {
-			final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft().gameSettings,
+			final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft(),
 					Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 			for (final GlassPane overpane : applyingOverlays) {
 				overpane.overlay();
@@ -193,7 +196,7 @@ public class GlassPaneMod {
 			// Mouse and Keyboard InputEvents are only called when in a game, not a GUI, which is the opposite of helpful
 			// so we do this awful hack
 			final Minecraft mc = Minecraft.getMinecraft();
-			final ScaledResolution res = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+			final ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			final int width = res.getScaledWidth();
 			final int height = res.getScaledHeight();
 			// that wasn't the hack - see the reflection below
@@ -276,7 +279,7 @@ public class GlassPaneMod {
 			// get the minecraft instance
 			final Minecraft mc = Minecraft.getMinecraft();
 			// get the resolution
-			final ScaledResolution res = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+			final ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			// store width and height for convenience
 			final int width = res.getScaledWidth();
 			final int height = res.getScaledHeight();
@@ -306,13 +309,13 @@ public class GlassPaneMod {
 	public void onRender(final TickEvent.RenderTickEvent e) {
 		if (e.phase == TickEvent.Phase.END) {
 			final Minecraft mc = Minecraft.getMinecraft();
-			final ScaledResolution res = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+			final ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			// just render all the overlays in insertion order
 			for (final GlassPane pane : combine(currentOverlays, currentStickyOverlays)) {
 				// clear the depth buffer to make overlays always render in front
 				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-				// have to do weird maths with the mouse stuff because Minecraft's 0, 0 is top-left, but GL/LWJGL's 0, 0 is bottom-left, and
-				// since Minecraft does resolution scaling
+				// have to do weird maths with the mouse stuff because Minecraft's 0, 0 is top-left,
+				// but GL/LWJGL's 0, 0 is bottom-left, and since Minecraft does resolution scaling
 				pane.render(Mouse.getX() * res.getScaledWidth() / mc.displayWidth, res.getScaledHeight() - Mouse.getY()
 						* res.getScaledHeight() / mc.displayHeight - 1, e.renderTickTime);
 			}
