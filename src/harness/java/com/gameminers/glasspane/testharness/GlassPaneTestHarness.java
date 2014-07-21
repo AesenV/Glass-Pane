@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiOptions;
 import gminers.glasspane.GlassPane;
@@ -21,6 +22,8 @@ public class GlassPaneTestHarness extends GlassPane {
 	@EventHandler
 	public void onInit(FMLInitializationEvent e) {
 		autoOverlay(GuiOptions.class);
+		autoOverlay(GuiIngame.class);
+		setRenderedWhenHUDIsOff(true);
 	}
 	@PaneEventHandler
 	public void onDisplay(PaneOverlayEvent e) {

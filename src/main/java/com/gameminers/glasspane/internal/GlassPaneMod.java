@@ -24,6 +24,7 @@ import lombok.extern.log4j.Log4j2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -52,7 +53,7 @@ import cpw.mods.fml.common.gameevent.TickEvent;
  * @author Aesen Vismea
  * 
  */
-@Mod(name = "Glass Pane", modid = "GlassPane", version = "0.3 `Aluminosilicate' Beta", dependencies="required-after:KitchenSink")
+@Mod(name = "Glass Pane", modid = "GlassPane", version = "0.3.1 `Aluminosilicate' Beta", dependencies="required-after:KitchenSink")
 @Log4j2
 public class GlassPaneMod {
 	@Instance("GlassPane") public static GlassPaneMod	inst;
@@ -312,6 +313,8 @@ public class GlassPaneMod {
 			final ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			// just render all the overlays in insertion order
 			for (final GlassPane pane : combine(currentOverlays, currentStickyOverlays)) {
+				if (Minecraft.getMinecraft().gameSettings.hideGUI && !pane.isRenderedWhenHUDIsOff()) continue;
+				mc.entityRenderer.setupOverlayRendering();
 				// clear the depth buffer to make overlays always render in front
 				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 				// have to do weird maths with the mouse stuff because Minecraft's 0, 0 is top-left,

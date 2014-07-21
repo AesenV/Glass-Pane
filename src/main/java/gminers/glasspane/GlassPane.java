@@ -78,6 +78,10 @@ public abstract class GlassPane
 	 * will remove any artifacts left by the previous frame.
 	 */
 	@Getter @Setter protected boolean					screenClearedBeforeDrawing	= false;
+	/**
+	 * Whether or not this GlassPane will render when the HUD is disabled.
+	 */
+	@Getter @Setter protected boolean					renderedWhenHUDIsOff = false;
 	
 	/**
 	 * Overrides the currently displaying GuiScreen with a screen dedicated to displaying this GlassPane, and stores the current GUI state
