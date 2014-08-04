@@ -3,6 +3,8 @@ package gminers.glasspane.component.text;
 
 import gminers.glasspane.VertAlignment;
 import gminers.glasspane.component.Focusable;
+import gminers.glasspane.component.PaneImage;
+import gminers.glasspane.component.button.PaneButton;
 import gminers.glasspane.event.KeyTypedEvent;
 import gminers.glasspane.listener.PaneEventHandler;
 import gminers.kitchensink.Rendering;
@@ -22,6 +24,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -73,6 +76,40 @@ public class PaneTextField
 	 * Other, custom, colors can also be used, but these four are the only ones used by default.
 	 */
 	@Getter @Setter boolean	visualBellEnabled	= true;
+	/**
+	 * An icon to put to the left of the text. Can be used for identification purposes or decoration.<br/>
+	 * Null means 'do not show'.
+	 */
+	@Getter @Setter ResourceLocation icon = null;
+	/**
+	 * The U (X texture offset) to use when rendering the icon
+	 */
+	@Getter @Setter int					iconU					= 0;
+	/**
+	 * The V (Y texture offset) to use when rendering the icon
+	 */
+	@Getter @Setter int					iconV					= 0;
+	/**
+	 * The width of the portion of the icon's image to use - 256 for the entire image
+	 */
+	@Getter @Setter int					iconImageWidth			= 256;
+	/**
+	 * The height of the portion of the icon's image to use - 256 for the entire image.
+	 */
+	@Getter @Setter int					iconImageHeight			= 256;
+	/**
+	 * A 24-bit packed color to use for the icon. (first 8 bits are ignored, see {@link #alpha})
+	 */
+	@Getter @Setter int					iconColor			= 0xFFFFFF;
+	/**
+	 * The alpha transparency of the icon - 0.0 is completely transparent, 1.0 is opaque
+	 */
+	@Getter @Setter float				alpha				= 1.0f;
+	/**
+	 * Whether or not to use one-bit transparency for the icon. One-bit transparency is faster, but if your image is partially
+	 * transparent, it will render as fully opaque.
+	 */
+	@Getter @Setter boolean				oneBitTransparency	= true;
 	
 	public PaneTextField() {
 		alignmentY = VertAlignment.MIDDLE;
@@ -87,7 +124,7 @@ public class PaneTextField
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		// add to the counter
 		counter++;
 		// if we're allowing visual bells, and we need to decrement the bell opacity, do so
@@ -112,18 +149,14 @@ public class PaneTextField
 		final int u = 0;
 		final int v = 0;
 		
-		// precalc the width and height halved to save cycles
-		final int hWidth = width / 2;
-		final int hHeight = height / 2;
-		
 		// set color
 		GL11.glColor3f(0.6f, 0.6f, 0.6f);
-		// draw it, same method and max size as buttons
-		Rendering.drawTexturedModalRect(0, 0, u, v, hWidth, hHeight);
-		Rendering.drawTexturedModalRect(hWidth, 0, u + (220 - hWidth), v, hWidth, hHeight);
+		PaneButton.renderStretchyTexturedRect(0, 0, u, v, width, height, 220, 40);
 		
-		Rendering.drawTexturedModalRect(0, hHeight, u, v + (40 - hHeight), hWidth, hHeight);
-		Rendering.drawTexturedModalRect(hWidth, hHeight, u + (220 - hWidth), v + (40 - hHeight), hWidth, hHeight);
+		// render the icon
+		if (icon != null) {
+			PaneImage.render(icon, 0, 0, iconU, iconV, getHeight()-4, getHeight()-4, iconImageWidth, iconImageHeight, iconColor, 1.0f, false);
+		}
 		
 		// translate to the right to make text less stupid looking
 		GL11.glTranslatef(4f, 0f, 0f);
@@ -155,6 +188,7 @@ public class PaneTextField
 			final int llw = renderer.getStringWidth(trimmedText.substring(0,
 					Math.min(trimmedLength, Math.max(0, cursorPos - viewPos))));
 			final int opacity = 255 - ((int) ((counter + partialTicks) * 15) % 255);
+			int hHeight = height/2;
 			// such as a carat (if the window is also focused)
 			if (Display.isActive()) {
 				Rendering.drawRect(llw - 1, hHeight - ((renderer.FONT_HEIGHT / 2) + 1), llw, hHeight
@@ -165,11 +199,7 @@ public class PaneTextField
 			// and ye olde blue outline
 			Minecraft.getMinecraft().renderEngine.bindTexture(RESOURCE);
 			final int fv = 200;
-			Rendering.drawTexturedModalRect(0, 0, u, fv, hWidth, hHeight);
-			Rendering.drawTexturedModalRect(hWidth, 0, u + (220 - hWidth), fv, hWidth, hHeight);
-			
-			Rendering.drawTexturedModalRect(0, hHeight, u, fv + (40 - hHeight), hWidth, hHeight);
-			Rendering.drawTexturedModalRect(hWidth, hHeight, u + (220 - hWidth), fv + (40 - hHeight), hWidth, hHeight);
+			PaneButton.renderStretchyTexturedRect(0, 0, u, fv, width, height, 220, 40);
 		} else {
 			// if we aren't focused, just undo the translate
 			GL11.glTranslatef(-4f, 0f, 0f);
@@ -253,6 +283,7 @@ public class PaneTextField
 			}
 		} else if (Character.isLetterOrDigit(e.getKeyChar()) || e.getKeyChar() > 31 && e.getKeyChar() < 127) {
 			// if it's a letter/digit, or a printable ASCII character, insert it
+			// this won't fit all cases for international text input, but should be adequate for US and Euro layouts (for the most part)
 			str.insert(cursorPos, e.getKeyChar());
 			text = str.toString();
 			cursorPos++;
@@ -308,3 +339,4 @@ public class PaneTextField
 		}
 	}
 }
+

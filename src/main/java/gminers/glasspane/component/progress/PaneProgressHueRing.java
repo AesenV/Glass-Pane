@@ -26,7 +26,7 @@ public class PaneProgressHueRing
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		counter++;
 		if (lagHue > targetHue) {
 			lagHue -= Math.min(hueChangeSpeed, lagHue - targetHue);

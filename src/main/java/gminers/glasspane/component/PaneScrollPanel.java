@@ -84,7 +84,7 @@ public class PaneScrollPanel
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		if (getMaximumChildEdgeY() <= getHeight()) {
 			momentum = 0;
 			offset = 0;

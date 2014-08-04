@@ -32,16 +32,20 @@ import com.google.common.collect.Lists;
 public abstract class PaneContainer
 		extends PaneComponent
 		implements Focusable {
-	protected List<PaneComponent>			components					= new CopyOnWriteArrayList<PaneComponent>();
-	private boolean							focusableComponentPresent	= false;
+	protected List<PaneComponent>	components					= new CopyOnWriteArrayList<PaneComponent>();
+	private boolean					focusableComponentPresent	= false;
 	/**
 	 * The component that currently has the focus.
 	 */
-	@Getter @Setter protected PaneComponent	focusedComponent			= null;
+	@Getter
+	@Setter
+	protected PaneComponent			focusedComponent			= null;
 	/**
 	 * Whether or not to allow using Tab and Shift+Tab to cycle the currently focused component.
 	 */
-	@Getter @Setter protected boolean		cycleFocusOnTabPress		= true;
+	@Getter
+	@Setter
+	protected boolean				cycleFocusOnTabPress		= true;
 	
 	/**
 	 * Adds multiple PaneComponents to this container, with their positions defined by the current PaneLayoutManager.<br/>
@@ -154,10 +158,8 @@ public abstract class PaneContainer
 	}
 	
 	@Override
-	void mouseDown(final int mouseX, final int mouseY, final int button) {
-		if (!isVisible()) {
-			return;
-		}
+	protected void mouseDown(final int mouseX, final int mouseY, final int button) {
+		if (!isVisible()) return;
 		boolean clickedAFocusable = false;
 		final int pX = getPX();
 		final int pY = getPY();
@@ -201,10 +203,8 @@ public abstract class PaneContainer
 	}
 	
 	@Override
-	void mouseUp(final int mouseX, final int mouseY, final int button) {
-		if (!isVisible()) {
-			return;
-		}
+	protected void mouseUp(final int mouseX, final int mouseY, final int button) {
+		if (!isVisible()) return;
 		final int pX = getPX();
 		final int pY = getPY();
 		for (final PaneComponent c : components) {
@@ -218,10 +218,8 @@ public abstract class PaneContainer
 	}
 	
 	@Override
-	void mouseWheel(final int mouseX, final int mouseY, final int distance) {
-		if (!isVisible()) {
-			return;
-		}
+	protected void mouseWheel(final int mouseX, final int mouseY, final int distance) {
+		if (!isVisible()) return;
 		final int pX = getPX();
 		final int pY = getPY();
 		for (final PaneComponent c : components) {
@@ -235,7 +233,7 @@ public abstract class PaneContainer
 	}
 	
 	@Override
-	void keyPressed(final char keyChar, final int keyCode) {
+	protected void keyPressed(final char keyChar, final int keyCode) {
 		if (keyCode == Keyboard.KEY_TAB && cycleFocusOnTabPress) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 				focusPrev(-1);
@@ -264,9 +262,7 @@ public abstract class PaneContainer
 	 */
 	public void focusPrev(final int index) {
 		// make sure we actually have a component to find
-		if (components.isEmpty() || !focusableComponentPresent) {
-			return;
-		}
+		if (components.isEmpty() || !focusableComponentPresent) return;
 		// store the currently focused component
 		final PaneComponent oldFocused = focusedComponent;
 		// get the index of the currently focused component, or the passed index
@@ -310,9 +306,7 @@ public abstract class PaneContainer
 	 */
 	public void focusNext(final int index) {
 		// make sure we actually have a component to find
-		if (components.isEmpty() || !focusableComponentPresent) {
-			return;
-		}
+		if (components.isEmpty() || !focusableComponentPresent) return;
 		// store the currently focused component
 		final PaneComponent oldFocused = focusedComponent;
 		// get the index of the currently focused component, or the passed index
@@ -352,7 +346,7 @@ public abstract class PaneContainer
 	}
 	
 	@Override
-	void winch(final int oldWidth, final int oldHeight, final int newWidth, final int newHeight) {
+	protected void winch(final int oldWidth, final int oldHeight, final int newWidth, final int newHeight) {
 		for (final PaneComponent c : components) {
 			if (c.isAutoResizeWidth()) {
 				c.setWidth((int) (newWidth * c.getRelativeWidth()) + c.getRelativeWidthOffset());

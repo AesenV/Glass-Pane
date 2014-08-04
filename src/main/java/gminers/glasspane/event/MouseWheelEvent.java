@@ -3,7 +3,6 @@ package gminers.glasspane.event;
 
 import gminers.glasspane.component.PaneComponent;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -15,10 +14,12 @@ import lombok.experimental.FieldDefaults;
  * X and Y are absolute, not relative to the component, and will need to be translated.
  * 
  * @author Aesen Vismea
- * 
+ * @see PaneComponent#getChainX()
+ * @see PaneComponent#getChainY()
  */
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-
+@FieldDefaults(
+		level = AccessLevel.PRIVATE,
+		makeFinal = true)
 @ToString
 @Getter
 public class MouseWheelEvent

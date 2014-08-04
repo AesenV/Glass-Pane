@@ -1,12 +1,13 @@
-package gminers.glasspane.component;
+package gminers.glasspane.component.numeric;
 
 
+import gminers.glasspane.component.ColorablePaneComponent;
+import gminers.glasspane.component.Focusable;
 import gminers.kitchensink.Rendering;
 
 import java.text.NumberFormat;
 
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,27 +19,29 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 
-@FieldDefaults(level = AccessLevel.PROTECTED)
-
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
 public class PaneSpinner
 		extends ColorablePaneComponent
 		implements Focusable {
-	public static final NumberFormat							DEFAULT_FORMAT	= NumberFormat.getInstance();
+	public static final NumberFormat	DEFAULT_FORMAT	= NumberFormat.getInstance();
 	
 	static {
 		DEFAULT_FORMAT.setGroupingUsed(true);
 	}
 	
-	float														value			= 0;
-	float														maximum			= Float.POSITIVE_INFINITY;
-	float														minimum			= Float.NEGATIVE_INFINITY;
-	float														increment		= 1;
-	NumberFormat												format			= DEFAULT_FORMAT;
-	@Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) float	lagValue		= 0;
-	FontRenderer												renderer		= Minecraft.getMinecraft().fontRenderer;
+	float								value			= 0;
+	float								maximum			= Float.POSITIVE_INFINITY;
+	float								minimum			= Float.NEGATIVE_INFINITY;
+	float								increment		= 1;
+	NumberFormat						format			= DEFAULT_FORMAT;
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	float								lagValue		= 0;
+	FontRenderer						renderer		= Minecraft.getMinecraft().fontRenderer;
 	
 	public PaneSpinner() {
 		setClipToSize(true);
@@ -55,7 +58,7 @@ public class PaneSpinner
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		if (Float.isNaN(lagValue)) {
 			lagValue = 0f;
 		}
@@ -72,7 +75,7 @@ public class PaneSpinner
 	}
 	
 	@Override
-	void keyPressed(final char keyChar, final int keyCode) {
+	protected void keyPressed(final char keyChar, final int keyCode) {
 		int direction;
 		switch (keyCode) {
 			case Keyboard.KEY_UP: {
@@ -99,7 +102,7 @@ public class PaneSpinner
 	}
 	
 	@Override
-	void mouseWheel(final int mouseX, final int mouseY, final int distance) {
+	protected void mouseWheel(final int mouseX, final int mouseY, final int distance) {
 		if (withinBounds(mouseX, mouseY)) {
 			int dist = 1;
 			final boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);

@@ -1,7 +1,7 @@
 package gminers.glasspane.component;
 
 
-import static lombok.AccessLevel.NONE;
+import static lombok.AccessLevel.NONE; // i generally think static imports are bad, but this is used in clear context and shortens lines
 import gminers.glasspane.GlassPane;
 import gminers.glasspane.GlassPaneMirror;
 import gminers.glasspane.PaneBB;
@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -55,50 +54,54 @@ import com.google.common.collect.Maps;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@ToString(exclude = {
-		"listeners",
-		"parent"
-})
+@FieldDefaults(
+		level = AccessLevel.PRIVATE)
+@ToString(
+		exclude = {
+				"listeners",
+				"parent"
+		})
 @Getter
 @Setter
 // TODO: this class is a bit oversized, needs refactoring
 public abstract class PaneComponent
 		extends PaneBB {
-	@Getter(NONE) @Setter(NONE) protected Map<Class<? extends PaneEvent>, Map<Object, List<Method>>>	listeners				= new HashMap<Class<? extends PaneEvent>, Map<Object, List<Method>>>();
+
+
+
 	/**
 	 * The Z index of this component. Components with higher Z indexes render in front of components with lower.
 	 */
-	protected int																						zIndex					= 0;
+	protected int	zIndex					= 0;
 	/**
 	 * The angle of this component, in degrees. Only listened to if rotationAllowed is true.
 	 */
-	float																								angle					= 0f;
+	float																	angle					= 0f;
 	/**
 	 * The X multiplier for rotation
 	 */
-	float																								xRot					= 0f;
+	float																	xRot					= 0f;
 	/**
 	 * The Y multiplier for rotation
 	 */
-	float																								yRot					= 0f;
+	float																	yRot					= 0f;
 	/**
-	 * The Z multiplier for rotation
+	 * The Z multiplier for rotation (this points into the screen and is probably what you want)
 	 */
-	float																								zRot					= 0f;
+	float																	zRot					= 0f;
 	/**
 	 * Whether or not rotation will be applied to this component.
 	 */
-	boolean																								rotationAllowed			= false;
+	boolean																	rotationAllowed			= false;
 	/**
 	 * For debugging - if true, renders a solid color box encompassing this entire component, with it's color being this component's
 	 * identityHashCode.
 	 */
-	boolean																								drawBoundingBox			= false;
+	boolean																	drawBoundingBox			= false;
 	/**
 	 * Whether or not this component will render.
 	 */
-	boolean																								visible					= true;
+	boolean																	visible					= true;
 	/**
 	 * Whether or not to clip rendering of this component to it's bounding box.<br/>
 	 * 
@@ -106,93 +109,108 @@ public abstract class PaneComponent
 	 *             PaneComponents rely on it, but as such Clip To Size functionality may contain PaneComponent-specific workarounds and
 	 *             other such quirks, and it should not be depended upon for third-party components.
 	 */
-	@Deprecated boolean																					clipToSize				= false;
+	@Deprecated
+	boolean																	clipToSize				= false;
 	/**
 	 * Whether or not to listen to the relative size set by relativeWidth. If this is true, width will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																								autoResizeWidth			= false;
+	boolean																	autoResizeWidth			= false;
 	/**
 	 * Whether or not to listen to the relative size set by relativeHeight. If this is true, height will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																								autoResizeHeight		= false;
+	boolean																	autoResizeHeight		= false;
 	/**
 	 * The multiplier to be applied to the parent container's width when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																								relativeWidth			= 1.0;
+	double																	relativeWidth			= 1.0;
 	/**
 	 * The multiplier to be applied to the parent container's height when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																								relativeHeight			= 1.0;
+	double																	relativeHeight			= 1.0;
 	/**
 	 * An offset to be applied to this component's width when it is resized due to autoResize.
 	 */
-	int																									relativeWidthOffset		= 0;
+	int																		relativeWidthOffset		= 0;
 	/**
 	 * An offset to be applied to this component's height when it is resized due to autoResize.
 	 */
-	int																									relativeHeightOffset	= 0;
+	int																		relativeHeightOffset	= 0;
 	/**
 	 * Whether or not to listen to the relative position set by relativeX. If this is true, X will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																								autoPositionX			= false;
+	boolean																	autoPositionX			= false;
 	/**
 	 * Whether or not to listen to the relative position set by relativeY. If this is true, Y will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																								autoPositionY			= false;
+	boolean																	autoPositionY			= false;
 	/**
 	 * The multiplier to be applied to the parent container's width when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																								relativeX				= 1.0;
+	double																	relativeX				= 1.0;
 	/**
 	 * The multiplier to be applied to the parent container's height when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																								relativeY				= 1.0;
+	double																	relativeY				= 1.0;
 	/**
 	 * An offset to be applied to this component's width when it is resized due to autoResize.
 	 */
-	int																									relativeXOffset			= 0;
+	int																		relativeXOffset			= 0;
 	/**
 	 * An offset to be applied to this component's height when it is resized due to autoResize.
 	 */
-	int																									relativeYOffset			= 0;
+	int																		relativeYOffset			= 0;
 	/**
 	 * Whether or not a ComponentActivateEvent should be fired when this component is clicked.
 	 */
-	boolean																								activatedOnClick		= true;
+	boolean																	activatedOnClick		= true;
 	/**
 	 * The tooltip to show when the mouse hovers over this component for a while.<br/>
 	 * Null is acceptable, and suppresses the tooltip. Newlines are allowed.
 	 */
-	@Setter(NONE) String																				tooltip					= null;
+	@Setter(NONE)
+	String																	tooltip					= null;
 	/**
 	 * The font renderer to use for the tooltip.
 	 */
-	FontRenderer																						tooltipFontRenderer		= Minecraft
-																																		.getMinecraft().fontRenderer;
+	FontRenderer tooltipFontRenderer		= Minecraft.getMinecraft().fontRenderer;
 	/**
 	 * The distance to translate the position of this component on the X axis, in 'big' pixels.
 	 */
-	protected float translateX = 0f;
+	protected float	translateX				= 0f;
 	/**
 	 * The distance to translate the position of this component on the Y axis, in 'big' pixels.
 	 */
-	protected float translateY = 0f;
+	protected float	translateY				= 0f;
 	
-	@Getter(NONE) @Setter(NONE) protected static final ResourceLocation									RESOURCE				= new ResourceLocation(
-																																		"glasspane",
-																																		"wadjets.png");
+	@Getter(NONE)
+	@Setter(NONE)
+	protected static final ResourceLocation	RESOURCE				= new ResourceLocation("glasspane", "wadjets.png");
 	/**
 	 * The parent of this component.
 	 */
-	@PackagePrivate @Setter(NONE) PaneContainer															parent					= null;
-	@Getter(NONE) @Setter(NONE) protected int															mouseX;
-	@Getter(NONE) @Setter(NONE) protected int															mouseY;
-	@Getter(NONE) @Setter(NONE) private List<String>													tooltipSplit			= null;
-	@Getter(NONE) @Setter(NONE) protected Map<String, String>											metadata				= Maps.newHashMap();
+	@PackagePrivate
+	@Setter(NONE)
+	PaneContainer	parent					= null;
+	@Getter(NONE)
+	@Setter(NONE)
+	protected int	mouseX;
+	@Getter(NONE)
+	@Setter(NONE)
+	protected int	mouseY;
+	@Getter(NONE)
+	@Setter(NONE)
+	private List<String> tooltipSplit			= null;
+	@Getter(NONE)
+	@Setter(NONE)
+	protected Map<String, String> metadata				= Maps.newHashMap();
+	
+	// FORM off
+	@Getter(NONE) @Setter(NONE) protected Map<Class<? extends PaneEvent>, Map<Object, List<Method>>>	listeners				= new HashMap<Class<? extends PaneEvent>, Map<Object, List<Method>>>();
+	// FORM on
 	
 	public PaneComponent() {
 		registerListeners(this);
@@ -268,9 +286,7 @@ public abstract class PaneComponent
 	 */
 	public final void render(final int mouseX, final int mouseY, final float partialTicks) {
 		// just return if we aren't visible
-		if (!visible) {
-			return;
-		}
+		if (!visible) return;
 		// push a matrix so we can easily revert
 		GL11.glPushMatrix();
 		// draw a bounding box if asked, for debugging purposes
@@ -289,7 +305,7 @@ public abstract class PaneComponent
 				GL11.glEnable(GL11.GL_SCISSOR_TEST);
 			}
 			// translate to this component's coordinates
-			GL11.glTranslatef(x+translateX, y+translateY, zIndex);
+			GL11.glTranslatef(x + translateX, y + translateY, zIndex);
 		} else if (((GlassPane) this).isScreenClearedBeforeDrawing() && currentScreenIsThis()) {
 			GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -345,11 +361,10 @@ public abstract class PaneComponent
 				break;
 			}
 		}
-		if (work instanceof GlassPane) {
+		if (work instanceof GlassPane)
 			return (GlassPane) work;
-		} else {
+		else
 			return null;
-		}
 	}
 	
 	public int getChainX() {
@@ -360,56 +375,77 @@ public abstract class PaneComponent
 		return getY() + (getParent() == null ? 0 : getParent().getPY());
 	}
 	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected int getAbsoluteX(final int scaledWidth) {
 		return getAbsoluteX(getChainX(), scaledWidth);
 	}
 	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected static int getAbsoluteX(final int x, final int scaledWidth) {
 		return (int) Math.floor(((double) x / ((double) scaledWidth)) * Minecraft.getMinecraft().displayWidth);
 	}
 	
-	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected int getAbsoluteY(final int scaledHeight) {
 		return getAbsoluteY(getChainY(), height, scaledHeight);
 	}
 	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected static int getAbsoluteY(final int y, final int height, final int scaledHeight) {
 		return (Minecraft.getMinecraft().displayHeight - getAbsoluteHeight(height, scaledHeight))
 				- (int) Math.ceil(((double) y / ((double) scaledHeight)) * Minecraft.getMinecraft().displayHeight);
 	}
 	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected int getAbsoluteEdgeY(final int scaledHeight) {
 		return getAbsoluteY(getEdgeY(), height, scaledHeight)
 				- (getParent() == null ? 0 : getParent().getAbsoluteEdgeY(scaledHeight));
 	}
 	
-	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected int getAbsoluteWidth(final int scaledWidth) {
 		return getAbsoluteWidth(width, scaledWidth);
 	}
 	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected static int getAbsoluteWidth(final int width, final int scaledWidth) {
 		return (int) Math.ceil(((double) width / ((double) scaledWidth)) * Minecraft.getMinecraft().displayWidth) + 1;
 	}
 	
-	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected int getAbsoluteHeight(final int scaledHeight) {
 		return getAbsoluteHeight(height, scaledHeight);
 	}
 	
+	/**
+	 * Internal utility method for transforming GlassPane/Minecraft coords to GL coords
+	 */
 	protected static int getAbsoluteHeight(final int height, final int scaledHeight) {
 		return (int) Math.ceil(((double) height / ((double) scaledHeight)) * Minecraft.getMinecraft().displayHeight);
 	}
 	
 	private boolean currentScreenIsThis() {
-		if (((GlassPane) this).isTakingOver()) {
-			return true;
-		}
+		if (((GlassPane) this).isTakingOver()) return true;
 		final Minecraft mc = Minecraft.getMinecraft();
 		if (mc.currentScreen != null) {
-			if (mc.currentScreen instanceof GlassPaneMirror) {
+			if (mc.currentScreen instanceof GlassPaneMirror)
 				return ((GlassPaneMirror) mc.currentScreen).getMirrored() == this;
-			}
 		}
 		return false;
 	}
@@ -469,7 +505,8 @@ public abstract class PaneComponent
 				if (m.getParameterTypes().length == 1) {
 					// and that that parameter can be cast to a PaneEvent
 					if (PaneEvent.class.isAssignableFrom(m.getParameterTypes()[0])) {
-						// first we'll cast the method class, which should be safe given the above check
+						// first we'll cast the parameter class, which should be safe given the above check
+						@SuppressWarnings("unchecked")
 						final Class<? extends PaneEvent> eventClass = (Class<? extends PaneEvent>) m
 								.getParameterTypes()[0];
 						// now we'll grab the objects map
@@ -567,7 +604,7 @@ public abstract class PaneComponent
 	 * @return The instantiated event, or <code>null</code> if an error occurred or an event did not need to be instantiated.
 	 */
 	public <T extends PaneEvent> T fireEvent(final @NonNull Class<T> eventClass, final Object... constructorArgs) {
-		// this is a bit hacky, but the only good way to forward into package-private from outside the package w/o reflecting
+		// this is a bit hacky, but the only good way to forward into protected from outside the package w/o reflecting
 		if (eventClass == KeyTypedEvent.class) {
 			keyPressed((Character) constructorArgs[1], (Integer) constructorArgs[2]);
 		} else if (eventClass == MouseDownEvent.class) {
@@ -582,10 +619,9 @@ public abstract class PaneComponent
 		}
 		
 		// first of all, to save objects, we're going to check if this event is being listened for on this object.
-		if (!isListeningForEvent(eventClass)) {
-			return null; // if not, just return and don't create any event objects. this is good for high-frequency events.
-		}
-		
+		if (!isListeningForEvent(eventClass)) return null; // if not, just return and don't create any event objects. this is good for
+															// high-frequency events.
+			
 		// now we'll create an instance... i hate how many lines all the exception garbage takes.
 		Class<?>[] constructorTypes;
 		try {
@@ -596,10 +632,9 @@ public abstract class PaneComponent
 				GlassPaneMod.inst
 						.getLog()
 						.error("[GlassPane] [EventSystem] A SecurityException was thrown, but there's no SecurityManager registered...");
-			} else {
+			} else
 				throw new PaneCantContinueError("Security manager (" + System.getSecurityManager().getClass().getName()
 						+ ") prevents proper operation of the GlassPane event system!", e);
-			}
 			return null;
 		} catch (final IllegalAccessException e) {
 			e.printStackTrace();
@@ -617,11 +652,6 @@ public abstract class PaneComponent
 		T event;
 		try {
 			event = eventClass.getConstructor(constructorTypes).newInstance(constructorArgs);
-		} catch (final IllegalArgumentException e) {
-			e.printStackTrace();
-			System.err.println("[GlassPane] [EventSystem] Cannot properly invoke constructor for event class "
-					+ eventClass.getName() + "!");
-			return null;
 		} catch (final SecurityException e) {
 			e.printStackTrace();
 			if (System.getSecurityManager() == null) {
@@ -629,28 +659,9 @@ public abstract class PaneComponent
 						.getLog()
 						.error("[GlassPane] [EventSystem] A SecurityException was thrown, but there's no SecurityManager registered...");
 				return null;
-			} else {
+			} else
 				throw new PaneCantContinueError("Security manager (" + System.getSecurityManager().getClass().getName()
 						+ ") prevents proper operation of the GlassPane event system!", e);
-			}
-		} catch (final InstantiationException e) {
-			e.printStackTrace();
-			GlassPaneMod.inst.getLog().error(
-					"[GlassPane] [EventSystem] Cannot properly invoke constructor for (abstract!) event class "
-							+ eventClass.getName() + "!");
-			return null;
-		} catch (final IllegalAccessException e) {
-			e.printStackTrace();
-			GlassPaneMod.inst.getLog().error(
-					"[GlassPane] [EventSystem] Don't have permission to invoke constructor for event class "
-							+ eventClass.getName() + "!");
-			return null;
-		} catch (final InvocationTargetException e) {
-			e.printStackTrace();
-			GlassPaneMod.inst.getLog().error(
-					"[GlassPane] [EventSystem] Constructor for event class " + eventClass.getName()
-							+ " threw an exception!");
-			return null;
 		} catch (final NoSuchMethodException e) {
 			e.printStackTrace();
 			final StringBuilder types = new StringBuilder();
@@ -666,6 +677,9 @@ public abstract class PaneComponent
 					"[GlassPane] [EventSystem] No constructor for event class " + eventClass.getName()
 							+ " matching the call spec of " + types + "!");
 			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 		
 		// now let's fire it
@@ -676,6 +690,7 @@ public abstract class PaneComponent
 				}
 				try {
 					method.setAccessible(true);
+					// you're fired
 					method.invoke(en.getKey(), event);
 				} catch (final IllegalArgumentException e) {
 					e.printStackTrace();
@@ -702,11 +717,10 @@ public abstract class PaneComponent
 								.getLog()
 								.error("[GlassPane] [EventSystem] A SecurityException was thrown, but there's no SecurityManager registered...");
 						return null;
-					} else {
+					} else
 						throw new PaneCantContinueError("Security manager ("
 								+ System.getSecurityManager().getClass().getName()
 								+ ") prevents proper operation of the GlassPane event system!", e);
-					}
 				}
 			}
 		}
@@ -730,7 +744,9 @@ public abstract class PaneComponent
 		super.setWidth(width);
 	}
 	
-	@Getter(NONE) @Setter(NONE) private int	hoverTime	= 0;
+	@Getter(NONE)
+	@Setter(NONE)
+	private int	hoverTime	= 0;
 	
 	public final void tick() {
 		fireEvent(ComponentTickEvent.class, this);
@@ -749,48 +765,38 @@ public abstract class PaneComponent
 	}
 	
 	/**
-	 * Shortcut for all basic components to be able to get key presses and mouse clicks without creating event objects.<br/>
-	 * Mainly used for focus control.
+	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	void mouseDown(final int mouseX, final int mouseY, final int button) {
-		
+	protected void mouseDown(final int mouseX, final int mouseY, final int button) {
 	}
 	
 	/**
-	 * Shortcut for all basic components to be able to get key presses and mouse clicks without creating event objects.<br/>
-	 * Mainly used for focus control.
+	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	void mouseUp(final int mouseX, final int mouseY, final int button) {
-		
+	protected void mouseUp(final int mouseX, final int mouseY, final int button) {
 	}
 	
 	/**
-	 * Shortcut for all basic components to be able to get key presses and mouse clicks without creating event objects.<br/>
-	 * Mainly used for focus control.
+	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	void mouseWheel(final int mouseX, final int mouseY, final int distance) {
-		
+	protected void mouseWheel(final int mouseX, final int mouseY, final int distance) {
 	}
 	
 	/**
-	 * Shortcut for all basic components to be able to get key presses and mouse clicks without creating event objects.<br/>
-	 * Mainly used for focus control.
+	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	void keyPressed(final char keyChar, final int keyCode) {
-		
+	protected void keyPressed(final char keyChar, final int keyCode) {
 	}
 	
 	/**
-	 * Shortcut for all basic components to be able to get key presses and mouse clicks without creating event objects.<br/>
-	 * Mainly used for focus control.
+	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	void winch(final int oldWidth, final int oldHeight, final int newWidth, final int newHeight) {
-		
+	protected void winch(final int oldWidth, final int oldHeight, final int newWidth, final int newHeight) {
 	}
 	
 	/**
 	 * Called every tick. Good for doing animation.
 	 */
-	public void doTick() {
+	protected void doTick() {
 	}
 }

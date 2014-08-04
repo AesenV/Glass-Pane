@@ -1,39 +1,44 @@
 package com.gameminers.glasspane.testharness;
 
-import java.util.Random;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiOptions;
+import gminers.glasspane.Direction;
 import gminers.glasspane.GlassPane;
-import gminers.glasspane.component.button.PaneButton;
-import gminers.glasspane.event.PaneDisplayEvent;
+import gminers.glasspane.component.numeric.PaneSlider;
 import gminers.glasspane.event.PaneOverlayEvent;
 import gminers.glasspane.listener.PaneEventHandler;
-import gminers.kitchensink.RandomPool;
+import net.minecraft.client.gui.GuiIngame;
+import net.minecraft.client.gui.GuiOptions;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 
-@Mod(name="Glass Pane Test Harness", version="0.1", modid="GlassPaneTH", dependencies="required-after:GlassPane")
-public class GlassPaneTestHarness extends GlassPane {
+
+@Mod(
+		name = "Glass Pane Test Harness",
+		version = "0.1",
+		modid = "GlassPaneTH",
+		dependencies = "required-after:GlassPane")
+public class GlassPaneTestHarness
+		extends GlassPane {
 	@EventHandler
 	public void onInit(FMLInitializationEvent e) {
 		autoOverlay(GuiOptions.class);
 		autoOverlay(GuiIngame.class);
 		setRenderedWhenHUDIsOff(true);
 	}
+	
 	@PaneEventHandler
-	public void onDisplay(PaneOverlayEvent e) {
-		PaneButton button = new PaneButton(RandomStringUtils.randomAlphanumeric(16));
+	public void onOverlay(PaneOverlayEvent e) {
+		clear();
+		PaneSlider button = new PaneSlider();
 		button.setAutoPosition(true);
 		button.setRelativeX(0.5);
 		button.setRelativeY(0.5);
-		button.setRelativeXOffset((int) RandomPool.nextGaussian(0, 200));
-		button.setRelativeYOffset((int) RandomPool.nextGaussian(0, 200));
-		button.setButtonColor(RandomPool.nextInt());
+		button.setRelativeXOffset(-100);
+		button.setRelativeYOffset(-10);
+		button.setDirection(Direction.VERTICAL);
+		button.setWidth(20);
+		button.setHeight(100);
 		add(button);
 	}
 }

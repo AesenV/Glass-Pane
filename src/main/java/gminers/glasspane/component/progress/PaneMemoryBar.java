@@ -20,7 +20,7 @@ public class PaneMemoryBar
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		maximumProgress = Runtime.getRuntime().maxMemory();
 		progress = (Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory());
 		setProgressText(((int) (target * 100f) + "% in use - "

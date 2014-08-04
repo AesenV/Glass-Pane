@@ -79,7 +79,7 @@ public abstract class GlassPane
 	 */
 	@Getter @Setter protected boolean					screenClearedBeforeDrawing	= false;
 	/**
-	 * Whether or not this GlassPane will render when the HUD is disabled.
+	 * Whether or not this GlassPane will render when the HUD is disabled. (Only applies if this GlassPane is displayed over a GuiIngame)
 	 */
 	@Getter @Setter protected boolean					renderedWhenHUDIsOff = false;
 	

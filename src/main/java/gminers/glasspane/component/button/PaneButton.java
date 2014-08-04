@@ -74,7 +74,7 @@ public class PaneButton
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		super.doTick();
 		// if we're disabled and focused, drop the focus
 		if (!enabled) {
@@ -103,9 +103,7 @@ public class PaneButton
 		}
 		// bind the widgets file
 		Minecraft.getMinecraft().renderEngine.bindTexture(RESOURCE);
-		// to save cycles, keep the halved values in a variable
-		final int hWidth = width / 2;
-		final int hHeight = height / 2;
+		renderStretchyTexturedRect(0, 0, u, v, width, height, 220, 40);
 		
 		// unpack the button color
 		int r = buttonColor >> 16 & 255;
@@ -119,27 +117,14 @@ public class PaneButton
 		
 		// apply the button color
 		GL11.glColor3f(r / 255f, g / 255f, b / 255f);
-		// render the button - this method of rendering gives buttons a max sensible size of 436x84
-		// for comparison, a GuiButton can only go up to 390x30
 		
-		// rendering nine-patch style with a tiled center would allow theoretically infinite button sizes, but that's unnecessary
-		Rendering.drawTexturedModalRect(0, 0, u, v, hWidth, hHeight);
-		Rendering.drawTexturedModalRect(hWidth, 0, u + (220 - hWidth), v, hWidth, hHeight);
-		
-		Rendering.drawTexturedModalRect(0, hHeight, u, v + (40 - hHeight), hWidth, hHeight);
-		Rendering.drawTexturedModalRect(hWidth, hHeight, u + (220 - hWidth), v + (40 - hHeight), hWidth, hHeight);
 		
 		// if we're focused, draw a blue border over the normal black one
 		GL11.glTranslatef(0, 0, 0.001f);
 		if (getParent() != null) {
 			if (getParent().getFocusedComponent() == this) {
 				final int fv = 200;
-				Rendering.drawTexturedModalRect(0, 0, u, fv, hWidth, hHeight);
-				Rendering.drawTexturedModalRect(hWidth, 0, u + (220 - hWidth), fv, hWidth, hHeight);
-				
-				Rendering.drawTexturedModalRect(0, hHeight, u, fv + (40 - hHeight), hWidth, hHeight);
-				Rendering.drawTexturedModalRect(hWidth, hHeight, u + (220 - hWidth), fv + (40 - hHeight), hWidth,
-						hHeight);
+				renderStretchyTexturedRect(0, 0, u, fv, width, height, 220, 40);
 			}
 		}
 		// change the label's color, if needed
@@ -196,4 +181,17 @@ public class PaneButton
 		}
 	}
 	
+	public static void renderStretchyTexturedRect(int x, int y, int u, int v, int width, int height, int texWidth, int texHeight) {
+		int hWidth = width/2;
+		int hHeight = height/2;
+		// render the button - this method of rendering gives buttons a max sensible size of 436x84 (for a 220x40 texture)
+		// for comparison, a GuiButton can only go up to 390x30
+		
+		// rendering nine-patch style with a tiled center would allow theoretically infinite button sizes, but that's unnecessary
+		Rendering.drawTexturedModalRect(x, y, u, v, hWidth, hHeight);
+		Rendering.drawTexturedModalRect(x+hWidth, y, u + (texWidth - hWidth), v, hWidth, hHeight);
+		
+		Rendering.drawTexturedModalRect(x, y+hHeight, u, v + (texHeight - hHeight), hWidth, hHeight);
+		Rendering.drawTexturedModalRect(x+hWidth, y+hHeight, u + (texWidth - hWidth), v + (texHeight - hHeight), hWidth, hHeight);
+	}
 }

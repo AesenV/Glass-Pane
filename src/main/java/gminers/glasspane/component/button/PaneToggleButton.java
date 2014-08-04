@@ -4,10 +4,9 @@ package gminers.glasspane.component.button;
 import gminers.glasspane.HorzAlignment;
 import gminers.glasspane.VertAlignment;
 import gminers.glasspane.event.ComponentActivateEvent;
-import gminers.glasspane.event.ToggleButtonStateChangedEvent;
+import gminers.glasspane.event.StateChangedEvent;
 import gminers.glasspane.listener.PaneEventHandler;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -19,8 +18,8 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PROTECTED)
-
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 public class PaneToggleButton
@@ -46,7 +45,7 @@ public class PaneToggleButton
 		final boolean oldSelected = this.selected;
 		this.selected = selected;
 		if (oldSelected != this.selected) {
-			fireEvent(ToggleButtonStateChangedEvent.class, this);
+			fireEvent(StateChangedEvent.class, this);
 		}
 	}
 	
@@ -54,7 +53,7 @@ public class PaneToggleButton
 	public void onActivateForToggle(final ComponentActivateEvent e) {
 		if (enabled) {
 			selected = !selected;
-			fireEvent(ToggleButtonStateChangedEvent.class, this);
+			fireEvent(StateChangedEvent.class, this);
 		}
 	}
 }

@@ -66,9 +66,15 @@ public class PaneImage
 		if (image == null) {
 			return;
 		}
+		render(image, 0, 0, u, v, width, height, imageWidth, imageHeight, color, alpha, oneBitTransparency);
+	}
+	
+	public static void render(ResourceLocation image, int x, int y, int u, int v, int width, int height, int imageWidth, int imageHeight, int color, float alpha, boolean oneBitTransparency) {
+		GL11.glPushMatrix();
 		// bind the image texture
 		Minecraft.getMinecraft().renderEngine.bindTexture(image);
 		// apply a scale because for some asinine reason all textures in minecraft are 256x256
+		// there's probably a really good reason for it, but I don't fully understand OpenGL
 		GL11.glScalef(width / ((float) imageWidth), height / ((float) imageHeight), 0.0f);
 		// if we want full transparency, enable blending
 		if (!oneBitTransparency) {
@@ -81,11 +87,12 @@ public class PaneImage
 		final int b = color & 255;
 		GL11.glColor4f(r / 255f, g / 255f, b / 255f, alpha);
 		// and finally render it
-		Rendering.drawTexturedModalRect(0, 0, u, v, imageWidth, imageHeight);
+		Rendering.drawTexturedModalRect(x, y, u, v, imageWidth, imageHeight);
 		// then disable blending if we enabled it for full transparency
 		if (!oneBitTransparency) {
 			GL11.glDisable(GL11.GL_BLEND);
 		}
+		GL11.glPopMatrix();
 	}
 	
 }

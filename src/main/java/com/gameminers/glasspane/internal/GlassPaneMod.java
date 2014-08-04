@@ -8,8 +8,8 @@ import gminers.glasspane.event.MouseDownEvent;
 import gminers.glasspane.event.MouseUpEvent;
 import gminers.glasspane.event.MouseWheelEvent;
 import gminers.glasspane.event.PaneDisplayEvent;
-import gminers.glasspane.event.PaneOverlayEvent;
 import gminers.glasspane.event.PaneOverrideEvent;
+import gminers.glasspane.exception.PaneCantContinueError;
 
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
@@ -24,14 +24,12 @@ import lombok.extern.log4j.Log4j2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -53,18 +51,23 @@ import cpw.mods.fml.common.gameevent.TickEvent;
  * @author Aesen Vismea
  * 
  */
-@Mod(name = "Glass Pane", modid = "GlassPane", version = "0.3.1 `Aluminosilicate' Beta", dependencies="required-after:KitchenSink")
+@Mod(
+		name = "Glass Pane",
+		modid = "GlassPane",
+		version = "0.3.1 `Aluminosilicate' Beta",
+		dependencies = "required-after:KitchenSink")
 @Log4j2
 public class GlassPaneMod {
-	@Instance("GlassPane") public static GlassPaneMod	inst;
+	@Instance("GlassPane")
+	public static GlassPaneMod					inst;
 	
-	public final Map<Class<?>, GlassPane>				overrides				= Maps.newHashMap();
-	public final Map<Class<?>, List<GlassPane>>			overlays				= Maps.newHashMap();
+	public final Map<Class<?>, GlassPane>		overrides				= Maps.newHashMap();
+	public final Map<Class<?>, List<GlassPane>>	overlays				= Maps.newHashMap();
 	
-	public final List<GlassPane>						currentOverlays			= Lists.newCopyOnWriteArrayList();
-	public final List<GlassPane>						currentStickyOverlays	= Lists.newCopyOnWriteArrayList();
+	public final List<GlassPane>				currentOverlays			= Lists.newCopyOnWriteArrayList();
+	public final List<GlassPane>				currentStickyOverlays	= Lists.newCopyOnWriteArrayList();
 	
-	public final List<Class<?>>							overrideExemptions		= Lists.newCopyOnWriteArrayList();
+	public final List<Class<?>>					overrideExemptions		= Lists.newCopyOnWriteArrayList();
 	
 	@EventHandler
 	public void init(final FMLInitializationEvent e) {
@@ -74,13 +77,31 @@ public class GlassPaneMod {
 		FMLCommonHandler.instance().bus().register(pem);
 		MinecraftForge.EVENT_BUS.register(pem);
 		overrideExemptions.add(GuiIngame.class);
+		try {
+			mouseReadBuffer = mouseClass.getDeclaredField("readBuffer");
+			keyboardReadBuffer = keyboardClass.getDeclaredField("readBuffer");
+			mouseDWheel = mouseClass.getDeclaredField("dwheel");
+			mouseReadBuffer.setAccessible(true);
+			keyboardReadBuffer.setAccessible(true);
+			mouseDWheel.setAccessible(true);
+		} catch (NoSuchFieldException e1) {
+			e1.printStackTrace();
+		} catch (SecurityException ex) {
+			if (System.getSecurityManager() == null) {
+				GlassPaneMod.inst
+						.getLog()
+						.error("[GlassPane] [EventSystem] A SecurityException was thrown, but there's no SecurityManager registered...");
+			} else
+				throw new PaneCantContinueError("Security manager (" + System.getSecurityManager().getClass().getName()
+						+ ") prevents proper collection of input events by GlassPane!", ex);
+		}
 	}
 	
 	public Logger getLog() {
 		return log;
 	}
 	
-	/*
+	/**
 	 * Gets called by Forge whenever the current GuiScreen changes.
 	 * This method looks at all registered auto overlays and auto overrides, and applies them.
 	 * Narrower class specs are given priority - an override for GuiMainMenu will be preferred over one for GuiScreen.
@@ -93,7 +114,7 @@ public class GlassPaneMod {
 	public void onGuiShown(final GuiOpenEvent e) {
 		// first, clear the current overlays.
 		for (GlassPane gp : currentOverlays) {
-			gp.hide();
+			gp.hide(); // we call hide instead of just clearing the list so the panes can do proper cleanup
 		}
 		// save the gui into a var, as we might be replacing it
 		Object orig = e.gui;
@@ -138,7 +159,9 @@ public class GlassPaneMod {
 		final Comparator<Entry<Class<?>, ?>> classComparator = new Comparator<Entry<Class<?>, ?>>() {
 			@Override
 			public int compare(final Entry<Class<?>, ?> o1, final Entry<Class<?>, ?> o2) {
-				return hierarchy.indexOf(o1.getKey()) - hierarchy.indexOf(o2.getKey());
+				int i1 = hierarchy.indexOf(o1.getKey());
+				int i2 = hierarchy.indexOf(o2.getKey());
+				return (i1 < i2) ? -1 : ((i1 == i2) ? 0 : 1);
 			}
 		};
 		// if we found multiple overrides, do some sort-y stuff
@@ -182,13 +205,24 @@ public class GlassPaneMod {
 			final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft(),
 					Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 			for (final GlassPane overpane : applyingOverlays) {
-				overpane.overlay();
+				overpane.overlay(); // we call overlay instead of adding to the list directly so the pane can do proper set-up
 			}
 		}
 	}
 	
-	private int	touchScreenCounter;
+	private int				touchScreenCounter;
 	
+	private Class<Mouse>	mouseClass		= Mouse.class;
+	private Class<Keyboard>	keyboardClass	= Keyboard.class;
+	
+	private Field			mouseReadBuffer;
+	private Field			mouseDWheel;
+	private Field			keyboardReadBuffer;
+	
+	/**
+	 * Protip: If you want to avoid having to do the same terrible hackery that is done in this method,
+	 * register an autoOverlay(Object) GlassPane that just
+	 */
 	@SubscribeEvent
 	@SneakyThrows
 	public void onTick(final TickEvent.ClientTickEvent e) {
@@ -202,10 +236,7 @@ public class GlassPaneMod {
 			final int height = res.getScaledHeight();
 			// that wasn't the hack - see the reflection below
 			if (Mouse.isCreated()) {
-				final Class<Mouse> mouseClazz = Mouse.class;
-				final Field f = mouseClazz.getDeclaredField("readBuffer");
-				f.setAccessible(true);
-				final ByteBuffer buf = (ByteBuffer) f.get(null);
+				final ByteBuffer buf = (ByteBuffer) mouseReadBuffer.get(null);
 				buf.mark();
 				while (Mouse.next()) {
 					final int mX = Mouse.getEventX() * width / mc.displayWidth;
@@ -218,17 +249,13 @@ public class GlassPaneMod {
 					}
 					
 					if (Mouse.getEventButtonState()) {
-						if (mc.gameSettings.touchscreen && touchScreenCounter++ > 0) {
-							return;
-						}
+						if (mc.gameSettings.touchscreen && touchScreenCounter++ > 0) return;
 						
 						for (final GlassPane pane : combine(currentOverlays, currentStickyOverlays)) {
 							pane.fireEvent(MouseDownEvent.class, pane, mX, mY, button);
 						}
 					} else if (button != -1) {
-						if (mc.gameSettings.touchscreen && --touchScreenCounter > 0) {
-							return;
-						}
+						if (mc.gameSettings.touchscreen && --touchScreenCounter > 0) return;
 						if (mc.currentScreen instanceof GlassPaneMirror) {
 							final GlassPane pane = ((GlassPaneMirror) mc.currentScreen).getMirrored();
 							pane.fireEvent(MouseUpEvent.class, pane, mX, mY, button);
@@ -250,19 +277,14 @@ public class GlassPaneMod {
 						for (final GlassPane pane : combine(currentOverlays, currentStickyOverlays)) {
 							pane.fireEvent(MouseWheelEvent.class, pane, mX, mY, wheel);
 						}
-						final Field wheelF = mouseClazz.getDeclaredField("dwheel");
-						wheelF.setAccessible(true);
-						wheelF.set(null, wheel);
+						mouseDWheel.set(null, wheel);
 					}
 				}
 				buf.reset();
 			}
 			
 			if (Keyboard.isCreated()) {
-				final Class<Keyboard> keyboardClazz = Keyboard.class;
-				final Field f = keyboardClazz.getDeclaredField("readBuffer");
-				f.setAccessible(true);
-				final ByteBuffer buf = (ByteBuffer) f.get(null);
+				final ByteBuffer buf = (ByteBuffer) keyboardReadBuffer.get(null);
 				buf.mark();
 				while (Keyboard.next()) {
 					if (Keyboard.getEventKeyState()) {
@@ -313,10 +335,10 @@ public class GlassPaneMod {
 			final ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			// just render all the overlays in insertion order
 			for (final GlassPane pane : combine(currentOverlays, currentStickyOverlays)) {
-				if (Minecraft.getMinecraft().gameSettings.hideGUI && !pane.isRenderedWhenHUDIsOff()) continue;
+				if (Minecraft.getMinecraft().gameSettings.hideGUI && !pane.isRenderedWhenHUDIsOff()) {
+					continue;
+				}
 				mc.entityRenderer.setupOverlayRendering();
-				// clear the depth buffer to make overlays always render in front
-				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 				// have to do weird maths with the mouse stuff because Minecraft's 0, 0 is top-left,
 				// but GL/LWJGL's 0, 0 is bottom-left, and since Minecraft does resolution scaling
 				pane.render(Mouse.getX() * res.getScaledWidth() / mc.displayWidth, res.getScaledHeight() - Mouse.getY()

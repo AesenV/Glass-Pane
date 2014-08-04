@@ -45,7 +45,7 @@ public class PaneBlinker
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		if (blinking) {
 			tickCounter++;
 		}

@@ -30,7 +30,9 @@ public class PanoramaShadowbox
 	/**
 	 * Whether or not this shadowbox should render with a layer of "fog" over it.
 	 */
-	@Getter @Setter private boolean			foggy				= true;
+	@Getter
+	@Setter
+	private boolean							foggy				= true;
 	private static final ResourceLocation[]	titlePanoramaPaths	= new ResourceLocation[] {
 			new ResourceLocation("textures/gui/title/background/panorama_0.png"),
 			new ResourceLocation("textures/gui/title/background/panorama_1.png"),
@@ -55,13 +57,10 @@ public class PanoramaShadowbox
 	 *            The array of paths to use as an override. Must be 6 elements long, and contain no null elements.
 	 */
 	public void setOverridePaths(final ResourceLocation[] overridePaths) {
-		if (overridePaths.length != 6) {
+		if (overridePaths.length != 6)
 			throw new IllegalArgumentException("Override paths array is incorrectly sized!");
-		}
 		for (int i = 0; i < overridePaths.length; i++) {
-			if (overridePaths[i] == null) {
-				throw new NullPointerException("overridePaths[" + i + "]");
-			}
+			if (overridePaths[i] == null) throw new NullPointerException("overridePaths[" + i + "]");
 		}
 		this.overridePaths = overridePaths.clone();
 	}
@@ -91,9 +90,9 @@ public class PanoramaShadowbox
 			final float f2 = ((float) (k / b0) / (float) b0 - 0.5F) / 64.0F;
 			final float f3 = 0.0F;
 			GL11.glTranslatef(f1, f2, f3);
-			GL11.glRotatef(MathHelper.sin((this.panoramaTimer + partialTick) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F,
+			GL11.glRotatef(MathHelper.sin((panoramaTimer + partialTick) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F,
 					0.0F);
-			GL11.glRotatef(-(this.panoramaTimer + partialTick) * 0.1F, 0.0F, 1.0F, 0.0F);
+			GL11.glRotatef(-(panoramaTimer + partialTick) * 0.1F, 0.0F, 1.0F, 0.0F);
 			
 			for (int l = 0; l < 6; ++l) {
 				GL11.glPushMatrix();

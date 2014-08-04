@@ -59,7 +59,7 @@ public class PaneProgressBar
 	
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		target = ((float) progress / (float) maximumProgress);
 		if (Float.isNaN(lag)) {
 			lag = 0f;

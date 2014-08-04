@@ -35,7 +35,7 @@ public class PaneCheckBox
 	}
 	
 	@Override
-	public void doTick() {
+	protected void doTick() {
 		super.doTick();
 		count++;
 		height = Math.max(10, getLineCount() * (renderer.FONT_HEIGHT + lineSpacing));
