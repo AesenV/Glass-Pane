@@ -110,7 +110,7 @@ public class PaneBlinker
 	 * Null is acceptable and disables targeting.
 	 */
 	public void target(PaneComponent component) {
-		this.target = target;
+		this.target = component;
 	}
 	
 	/**
