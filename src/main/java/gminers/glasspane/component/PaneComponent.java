@@ -72,6 +72,7 @@ public abstract class PaneComponent
 
 
 
+
 	/**
 	 * The Z index of this component. Components with higher Z indexes render in front of components with lower.
 	 */
@@ -323,7 +324,8 @@ public abstract class PaneComponent
 		}
 		// if we're a pane and have a shadowbox, this will be true
 		final boolean renderShadowbox = this instanceof GlassPane && !((GlassPane) this).getScreenMirror().isModal()
-				&& ((GlassPane) this).getShadowbox() != null;
+				&& ((GlassPane) this).getShadowbox() != null
+				&& (currentScreenIsThis() || ((GlassPane) this).isTakingOver());
 		// if we don't want shadowboxes to be rotated, render it here
 		if (renderShadowbox && !((GlassPane) this).isShadowboxRotationAllowed()) {
 			((GlassPane) this).getShadowbox().render(mouseX, mouseY, partialTicks);
