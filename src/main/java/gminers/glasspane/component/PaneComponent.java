@@ -6,6 +6,7 @@ import gminers.glasspane.GlassPane;
 import gminers.glasspane.GlassPaneMirror;
 import gminers.glasspane.PaneBB;
 import gminers.glasspane.component.button.PaneButton;
+import gminers.glasspane.event.ComponentActivateEvent;
 import gminers.glasspane.event.ComponentTickEvent;
 import gminers.glasspane.event.KeyTypedEvent;
 import gminers.glasspane.event.MouseDownEvent;
@@ -66,6 +67,8 @@ import com.google.common.collect.Maps;
 // TODO: this class is a bit oversized, needs refactoring
 public abstract class PaneComponent
 		extends PaneBB {
+
+
 
 
 
@@ -214,6 +217,14 @@ public abstract class PaneComponent
 	
 	public PaneComponent() {
 		registerListeners(this);
+	}
+	
+	public String getName() {
+		return getMetadata("name");
+	}
+	
+	public void setName(String name) {
+		putMetadata("name", name);
 	}
 	
 	public void putMetadata(final String k, final String v) {
@@ -742,6 +753,13 @@ public abstract class PaneComponent
 			fireEvent(WinchEvent.class, this, this.width, this.height, width, this.height);
 		}
 		super.setWidth(width);
+	}
+	
+	/**
+	 * Activates this component. Equivalent to clicking on the component or pressing Enter while it has the focus.
+	 */
+	public void activate() {
+		fireEvent(ComponentActivateEvent.class, this);
 	}
 	
 	@Getter(NONE)

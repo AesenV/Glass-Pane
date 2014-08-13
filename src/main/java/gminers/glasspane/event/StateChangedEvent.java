@@ -21,6 +21,9 @@ import lombok.experimental.FieldDefaults;
 @ToString
 public class StateChangedEvent
 		extends PaneEvent {
+	public static final Class<?>[]	SIGNATURE	= {
+													PaneComponent.class
+												};
 	
 	public StateChangedEvent(final PaneComponent source) {
 		super(source);

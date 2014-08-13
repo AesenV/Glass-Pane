@@ -34,8 +34,6 @@ import org.lwjgl.input.Mouse;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -56,10 +54,9 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 @Mod(
 		name = "Glass Pane",
 		modid = "GlassPane",
-		version = "0.4 `Aluminosilicate' Beta",
+		version = "0.5 `Aluminosilicate' Beta",
 		dependencies = "required-after:KitchenSink")
 @Log4j2
-@SideOnly(Side.CLIENT)
 public class GlassPaneMod {
 	@Instance("GlassPane")
 	public static GlassPaneMod					inst;

@@ -40,8 +40,8 @@ public final class GlassPaneMirror
 	 */
 	@Getter GlassPane																	mirrored;
 	@NonFinal boolean																	shown	= false;
-	@Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE) @NonFinal List<GlassPane>	modalUnderlays;
-	@Getter(AccessLevel.PACKAGE) @Setter(AccessLevel.PACKAGE) @NonFinal GuiScreen		modal;
+	@Getter @Setter(AccessLevel.PACKAGE) @NonFinal List<GlassPane>	modalUnderlays;
+	@Getter @Setter(AccessLevel.PACKAGE) @NonFinal GuiScreen		modal;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
