@@ -10,7 +10,6 @@ import gminers.kitchensink.Rendering;
 import java.util.List;
 
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -31,17 +30,27 @@ import com.gameminers.glasspane.internal.GlassPaneMod;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@FieldDefaults(
+		makeFinal = true,
+		level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public final class GlassPaneMirror
 		extends GuiScreen {
 	/**
 	 * The GlassPane that this GlassPaneMirror is mirroring.
 	 */
-	@Getter GlassPane																	mirrored;
-	@NonFinal boolean																	shown	= false;
-	@Getter @Setter(AccessLevel.PACKAGE) @NonFinal List<GlassPane>	modalUnderlays;
-	@Getter @Setter(AccessLevel.PACKAGE) @NonFinal GuiScreen		modal;
+	@Getter
+	GlassPane		mirrored;
+	@NonFinal
+	boolean			shown	= false;
+	@Getter
+	@Setter(AccessLevel.PACKAGE)
+	@NonFinal
+	List<GlassPane>	modalUnderlays;
+	@Getter
+	@Setter(AccessLevel.PACKAGE)
+	@NonFinal
+	GuiScreen		modal;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -104,9 +113,7 @@ public final class GlassPaneMirror
 	protected void keyTyped(final char keyChar, final int keyCode) {
 		final KeyTypedEvent e = mirrored.fireEvent(KeyTypedEvent.class, mirrored, keyChar, keyCode);
 		if (e != null) {
-			if (e.isConsumed()) {
-				return;
-			}
+			if (e.isConsumed()) return;
 		}
 		if (keyCode == Keyboard.KEY_ESCAPE) {
 			mc.displayGuiScreen(null);

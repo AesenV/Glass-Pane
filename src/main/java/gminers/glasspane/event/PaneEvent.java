@@ -3,7 +3,6 @@ package gminers.glasspane.event;
 
 import gminers.glasspane.component.PaneComponent;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -19,19 +18,21 @@ import lombok.experimental.NonFinal;
  * @author Aesen Vismea
  */
 @Getter
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-
+@FieldDefaults(
+		makeFinal = true,
+		level = AccessLevel.PRIVATE)
 @ToString
 @RequiredArgsConstructor
 public abstract class PaneEvent {
 	/**
 	 * The source of this event.
 	 */
-	PaneComponent		source;
+	PaneComponent	source;
 	/**
 	 * Whether or not this event is consumed.
 	 */
-	@NonFinal boolean	consumed	= false;
+	@NonFinal
+	boolean			consumed	= false;
 	
 	/**
 	 * Consumes this event, preventing it from firing other event behaviors.<br/>

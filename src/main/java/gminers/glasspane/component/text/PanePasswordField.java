@@ -17,7 +17,8 @@ import org.lwjgl.input.Keyboard;
  */
 public class PanePasswordField
 		extends PaneTextField {
-	@Getter private String	text;
+	@Getter
+	private String	text;
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {

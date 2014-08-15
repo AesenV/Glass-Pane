@@ -11,6 +11,8 @@ package gminers.glasspane.exception;
  */
 public class PaneCantContinueError
 		extends Error {
+	private static final long	serialVersionUID	= -5909212699861507521L;
+	
 	public PaneCantContinueError() {
 		super();
 	}

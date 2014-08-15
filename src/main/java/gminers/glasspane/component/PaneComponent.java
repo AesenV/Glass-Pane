@@ -73,6 +73,8 @@ public abstract class PaneComponent
 
 
 
+
+
 	/**
 	 * The Z index of this component. Components with higher Z indexes render in front of components with lower.
 	 */
@@ -461,14 +463,6 @@ public abstract class PaneComponent
 				return ((GlassPaneMirror) mc.currentScreen).getMirrored() == this;
 		}
 		return false;
-	}
-	
-	private void accumRender(final float partialTicks, final float x, final float y, final float step) {
-		GL11.glPushMatrix();
-		GL11.glTranslatef(x, y, 0f);
-		performRender(partialTicks);
-		GL11.glPopMatrix();
-		GL11.glAccum(GL11.GL_ACCUM, step);
 	}
 	
 	private void performRender(final float partialTicks) {

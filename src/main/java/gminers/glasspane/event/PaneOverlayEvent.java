@@ -3,7 +3,6 @@ package gminers.glasspane.event;
 
 import gminers.glasspane.GlassPane;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -16,8 +15,9 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Getter
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-
+@FieldDefaults(
+		makeFinal = true,
+		level = AccessLevel.PRIVATE)
 @ToString
 public class PaneOverlayEvent
 		extends PaneEvent {

@@ -5,7 +5,6 @@ import gminers.glasspane.GlassPane;
 import gminers.glasspane.component.button.PaneButton;
 import gminers.glasspane.component.text.PaneLabel;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +18,8 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PROTECTED)
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter

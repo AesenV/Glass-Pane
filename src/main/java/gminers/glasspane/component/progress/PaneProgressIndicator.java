@@ -4,7 +4,6 @@ package gminers.glasspane.component.progress;
 import gminers.glasspane.component.ColorablePaneComponent;
 import gminers.kitchensink.ReadableNumbers;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,8 +21,8 @@ import org.lwjgl.opengl.GL11;
  * @see PaneProgressBar
  * @see PaneProgressRing
  */
-@FieldDefaults(level = AccessLevel.PROTECTED)
-
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -32,62 +31,70 @@ public abstract class PaneProgressIndicator
 	/**
 	 * The font renderer for this progress indicator.
 	 */
-	FontRenderer														renderer				= Minecraft
-																										.getMinecraft().fontRenderer;
+	FontRenderer		renderer				= Minecraft
+														.getMinecraft().fontRenderer;
 	/**
 	 * Whether or not the progress text for this indicator is shown.
 	 */
-	boolean																progressTextShown		= false;
+	boolean				progressTextShown		= false;
 	/**
 	 * The custom progress text for this indicator. Set to null to use the default, as specified by the progressTextStyle.
 	 */
-	String																progressText			= null;
+	String				progressText			= null;
 	/**
 	 * The current progress of this indicator.
 	 */
-	@Setter(AccessLevel.NONE) long										progress				= 0;
+	@Setter(AccessLevel.NONE)
+	long				progress				= 0;
 	/**
 	 * The maximum progress of this indicator.
 	 */
-	@Setter(AccessLevel.NONE) long										maximumProgress			= 100;
+	@Setter(AccessLevel.NONE)
+	long				maximumProgress			= 100;
 	/**
 	 * Whether or not this indicator should render in Indeterminate mode - in this mode, an indicator shows a repeating animation and
 	 * disregards progress and maximumProgress.
 	 */
-	boolean																indeterminate			= false;
+	boolean				indeterminate			= false;
 	/**
 	 * Whether or not the progress text should be rendered at half size.
 	 */
-	boolean																smallProgressText		= false;
+	boolean				smallProgressText		= false;
 	/**
 	 * The color of the filled portion of this indicator.
 	 */
-	int																	filledColor				= 0x55FF55;
+	int					filledColor				= 0x55FF55;
 	/**
 	 * The color of the filled portion of the indicator, when in Indeterminate mode.
 	 */
-	int																	indeterminateColor		= 0x5555FF;
+	int					indeterminateColor		= 0x5555FF;
 	/**
 	 * The style to use for the default progress text. Only regarded when progressText is null.
 	 */
-	ProgressTextStyle													progressTextStyle		= ProgressTextStyle.PERCENTAGE;
-	@Setter(AccessLevel.NONE) @Getter(AccessLevel.NONE) private long	lastAmount				= 0;
-	@Setter(AccessLevel.NONE) @Getter(AccessLevel.NONE) private String	timeEstimate			= "about 7 eternities remaining";
-	@Setter(AccessLevel.NONE) @Getter(AccessLevel.NONE) private long	lastTimeEstimateUpdate	= 0;
+	ProgressTextStyle	progressTextStyle		= ProgressTextStyle.PERCENTAGE;
+	@Setter(AccessLevel.NONE)
+	@Getter(AccessLevel.NONE)
+	private long		lastAmount				= 0;
+	@Setter(AccessLevel.NONE)
+	@Getter(AccessLevel.NONE)
+	private String		timeEstimate			= "about 7 eternities remaining";
+	@Setter(AccessLevel.NONE)
+	@Getter(AccessLevel.NONE)
+	private long		lastTimeEstimateUpdate	= 0;
 	/**
 	 * Whether or not to apply an OpenGL negation blend to the rendered progress text.
 	 */
-	boolean																invertProgressText		= true;
+	boolean				invertProgressText		= true;
 	/**
 	 * The color to use for the progress text. White (0xFFFFFF) is recommended when invertProgressText is enabled.
 	 */
-	int																	progressTextColor		= 0xFFFFFF;
+	int					progressTextColor		= 0xFFFFFF;
 	/**
 	 * Whether or not to 'smooth' the changing of the time estimate. With this off, the time estimate will constantly change as it tries to
 	 * reflect how long it would take if it continued at exactly this pace until completion. With this on, changes in estimate will be
 	 * smoothed, making the changes less extreme.
 	 */
-	boolean																smoothTimeEstimate		= true;
+	boolean				smoothTimeEstimate		= true;
 	
 	public PaneProgressIndicator() {
 		color = 0x333333;
@@ -185,7 +192,9 @@ public abstract class PaneProgressIndicator
 		}
 	}
 	
-	@Setter(AccessLevel.NONE) @Getter(AccessLevel.NONE) private long	lastMillisEstimate	= -1;
+	@Setter(AccessLevel.NONE)
+	@Getter(AccessLevel.NONE)
+	private long	lastMillisEstimate	= -1;
 	
 	protected long calculateMillisEstimate() {
 		return (long) (((maximumProgress - progress) / Math.max(progress - lastAmount, 0.00000000000000001)) * 1000);

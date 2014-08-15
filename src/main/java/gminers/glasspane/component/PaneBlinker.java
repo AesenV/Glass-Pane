@@ -56,7 +56,6 @@ public class PaneBlinker
 	private PaneComponent	target		= null;
 	
 	public PaneBlinker() {
-		setClipToSize(false);
 		setColor(0xFF0000);
 	}
 	

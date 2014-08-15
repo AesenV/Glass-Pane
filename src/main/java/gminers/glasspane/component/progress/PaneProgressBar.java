@@ -4,7 +4,6 @@ package gminers.glasspane.component.progress;
 import gminers.kitchensink.Rendering;
 import gminers.kitchensink.WaveType;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,42 +19,54 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PROTECTED)
-
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 public class PaneProgressBar
 		extends PaneProgressIndicator {
 	/**
 	 * Whether or not to draw an outline around this bar.
 	 */
-	@Getter @Setter protected boolean	outlined						= true;
+	@Getter
+	@Setter
+	protected boolean	outlined						= true;
 	/**
 	 * The wave to use for the indeterminate animation.
 	 */
-	@Getter @Setter protected WaveType	indeterminateWave				= WaveType.SINE;
+	@Getter
+	@Setter
+	protected WaveType	indeterminateWave				= WaveType.SINE;
 	/**
 	 * Whether or not to allow the indeterminate bar to leave the bounds of the bar. Turning this off is useful for some waves to make them
 	 * look better, such as tangent.<br/>
 	 * When turning this off, it is usually a good idea to make sure clipToSize is enabled.
 	 */
-	@Getter @Setter protected boolean	indeterminateWaveKeptInBounds	= true;
+	@Getter
+	@Setter
+	protected boolean	indeterminateWaveKeptInBounds	= true;
 	/**
 	 * Whether or not to use the 'lag' value for progress text display.
 	 */
-	@Getter @Setter protected boolean	useLagValueForProgressText		= true;
+	@Getter
+	@Setter
+	protected boolean	useLagValueForProgressText		= true;
 	/**
 	 * Defines the width of the indeterminate animation's segment. (width / indeterminateSegmentDivisor = segmentLength)
 	 */
-	@Getter @Setter protected double	indeterminateSegmentDivisor		= 5D;
+	@Getter
+	@Setter
+	protected double	indeterminateSegmentDivisor		= 5D;
 	/**
 	 * How accurate this bar should be - 1.0 means it will always follow the value exactly, values less than 1.0 make it animate smoothly
 	 * towards the value, with lower values being slower.
 	 */
-	@Getter @Setter protected double	accuracy						= 0.25;
+	@Getter
+	@Setter
+	protected double	accuracy						= 0.25;
 	
-	protected int						step							= 0;
-	protected float						lag								= 0;
-	protected float						target							= 0;
+	protected int		step							= 0;
+	protected float		lag								= 0;
+	protected float		target							= 0;
 	
 	
 	@Override

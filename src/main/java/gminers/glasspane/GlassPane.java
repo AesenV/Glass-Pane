@@ -15,7 +15,6 @@ import gminers.kitchensink.Rendering;
 
 import java.util.List;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -47,13 +46,17 @@ public abstract class GlassPane
 	/**
 	 * A mirror of this GlassPane that can be used for APIs that need a GuiScreen, or for Minecraft itself.
 	 */
-	@Getter(lazy = true) private final GlassPaneMirror	screenMirror				= new GlassPaneMirror(this);
+	@Getter(
+			lazy = true)
+	private final GlassPaneMirror			screenMirror				= new GlassPaneMirror(this);
 	/**
 	 * Whether or not the revert() method can be used.
 	 */
-	@Getter @Setter private boolean						revertAllowed				= false;
-	protected static final ResourceLocation				defaultShadowboxTex			= new ResourceLocation(
-																							"textures/gui/options_background.png");
+	@Getter
+	@Setter
+	private boolean							revertAllowed				= false;
+	protected static final ResourceLocation	defaultShadowboxTex			= new ResourceLocation(
+																				"textures/gui/options_background.png");
 	/**
 	 * The shadowbox (background) used by this GlassPane.
 	 * 
@@ -61,27 +64,36 @@ public abstract class GlassPane
 	 * @see PanoramaShadowbox
 	 * @see AdaptivePanoramaShadowbox
 	 */
-	@Getter @Setter protected PaneShadowbox				shadowbox					= new ImageTileShadowbox(
-																							defaultShadowboxTex);
-	private List<GlassPane>								lastOverlays				= null;
-	private GuiScreen									lastScreen					= null;
+	@Getter
+	@Setter
+	protected PaneShadowbox					shadowbox					= new ImageTileShadowbox(
+																				defaultShadowboxTex);
+	private List<GlassPane>					lastOverlays				= null;
+	private GuiScreen						lastScreen					= null;
 	/**
 	 * Whether or not this GlassPane is currently being displayed with takeover mode.
 	 */
-	@Getter protected boolean							takingOver					= false;
+	@Getter
+	protected boolean						takingOver					= false;
 	/**
 	 * Whether or not the shadowbox should be affected by rotation applied to this GlassPane.
 	 */
-	@Getter @Setter protected boolean					shadowboxRotationAllowed	= true;
+	@Getter
+	@Setter
+	protected boolean						shadowboxRotationAllowed	= true;
 	/**
 	 * Whether or not the screen should be cleared before drawing this GlassPane. If the screen size or rotation changes on the fly, this
 	 * will remove any artifacts left by the previous frame.
 	 */
-	@Getter @Setter protected boolean					screenClearedBeforeDrawing	= false;
+	@Getter
+	@Setter
+	protected boolean						screenClearedBeforeDrawing	= false;
 	/**
 	 * Whether or not this GlassPane will render when the HUD is disabled. (Only applies if this GlassPane is displayed over a GuiIngame)
 	 */
-	@Getter @Setter protected boolean					renderedWhenHUDIsOff = false;
+	@Getter
+	@Setter
+	protected boolean						renderedWhenHUDIsOff		= false;
 	
 	/**
 	 * Overrides the currently displaying GuiScreen with a screen dedicated to displaying this GlassPane, and stores the current GUI state
@@ -186,22 +198,19 @@ public abstract class GlassPane
 	// TODO - Update this for new MouseUp, Wheel, etc events
 	public final void takeover() {
 		// make sure minecraft isn't fully initialized yet
-		if (Minecraft.getMinecraft().theWorld != null || Minecraft.getMinecraft().currentScreen != null) {
+		if (Minecraft.getMinecraft().theWorld != null || Minecraft.getMinecraft().currentScreen != null)
 			throw new IllegalStateException("Minecraft is initialized!");
-		}
 		long lastTick = 0;
 		// activate the takeover flag
 		takingOver = true;
 		// enter a loop
 		final Minecraft mc = Minecraft.getMinecraft();
 		ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-		int scaleFactor = res.getScaleFactor();
 		fireEvent(PaneDisplayEvent.class, this);
 		while (takingOver) {
 			// make sure Minecraft doesn't initialize while displaying this screen, as that would cause horrific flickering
-			if (Minecraft.getMinecraft().theWorld != null || Minecraft.getMinecraft().currentScreen != null) {
+			if (Minecraft.getMinecraft().theWorld != null || Minecraft.getMinecraft().currentScreen != null)
 				throw new IllegalStateException("Minecraft is initialized!");
-			}
 			// tick if we should
 			if (System.currentTimeMillis() - lastTick >= 50) {
 				if (Mouse.isCreated()) {
@@ -240,7 +249,6 @@ public abstract class GlassPane
 			// render
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
 			res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-			scaleFactor = res.getScaleFactor();
 			setWidth(res.getScaledWidth());
 			setHeight(res.getScaledHeight());
 			if (shadowbox != null) {
@@ -319,15 +327,13 @@ public abstract class GlassPane
 	 */
 	public final void revert() {
 		// make sure we can do reverts
-		if (!getScreenMirror().isModal() && !revertAllowed) {
+		if (!getScreenMirror().isModal() && !revertAllowed)
 			throw new IllegalStateException("Attempt to use revert() on " + getClass().getName()
 					+ ", but it's not enabled!");
-		}
 		// then, make sure we have a state to revert to
-		if (!getScreenMirror().isModal() && (lastOverlays == null || lastScreen == null)) {
+		if (!getScreenMirror().isModal() && (lastOverlays == null || lastScreen == null))
 			throw new IllegalStateException("Attempt to use revert() on " + getClass().getName()
 					+ ", but there is no previous state to revert to!");
-		}
 		// if we're a modal overlay, let's use our modal metadata to revert instead
 		final GuiScreen screen = getScreenMirror().isModal() ?
 				getScreenMirror().getModal()
@@ -377,19 +383,16 @@ public abstract class GlassPane
 				|| screenOrPane == Object.class) {
 			// fetch the list for this specific class
 			final List<GlassPane> list = GlassPaneMod.inst.overlays.get(screenOrPane);
-			if (list == null) {
-				// if there's no list, there's no overlays for this class, so just return
+			if (list == null) // if there's no list, there's no overlays for this class, so just return
 				return;
-			}
 			// remove us from the list
 			list.remove(this);
 			// if the list is empty, dereference it
 			if (list.isEmpty()) {
 				GlassPaneMod.inst.overlays.remove(screenOrPane);
 			}
-		} else {
+		} else
 			throw new IllegalArgumentException(screenOrPane.getName() + " is not supported by stopOverlaying!");
-		}
 	}
 	
 	/**
@@ -419,9 +422,8 @@ public abstract class GlassPane
 			}
 			// add us to the list
 			list.add(this);
-		} else {
+		} else
 			throw new IllegalArgumentException(screenOrPane.getName() + " is not supported by autoOverlay!");
-		}
 	}
 	
 	/**
@@ -446,9 +448,8 @@ public abstract class GlassPane
 								+ this.getClass().getName() + " but it's actually overridden with "
 								+ GlassPaneMod.inst.overrides.get(screenOrPane).getClass().getName() + "!");
 			}
-		} else {
+		} else
 			throw new IllegalArgumentException(screenOrPane.getName() + " is not supported by stopOverriding!");
-		}
 	}
 	
 	/**
@@ -472,11 +473,10 @@ public abstract class GlassPane
 			}
 			// now put it into the map
 			GlassPaneMod.inst.overrides.put(screenOrPane, this);
-		} else {
+		} else
 			throw new IllegalArgumentException(screenOrPane.getName() + " is not supported by autoOverride!");
-		}
 	}
-
+	
 	/**
 	 * Internal method used by GlassPaneMod. Do not touch. Beware of dog.
 	 */

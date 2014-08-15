@@ -3,7 +3,6 @@ package gminers.glasspane.event;
 
 import gminers.glasspane.component.PaneComponent;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -16,8 +15,9 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-
+@FieldDefaults(
+		makeFinal = true,
+		level = AccessLevel.PRIVATE)
 @ToString
 @Getter
 public class PaneComponentPostRenderEvent
@@ -41,7 +41,8 @@ public class PaneComponentPostRenderEvent
 	 */
 	float							partialTicks;
 	
-	public PaneComponentPostRenderEvent(final PaneComponent compo, final int mouseX, final int mouseY, final float partialTicks) {
+	public PaneComponentPostRenderEvent(final PaneComponent compo, final int mouseX, final int mouseY,
+			final float partialTicks) {
 		super(compo);
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;

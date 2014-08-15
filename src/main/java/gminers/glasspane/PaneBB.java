@@ -17,7 +17,8 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Data
-@FieldDefaults(level = AccessLevel.PROTECTED)
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor

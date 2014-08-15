@@ -201,8 +201,6 @@ public class GlassPaneMod {
 		}
 		// apply the overlays
 		if (applyingOverlays.size() >= 1) {
-			final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft(),
-					Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 			for (final GlassPane overpane : applyingOverlays) {
 				overpane.overlay(); // we call overlay instead of adding to the list directly so the pane can do proper set-up
 			}

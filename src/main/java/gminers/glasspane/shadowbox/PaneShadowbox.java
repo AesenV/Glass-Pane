@@ -15,9 +15,12 @@ public abstract class PaneShadowbox
 	/**
 	 * Called every frame to render this Shadowbox.
 	 * 
-	 * @param mouseX The X coordinate of the mouse, in 'big' pixels.
-	 * @param mouseY The Y coordinate of the mouse, in 'big' pixels.
-	 * @param partialTicks The amount of the way into the next tick we are, since frames do not align with ticks.
+	 * @param mouseX
+	 *            The X coordinate of the mouse, in 'big' pixels.
+	 * @param mouseY
+	 *            The Y coordinate of the mouse, in 'big' pixels.
+	 * @param partialTicks
+	 *            The amount of the way into the next tick we are, since frames do not align with ticks.
 	 */
 	public abstract void render(final int mouseX, final int mouseY, final float partialTicks);
 	

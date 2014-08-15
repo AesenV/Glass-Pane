@@ -14,7 +14,8 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PROTECTED)
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public class PaneGradientBox

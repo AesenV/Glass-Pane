@@ -61,7 +61,6 @@ public class PaneProgressRing
 			final float seg2 = (total >= 2 ? 1 : (total <= 1 ? 0 : total - 1));
 			final float seg3 = (total >= 3 ? 1 : (total <= 2 ? 0 : total - 2));
 			final float seg4 = (total >= 4 ? 1 : (total <= 3 ? 0 : total - 3));
-			final int shadowColor = (filledColor & 16579836) >> 2 | filledColor & -16777216;
 			Rendering.drawRect(0, 0, (int) (percievedWidth * seg1), 2, filledColor | 0xFF000000);
 			if (seg2 > 0) {
 				Rendering.drawRect(percievedWidth - 2, 2, percievedWidth, (int) (percievedHeight * seg2),

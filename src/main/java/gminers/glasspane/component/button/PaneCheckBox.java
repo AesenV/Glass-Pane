@@ -16,8 +16,7 @@ import org.lwjgl.opengl.GL11;
  */
 public class PaneCheckBox
 		extends PaneToggleButton {
-	protected int	u		= 220;
-	private int		count	= 0;
+	protected int	u	= 220;
 	
 	public PaneCheckBox() {
 		this("Checkbox");
@@ -37,7 +36,6 @@ public class PaneCheckBox
 	@Override
 	protected void doTick() {
 		super.doTick();
-		count++;
 		height = Math.max(10, getLineCount() * (renderer.FONT_HEIGHT + lineSpacing));
 		width = getLongestLineWidth() + 12;
 	}
@@ -74,9 +72,6 @@ public class PaneCheckBox
 		}
 		// bind the widgets file
 		Minecraft.getMinecraft().renderEngine.bindTexture(RESOURCE);
-		// to save cycles, keep the halved values in a variable
-		final int hWidth = width / 2;
-		final int hHeight = height / 2;
 		
 		// unpack the button color
 		final int r = buttonColor >> 16 & 255;

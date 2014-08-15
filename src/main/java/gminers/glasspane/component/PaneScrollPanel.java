@@ -22,18 +22,23 @@ import org.lwjgl.opengl.GL11;
  */
 public class PaneScrollPanel
 		extends PaneContainer {
-	private float					momentum			= 0.0f;
-	private float					incomingMomentum	= 0.0f;
-	private float					offset				= 0.0f;
+	private float	momentum			= 0.0f;
+	private float	incomingMomentum	= 0.0f;
+	private float	offset				= 0.0f;
 	/**
 	 * Whether or not to draw a ShadowPanel-style shadow.
 	 */
-	@Getter @Setter private boolean	shadowed			= true;
+	@Getter
+	@Setter
+	private boolean	shadowed			= true;
 	/**
 	 * The depth of the shadow, if enabled.
 	 */
-	@Getter @Setter private int		shadowDepth			= 3;
+	@Getter
+	@Setter
+	private int		shadowDepth			= 3;
 	
+	@SuppressWarnings("deprecation")
 	public PaneScrollPanel() {
 		// Workaround: Scroll Panel causes horrible white flickering when it's not clipped to size. I don't know why.
 		setClipToSize(true);
@@ -62,9 +67,7 @@ public class PaneScrollPanel
 	}
 	
 	public int getMinimumChildY() {
-		if (components.isEmpty()) {
-			return 0;
-		}
+		if (components.isEmpty()) return 0;
 		int rtrn = Integer.MAX_VALUE;
 		for (final PaneComponent pc : components) {
 			rtrn = Math.min(rtrn, pc.getY());
@@ -73,9 +76,7 @@ public class PaneScrollPanel
 	}
 	
 	public int getMaximumChildEdgeY() {
-		if (components.isEmpty()) {
-			return 0;
-		}
+		if (components.isEmpty()) return 0;
 		int rtrn = Integer.MIN_VALUE;
 		for (final PaneComponent pc : components) {
 			rtrn = Math.max(rtrn, pc.getEdgeY());

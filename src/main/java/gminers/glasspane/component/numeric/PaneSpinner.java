@@ -43,6 +43,7 @@ public class PaneSpinner
 	float								lagValue		= 0;
 	FontRenderer						renderer		= Minecraft.getMinecraft().fontRenderer;
 	
+	@SuppressWarnings("deprecation")
 	public PaneSpinner() {
 		setClipToSize(true);
 	}
@@ -117,6 +118,7 @@ public class PaneSpinner
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {
 		// bind the widgets

@@ -7,7 +7,6 @@ import gminers.glasspane.component.ColorablePaneComponent;
 import gminers.glasspane.component.PaneComponent;
 import gminers.kitchensink.Rendering;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,8 +23,8 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PROTECTED)
-
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -34,42 +33,43 @@ public class PaneLabel
 	/**
 	 * The text to render for this label. Allows newlines.
 	 */
-	@Setter(AccessLevel.NONE) String	text			= "";
+	@Setter(AccessLevel.NONE)
+	String			text			= "";
 	/**
 	 * The font renderer to use for the text of this label.
 	 * 
 	 * @see Minecraft#fontRenderer
 	 * @see Minecraft#standardGalacticFontRenderer
 	 */
-	FontRenderer						renderer		= Minecraft.getMinecraft().fontRenderer;
+	FontRenderer	renderer		= Minecraft.getMinecraft().fontRenderer;
 	/**
 	 * Whether or not to render a shadow for this text.
 	 */
-	boolean								shadow			= true;
+	boolean			shadow			= true;
 	/**
 	 * Whether or not to outline this text.
 	 */
-	boolean								outlined		= false;
+	boolean			outlined		= false;
 	/**
 	 * Whether or not to put a more vibrant color for the outline, instead of the default of a darker color.
 	 */
-	boolean								invertedOutline	= false;
+	boolean			invertedOutline	= false;
 	/**
 	 * The X alignment of this label.
 	 */
-	HorzAlignment						alignmentX		= HorzAlignment.LEFT;
+	HorzAlignment	alignmentX		= HorzAlignment.LEFT;
 	/**
 	 * The Y alignment of this label.
 	 */
-	VertAlignment						alignmentY		= VertAlignment.TOP;
+	VertAlignment	alignmentY		= VertAlignment.TOP;
 	/**
 	 * Whether or not to render this label at 50% size.
 	 */
-	boolean								small			= false;
+	boolean			small			= false;
 	/**
 	 * The amount of pixels between lines of text.
 	 */
-	int									lineSpacing		= 4;
+	int				lineSpacing		= 4;
 	
 	public PaneLabel() {
 		recalculateSize();
@@ -94,26 +94,22 @@ public class PaneLabel
 	}
 	
 	public int getLineCount() {
-		if (text.trim().isEmpty()) {
-			return 0;
-		}
-		if (text.contains("\n")) {
+		if (text.trim().isEmpty()) return 0;
+		if (text.contains("\n"))
 			return text.split("\n").length;
-		} else {
+		else
 			return 1;
-		}
 	}
 	
 	public int getLongestLineWidth() {
 		if (text.contains("\n")) {
 			int work = 0;
 			for (final String s : text.split("\n")) {
-				work = Math.max(renderer.getStringWidth(text), work);
+				work = Math.max(renderer.getStringWidth(s), work);
 			}
 			return work;
-		} else {
+		} else
 			return renderer.getStringWidth(text);
-		}
 	}
 	
 	

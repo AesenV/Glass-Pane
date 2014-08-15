@@ -14,11 +14,17 @@ import lombok.Setter;
  */
 public class PaneProgressHueBar
 		extends PaneProgressBar {
-	@Getter @Setter protected float	targetHue			= 100;
-	protected float					lagHue				= 100;
-	protected int					counter				= 0;
-	@Getter @Setter protected int	brightnessModifier	= 64;
-	@Getter @Setter protected int	hueChangeSpeed		= 12;
+	@Getter
+	@Setter
+	protected float	targetHue			= 100;
+	protected float	lagHue				= 100;
+	protected int	counter				= 0;
+	@Getter
+	@Setter
+	protected int	brightnessModifier	= 64;
+	@Getter
+	@Setter
+	protected int	hueChangeSpeed		= 12;
 	
 	public PaneProgressHueBar() {
 		doTick();

@@ -3,7 +3,6 @@ package gminers.glasspane.event;
 
 import gminers.glasspane.component.PaneComponent;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -16,8 +15,9 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Getter
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-
+@FieldDefaults(
+		makeFinal = true,
+		level = AccessLevel.PRIVATE)
 @ToString
 public class WinchEvent
 		extends PaneEvent {
@@ -45,7 +45,8 @@ public class WinchEvent
 	 */
 	int								newHeight;
 	
-	public WinchEvent(final PaneComponent source, final int oldWidth, final int oldHeight, final int newWidth, final int newHeight) {
+	public WinchEvent(final PaneComponent source, final int oldWidth, final int oldHeight, final int newWidth,
+			final int newHeight) {
 		super(source);
 		this.oldWidth = oldWidth;
 		this.oldHeight = oldHeight;

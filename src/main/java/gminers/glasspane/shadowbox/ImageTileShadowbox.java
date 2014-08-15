@@ -19,7 +19,8 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(
+		level = AccessLevel.PRIVATE)
 @Getter
 @Setter
 public class ImageTileShadowbox

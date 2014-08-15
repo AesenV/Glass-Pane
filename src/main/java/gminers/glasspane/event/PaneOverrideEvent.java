@@ -3,7 +3,6 @@ package gminers.glasspane.event;
 
 import gminers.glasspane.GlassPane;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -17,8 +16,9 @@ import net.minecraft.client.gui.GuiScreen;
  * 
  */
 @Getter
-@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-
+@FieldDefaults(
+		makeFinal = true,
+		level = AccessLevel.PRIVATE)
 @ToString
 public class PaneOverrideEvent
 		extends PaneEvent {

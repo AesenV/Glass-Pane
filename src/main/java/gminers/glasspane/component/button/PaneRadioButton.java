@@ -17,7 +17,8 @@ import lombok.Getter;
  */
 public class PaneRadioButton
 		extends PaneCheckBox {
-	@Getter protected RadioButtonGroup	group	= null;
+	@Getter
+	protected RadioButtonGroup	group	= null;
 	
 	public PaneRadioButton() {
 		this("Radio Button");

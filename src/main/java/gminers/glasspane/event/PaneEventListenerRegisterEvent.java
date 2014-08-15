@@ -6,7 +6,6 @@ import gminers.glasspane.component.PaneComponent;
 import java.lang.reflect.Method;
 
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -18,8 +17,9 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-
+@FieldDefaults(
+		level = AccessLevel.PRIVATE,
+		makeFinal = true)
 @ToString
 @Getter
 public class PaneEventListenerRegisterEvent

@@ -3,7 +3,6 @@ package gminers.glasspane.event;
 
 import gminers.glasspane.component.PaneComponent;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
@@ -18,8 +17,9 @@ import org.lwjgl.input.Keyboard;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-
+@FieldDefaults(
+		level = AccessLevel.PRIVATE,
+		makeFinal = true)
 @ToString
 @Getter
 public class KeyTypedEvent
