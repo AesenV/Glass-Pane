@@ -68,13 +68,6 @@ import com.google.common.collect.Maps;
 public abstract class PaneComponent
 		extends PaneBB {
 
-
-
-
-
-
-
-
 	/**
 	 * The Z index of this component. Components with higher Z indexes render in front of components with lower.
 	 */

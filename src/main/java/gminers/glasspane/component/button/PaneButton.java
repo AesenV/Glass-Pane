@@ -194,4 +194,28 @@ public class PaneButton
 		Rendering.drawTexturedModalRect(x + hWidth, y + hHeight, u + (texWidth - hWidth), v + (texHeight - hHeight),
 				hWidth, hHeight);
 	}
+	
+	/**
+	 * Creates a 'done' button - a button which will call revert() on it's parent GlassPane when clicked, and appears centered near the
+	 * bottom of the screen.
+	 * 
+	 * @return A newly created 'done' button.
+	 */
+	public static PaneButton createDoneButton() {
+		final PaneButton done = new PaneButton("Done");
+		done.setAutoPositionX(true);
+		done.setRelativeX(0.5);
+		done.setRelativeXOffset(-100);
+		done.setAutoPositionY(true);
+		done.setRelativeY(1.0);
+		done.setRelativeYOffset(-30);
+		done.registerActivationListener(new Runnable() {
+			
+			@Override
+			public void run() {
+				done.getGlassPane().revert();
+			}
+		});
+		return done;
+	}
 }

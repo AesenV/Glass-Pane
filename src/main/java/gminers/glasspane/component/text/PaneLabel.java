@@ -4,7 +4,6 @@ package gminers.glasspane.component.text;
 import gminers.glasspane.HorzAlignment;
 import gminers.glasspane.VertAlignment;
 import gminers.glasspane.component.ColorablePaneComponent;
-import gminers.glasspane.component.PaneComponent;
 import gminers.kitchensink.Rendering;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -229,7 +228,7 @@ public class PaneLabel
 	 *            The text the label should have
 	 * @return A newly created 'center label'
 	 */
-	public static PaneComponent createCenterLabel(final String text) {
+	public static PaneLabel createCenterLabel(final String text) {
 		final PaneLabel label = new PaneLabel(text);
 		label.setAutoResize(true);
 		label.setAlignmentY(VertAlignment.MIDDLE);

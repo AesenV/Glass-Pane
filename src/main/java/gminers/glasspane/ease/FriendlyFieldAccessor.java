@@ -31,8 +31,7 @@ public class FriendlyFieldAccessor<T>
 		try {
 			return (T) clazz.getMethod(getterName).invoke(access);
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Could not get " + field + " from " + clazz.getName());
+			throw new RuntimeException("Could not get " + field + " from " + clazz.getName(), e);
 		}
 	}
 	
@@ -41,8 +40,7 @@ public class FriendlyFieldAccessor<T>
 		try {
 			clazz.getMethod(setterName, setterClass).invoke(access, val);
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Could not set " + field + " in " + clazz.getName());
+			throw new RuntimeException("Could not set " + field + " in " + clazz.getName(), e);
 		}
 	}
 	

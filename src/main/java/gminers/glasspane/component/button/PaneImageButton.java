@@ -50,11 +50,11 @@ public class PaneImageButton
 	/**
 	 * The width of the portion of the image to use - 256 for the entire image
 	 */
-	int					imageWidth			= 256;
+	int					imagePortionWidth	= 256;
 	/**
 	 * The height of the portion of the image to use - 256 for the entire image.
 	 */
-	int					imageHeight			= 256;
+	int					imagePortionHeight	= 256;
 	/**
 	 * The alpha transparency of this image - 0.0 is completely transparent, 1.0 is opaque
 	 */
@@ -76,17 +76,23 @@ public class PaneImageButton
 	 * The tint to use for the image in it's disabled state.
 	 */
 	int					imageDisabledColor	= 0xA0A0A0;
+	/**
+	 * The width of the image on the button.
+	 */
+	int					imageWidth			= 16;
+	/**
+	 * The width of the image on the button.
+	 */
+	int					imageHeight			= 16;
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {
 		super.doRender(mouseX, mouseY, partialTicks);
-		if (image == null) {
-			return;
-		}
+		if (image == null) return;
 		// apply a transform
 		GL11.glTranslatef(2, 2, 0);
 		// apply a scale because for some asinine reason all textures in minecraft are 256x256
-		GL11.glScalef((width - 4) / ((float) imageWidth), (height - 4) / ((float) imageHeight), 0.0f);
+		GL11.glScalef(imageWidth / ((float) imagePortionWidth), imageHeight / ((float) imagePortionHeight), 0.0f);
 		// if we want full transparency, enable blending
 		if (!oneBitTransparency) {
 			GL11.glEnable(GL11.GL_BLEND);
@@ -118,7 +124,7 @@ public class PaneImageButton
 		final int b = color & 255;
 		GL11.glColor4f(r / 255f, g / 255f, b / 255f, alpha);
 		// and finally render it
-		Rendering.drawTexturedModalRect(0, 0, u, v, imageWidth, imageHeight);
+		Rendering.drawTexturedModalRect(0, 0, u, v, imagePortionWidth, imagePortionHeight);
 		// then disable blending if we enabled it for full transparency
 		if (!oneBitTransparency) {
 			GL11.glDisable(GL11.GL_BLEND);

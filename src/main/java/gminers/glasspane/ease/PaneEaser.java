@@ -31,7 +31,7 @@ import cpw.mods.fml.common.gameevent.TickEvent.Phase;
  * @author Aesen Vismea
  * 
  */
-// We use raw types because types are fake anyway
+// We use raw types because generics are fake anyway
 // Yes, this code is a big hack. Does it work? Yes.
 @SuppressWarnings("rawtypes")
 public class PaneEaser
