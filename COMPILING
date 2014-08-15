@@ -1,0 +1,7 @@
+This project should be able to be pulled verbatim into a ForgeGradle 1.2 (1.7.10) dev environment.
+All that should be required to compile is a simple 'gradle build', or a 'gradle jar' for a dev build.
+
+The Glass Pane build.gradle also adds a new task; 'delombok', as we use Project Lombok. To run it, just do 'gradle delombok'.
+A new folder will be created called 'delombok' with the delomboked sources in it.
+
+You will need Kitchen Sink, from http://github.com/AesenV/Kitchen-Sink to compile Glass Pane, as well as Project Lombok, from http://projectlombok.org
