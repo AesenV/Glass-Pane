@@ -3,6 +3,7 @@ package com.gameminers.glasspane.internal;
 
 import gminers.glasspane.GlassPane;
 import gminers.glasspane.GlassPaneMirror;
+import gminers.glasspane.ease.PaneEaser;
 import gminers.glasspane.event.KeyTypedEvent;
 import gminers.glasspane.event.MouseDownEvent;
 import gminers.glasspane.event.MouseUpEvent;
@@ -15,6 +16,7 @@ import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -73,9 +75,6 @@ public class GlassPaneMod {
 	public void init(final FMLInitializationEvent e) {
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(this);
-		PaneEaserManager pem = new PaneEaserManager();
-		FMLCommonHandler.instance().bus().register(pem);
-		MinecraftForge.EVENT_BUS.register(pem);
 		overrideExemptions.add(GuiIngame.class);
 		try {
 			mouseReadBuffer = mouseClass.getDeclaredField("readBuffer");
@@ -210,14 +209,17 @@ public class GlassPaneMod {
 		}
 	}
 	
-	private int				touchScreenCounter;
+	private int								touchScreenCounter;
 	
-	private Class<Mouse>	mouseClass		= Mouse.class;
-	private Class<Keyboard>	keyboardClass	= Keyboard.class;
+	private Class<Mouse>					mouseClass		= Mouse.class;
+	private Class<Keyboard>					keyboardClass	= Keyboard.class;
 	
-	private Field			mouseReadBuffer;
-	private Field			mouseDWheel;
-	private Field			keyboardReadBuffer;
+	private Field							mouseReadBuffer;
+	private Field							mouseDWheel;
+	private Field							keyboardReadBuffer;
+	
+	public static Map<Object, PaneEaser>	easers			= Collections
+																	.synchronizedMap(new HashMap<Object, PaneEaser>());
 	
 	/**
 	 * Protip: If you want to avoid having to do the same terrible hackery that is done in this method,
@@ -226,6 +228,19 @@ public class GlassPaneMod {
 	@SubscribeEvent
 	@SneakyThrows
 	public void onTick(final TickEvent.ClientTickEvent e) {
+		// tick the easers
+		Minecraft.getMinecraft().mcProfiler.startSection("paneEaser");
+		for (PaneEaser pe : GlassPaneMod.easers.values().toArray(new PaneEaser[GlassPaneMod.easers.size()])) {
+			Minecraft.getMinecraft().mcProfiler.startSection(Integer.toHexString(pe.hashCode()));
+			try {
+				pe.onTick(e.phase);
+			} catch (Throwable t) {
+				t.printStackTrace();
+				System.out.println("Exception while ticking easer " + Integer.toHexString(pe.hashCode()));
+			}
+			Minecraft.getMinecraft().mcProfiler.endSection();
+		}
+		Minecraft.getMinecraft().mcProfiler.endSection();
 		if (e.phase == TickEvent.Phase.START) {
 			// this is a terrible, terrible hack, but there's no better way to do it
 			// Mouse and Keyboard InputEvents are only called when in a game, not a GUI, which is the opposite of helpful

@@ -23,7 +23,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.val;
 
-import com.gameminers.glasspane.internal.PaneEaserManager;
+import com.gameminers.glasspane.internal.GlassPaneMod;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.math.BigIntegerMath;
@@ -76,7 +76,7 @@ public class PaneEaser implements Closeable {
 	
 	public PaneEaser(@NonNull Object toEase) {
 		this.toEase = toEase;
-		PaneEaserManager.easers.put(toEase, this);;
+		GlassPaneMod.easers.put(toEase, this);;
 	}
 	
 	private <T extends Number> void ease(Iterator<Entry<String, T>> iter, Class<?> primitive) {
@@ -218,7 +218,7 @@ public class PaneEaser implements Closeable {
 	@Override
 	public void close() {
 		if (closed) return;
-		PaneEaserManager.easers.remove(toEase);
+		GlassPaneMod.easers.remove(toEase);
 		for (Runnable r : closeListeners) {
 			r.run();
 		}
