@@ -96,6 +96,7 @@ public class PaneSlider
 		boolean horz = (direction == Direction.HORIZONTAL);
 		if (renderBackground) {
 			GL11.glPushMatrix();
+			GL11.glColor3f(1.0f, 1.0f, 1.0f);
 			boolean focus = getParent() != null && getParent().getFocusedComponent() == this;
 			if (horz) {
 				PaneButton.renderStretchyTexturedRect(0, 0, u, 0, width, height, 220, 40);
