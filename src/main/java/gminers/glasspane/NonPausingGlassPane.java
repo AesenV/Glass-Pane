@@ -8,7 +8,7 @@ package gminers.glasspane;
  * @author Aesen Vismea
  * 
  */
-public class NonPausingGlassPane
+public abstract class NonPausingGlassPane
 		extends GlassPane {
 	
 }
