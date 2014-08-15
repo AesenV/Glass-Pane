@@ -29,11 +29,11 @@ public class PaneTestHarness
 	
 	public PaneTestHarness() {
 		setRevertAllowed(true);
-		add(PaneLabel.createTitleLabel("Glass Pane Test Harness\n\u00A77Choose something to test"));
+		add(PaneLabel
+				.createTitleLabel("Glass Pane Test Harness\n\u00A77Useful for texturers or learning what Glass Pane can do."));
 		add(PaneButton.createDoneButton());
 	}
 	
-	@SuppressWarnings("resource")
 	@Override
 	protected void doTick() {
 		if (mouseX == -10) {
@@ -65,7 +65,7 @@ public class PaneTestHarness
 				}
 				PaneComponent c = components.get(idx);
 				if ("entry".equals(c.getName())) {
-					ease(c, 0xAAAAAA, 0xFFFFFF);
+					ease(c, 0x55AAFF, 0x55FFFF);
 				}
 			} else if (idx == components.size()) {
 				PaneComponent last = components.get(idx - 1);
@@ -76,10 +76,12 @@ public class PaneTestHarness
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	private void ease(PaneComponent c, int buttonColor, int color) {
 		PaneEaser easer = new PaneEaser(c);
 		easer.easeColorInt("buttonColor", buttonColor);
 		easer.easeColorInt("color", color);
+		easer.setAutoClose(true);
 	}
 	
 	// overridden for the buttons to reflow when the window is resized
@@ -100,14 +102,14 @@ public class PaneTestHarness
 				y += 24;
 			}
 			PaneButton button = new PaneButton(gp.getName());
-			if (button.getText().startsWith("NEW!")) {
-				button.setButtonColor(0xFFAA00);
-			}
 			button.setName("entry");
 			button.setWidth(98);
 			button.setX(x);
 			button.setY(y);
 			button.setButtonColor(0xAAAAAA);
+			if (gp.getComponents().size() <= 1) {
+				button.setEnabled(false);
+			}
 			button.registerActivationListener(new Runnable() {
 				
 				@Override

@@ -32,6 +32,12 @@ public class PaneTestButtons
 		setName("Buttons");
 		add(PaneButton.createDoneButton());
 		
+		final PaneButton basic = new PaneButton("Basic Button");
+		basic.setX(10);
+		basic.setY(10);
+		basic.setWidth(98);
+		add(basic);
+		
 		final PaneButton colored = new PaneButton("Colored Button");
 		colored.setButtonColor(0xFF0000);
 		colored.setColor(0xFFFF00);
@@ -45,8 +51,9 @@ public class PaneTestButtons
 				colored.setColor(RandomPool.nextInt());
 			}
 		});
-		colored.setX(10);
+		colored.setX(110);
 		colored.setY(10);
+		colored.setWidth(98);
 		add(colored);
 		
 		final PaneImageButton imageButton = new PaneImageButton();
@@ -61,6 +68,12 @@ public class PaneTestButtons
 		toggleButton.setY(58);
 		add(toggleButton);
 		
+		PaneButton disabledButton = new PaneButton("Disabled Button");
+		disabledButton.setX(10);
+		disabledButton.setY(82);
+		disabledButton.setEnabled(false);
+		add(disabledButton);
+		
 		int x = 10;
 		for (String s : textures) {
 			if (s.equals("textures/items/diamond_helmet.png")) {
@@ -72,14 +85,14 @@ public class PaneTestButtons
 			iconButton.setWidth(20);
 			iconButton.setText("");
 			iconButton.setX(x);
-			iconButton.setY(82);
+			iconButton.setY(106);
 			add(iconButton);
 			x += 26;
 		}
 		
 		PaneLabel iconButtonLabel = new PaneLabel("Also Image Buttons");
 		iconButtonLabel.setX(10);
-		iconButtonLabel.setY(106);
+		iconButtonLabel.setY(130);
 		iconButtonLabel.setHeight(12);
 		iconButtonLabel.setWidth(200);
 		iconButtonLabel.setAlignmentY(VertAlignment.MIDDLE);
@@ -100,16 +113,26 @@ public class PaneTestButtons
 		coloredCheckBox.setHoveredColor(0x0000FF);
 		add(coloredCheckBox);
 		
+		PaneCheckBox disabledCheckBox = new PaneCheckBox("Disabled Checkbox");
+		disabledCheckBox.setX(214);
+		disabledCheckBox.setY(38);
+		disabledCheckBox.setEnabled(false);
+		add(disabledCheckBox);
+		
 		PaneRadioButton radioButton = new PaneRadioButton("Radio Button");
 		radioButton.setX(214);
-		radioButton.setY(38);
+		radioButton.setY(52);
 		add(radioButton);
 		
 		RadioButtonGroup group = new RadioButtonGroup();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 5; i++) {
 			PaneRadioButton groupedRadioButton = new PaneRadioButton("Grouped Radio Button (" + i + ")");
+			if (i == 4) {
+				groupedRadioButton.setText("Grouped Radio Button (4, Disabled)");
+				groupedRadioButton.setEnabled(false);
+			}
 			groupedRadioButton.setX(214);
-			groupedRadioButton.setY(52 + (i * 12));
+			groupedRadioButton.setY(66 + (i * 12));
 			group.add(groupedRadioButton);
 			add(groupedRadioButton);
 		}
@@ -117,7 +140,7 @@ public class PaneTestButtons
 		PaneLabel tabLabel = new PaneLabel(
 				"Try pressing Tab and Shift+Tab to change the focus\nPress Enter to send a click");
 		tabLabel.setX(10);
-		tabLabel.setY(140);
+		tabLabel.setY(150);
 		tabLabel.setHeight(12);
 		tabLabel.setAutoResizeWidth(true);
 		tabLabel.setAlignmentY(VertAlignment.MIDDLE);

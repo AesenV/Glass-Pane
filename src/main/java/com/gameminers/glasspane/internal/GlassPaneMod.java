@@ -71,6 +71,9 @@ public class GlassPaneMod {
 	
 	public final List<Class<?>>					overrideExemptions		= Lists.newCopyOnWriteArrayList();
 	
+	public static Map<Object, PaneEaser>		easers					= Collections
+																				.synchronizedMap(new HashMap<Object, PaneEaser>());
+	
 	@EventHandler
 	public void init(final FMLInitializationEvent e) {
 		FMLCommonHandler.instance().bus().register(this);
@@ -207,17 +210,15 @@ public class GlassPaneMod {
 		}
 	}
 	
-	private int								touchScreenCounter;
+	private int				touchScreenCounter;
 	
-	private Class<Mouse>					mouseClass		= Mouse.class;
-	private Class<Keyboard>					keyboardClass	= Keyboard.class;
+	private Class<Mouse>	mouseClass		= Mouse.class;
+	private Class<Keyboard>	keyboardClass	= Keyboard.class;
 	
-	private Field							mouseReadBuffer;
-	private Field							mouseDWheel;
-	private Field							keyboardReadBuffer;
+	private Field			mouseReadBuffer;
+	private Field			mouseDWheel;
+	private Field			keyboardReadBuffer;
 	
-	public static Map<Object, PaneEaser>	easers			= Collections
-																	.synchronizedMap(new HashMap<Object, PaneEaser>());
 	
 	/**
 	 * Protip: If you want to avoid having to do the same terrible hackery that is done in this method,

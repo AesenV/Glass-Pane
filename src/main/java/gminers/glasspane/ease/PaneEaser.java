@@ -66,7 +66,7 @@ public class PaneEaser
 	
 	public PaneEaser(@NonNull Object toEase) {
 		this.toEase = toEase;
-		GlassPaneMod.easers.put(toEase, this);;
+		GlassPaneMod.easers.put(toEase, this);
 	}
 	
 	@SuppressWarnings("unchecked")
