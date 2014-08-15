@@ -3,7 +3,6 @@ package gminers.glasspane.component;
 
 import gminers.kitchensink.Rendering;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,8 +19,8 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(level = AccessLevel.PROTECTED)
-
+@FieldDefaults(
+		level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -63,13 +62,12 @@ public class PaneImage
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {
-		if (image == null) {
-			return;
-		}
 		render(image, 0, 0, u, v, width, height, imageWidth, imageHeight, color, alpha, oneBitTransparency);
 	}
 	
-	public static void render(ResourceLocation image, int x, int y, int u, int v, int width, int height, int imageWidth, int imageHeight, int color, float alpha, boolean oneBitTransparency) {
+	public static void render(ResourceLocation image, int x, int y, int u, int v, int width, int height,
+			int imageWidth, int imageHeight, int color, float alpha, boolean oneBitTransparency) {
+		if (image == null) return;
 		GL11.glPushMatrix();
 		// bind the image texture
 		Minecraft.getMinecraft().renderEngine.bindTexture(image);

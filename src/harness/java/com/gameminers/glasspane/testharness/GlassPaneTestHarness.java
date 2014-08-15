@@ -6,7 +6,6 @@ import gminers.glasspane.GlassPane;
 import gminers.glasspane.component.numeric.PaneSlider;
 import gminers.glasspane.event.PaneOverlayEvent;
 import gminers.glasspane.listener.PaneEventHandler;
-import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiOptions;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -23,8 +22,6 @@ public class GlassPaneTestHarness
 	@EventHandler
 	public void onInit(FMLInitializationEvent e) {
 		autoOverlay(GuiOptions.class);
-		autoOverlay(GuiIngame.class);
-		setRenderedWhenHUDIsOff(true);
 	}
 	
 	@PaneEventHandler
