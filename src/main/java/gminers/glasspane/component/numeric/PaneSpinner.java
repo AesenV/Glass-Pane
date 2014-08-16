@@ -3,7 +3,7 @@ package gminers.glasspane.component.numeric;
 
 import gminers.glasspane.component.ColorablePaneComponent;
 import gminers.glasspane.component.Focusable;
-import gminers.kitchensink.Rendering;
+import gminers.glasspane.component.button.PaneButton;
 
 import java.text.NumberFormat;
 
@@ -128,30 +128,16 @@ public class PaneSpinner
 		final int u = 0;
 		final int v = 0;
 		
-		// precalc the width and height halved to save cycles
-		final int hWidth = width / 2;
-		final int hHeight = height / 2;
-		
 		// set color
 		GL11.glColor3f(0.6f, 0.6f, 0.6f);
-		// draw it, same method and max size as buttons
-		Rendering.drawTexturedModalRect(0, 0, u, v, hWidth, hHeight);
-		Rendering.drawTexturedModalRect(hWidth, 0, u + (220 - hWidth), v, hWidth, hHeight);
-		
-		Rendering.drawTexturedModalRect(0, hHeight, u, v + (40 - hHeight), hWidth, hHeight);
-		Rendering.drawTexturedModalRect(hWidth, hHeight, u + (220 - hWidth), v + (40 - hHeight), hWidth, hHeight);
+		PaneButton.renderStretchyTexturedRect(0, 0, u, v, width, height, 220, 40);
 		
 		// if we're focused, draw a blue border over the normal black one
 		GL11.glTranslatef(0, 0, 0.001f);
 		if (getParent() != null) {
 			if (getParent().getFocusedComponent() == this) {
 				final int fv = 200;
-				Rendering.drawTexturedModalRect(0, 0, u, fv, hWidth, hHeight);
-				Rendering.drawTexturedModalRect(hWidth, 0, u + (220 - hWidth), fv, hWidth, hHeight);
-				
-				Rendering.drawTexturedModalRect(0, hHeight, u, fv + (40 - hHeight), hWidth, hHeight);
-				Rendering.drawTexturedModalRect(hWidth, hHeight, u + (220 - hWidth), fv + (40 - hHeight), hWidth,
-						hHeight);
+				PaneButton.renderStretchyTexturedRect(0, 0, u, fv, width, height, 220, 40);
 			}
 		}
 		

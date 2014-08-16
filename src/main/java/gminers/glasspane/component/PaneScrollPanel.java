@@ -132,11 +132,8 @@ public class PaneScrollPanel
 		GL11.glPopMatrix();
 		if (shadowed) {
 			GL11.glDisable(GL11.GL_SCISSOR_TEST);
-			final int opacity = (408 / shadowDepth) << 24;
-			for (int i = shadowDepth; i > 0; i--) {
-				Rendering.drawRect(0, 0, width, i, opacity);
-				Rendering.drawRect(0, height, width, height - i, opacity);
-			}
+			Rendering.drawGradientRect(0, 0, width, shadowDepth, 0xFF000000, 0x00000000);
+			Rendering.drawGradientRect(0, height - shadowDepth, width, height, 0x00000000, 0xFF000000);
 			GL11.glEnable(GL11.GL_SCISSOR_TEST);
 		}
 		GL11.glScissor(getAbsoluteX(getGlassPane().getWidth()), getAbsoluteY(getGlassPane().getHeight()),

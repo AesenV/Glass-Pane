@@ -8,6 +8,8 @@ import gminers.glasspane.component.button.PaneButton;
 import gminers.glasspane.component.button.PaneImageButton;
 import gminers.glasspane.component.text.PaneLabel;
 import gminers.glasspane.ease.PaneEaser;
+import gminers.glasspane.event.PaneHideEvent;
+import gminers.glasspane.listener.PaneEventHandler;
 
 import java.awt.Desktop;
 import java.io.IOException;
@@ -40,9 +42,6 @@ public class PaneTestHarness
 	
 	public PaneTestHarness() {
 		setRevertAllowed(true);
-		setXRot(0);
-		setYRot(0);
-		setZRot(1);
 		setScreenClearedBeforeDrawing(true);
 		add(PaneLabel
 				.createTitleLabel("Glass Pane Test Harness\n\u00A77Useful for texturers or learning what Glass Pane can do."));
@@ -79,23 +78,33 @@ public class PaneTestHarness
 			public void run() {
 				GlassPane pane = button.getGlassPane();
 				pane.setRotationAllowed(true);
-				if (pane.getAngle() == 180f) {
-					button.setTranslateX(0);
-					button.setTranslateY(0);
-					pane.setTranslateX(0);
-					pane.setTranslateY(0);
-					pane.setAngle(0f);
-					button.setRotationAllowed(false);
+				button.setRotationAllowed(true);
+				PaneEaser paneEaser = new PaneEaser(pane);
+				PaneEaser buttonEaser = new PaneEaser(button);
+				buttonEaser.setSpeed(8D);
+				paneEaser.setSpeed(8D);
+				pane.setXRot(0);
+				pane.setYRot(0);
+				pane.setZRot(1);
+				if (GlassPaneMod.invertMouseCoordinates) {
+					buttonEaser.easeFloat("translateX", 0);
+					buttonEaser.easeFloat("translateY", 0);
+					buttonEaser.easeFloat("angle", 0);
+					paneEaser.easeFloat("translateX", 0);
+					paneEaser.easeFloat("translateY", 0);
+					paneEaser.easeFloat("angle", 0);
 					GlassPaneMod.invertMouseCoordinates = false;
 				} else {
-					button.setTranslateX(button.getWidth());
-					button.setTranslateY(button.getHeight());
-					pane.setTranslateX(pane.getWidth());
-					pane.setTranslateY(pane.getHeight());
-					pane.setAngle(180f);
-					button.setRotationAllowed(true);
+					buttonEaser.easeFloat("translateX", button.getWidth());
+					buttonEaser.easeFloat("translateY", button.getHeight());
+					buttonEaser.easeFloat("angle", 180);
+					paneEaser.easeFloat("translateX", pane.getWidth());
+					paneEaser.easeFloat("translateY", pane.getHeight());
+					paneEaser.easeFloat("angle", 180);
 					GlassPaneMod.invertMouseCoordinates = true;
 				}
+				paneEaser.setAutoClose(true);
+				buttonEaser.setAutoClose(true);
 			}
 		});
 		return button;
@@ -180,6 +189,26 @@ public class PaneTestHarness
 		}
 	}
 	
+	@PaneEventHandler
+	public void onHide(PaneHideEvent e) {
+		unrotate();
+	}
+	
+	private void unrotate() {
+		if (GlassPaneMod.easers.containsKey(this)) {
+			GlassPaneMod.easers.get(this).close();
+		}
+		if (GlassPaneMod.easers.containsKey(flipButton)) {
+			GlassPaneMod.easers.get(flipButton).close();
+		}
+		flipButton.setTranslateX(0);
+		flipButton.setTranslateY(0);
+		flipButton.setAngle(0);
+		setTranslateX(0);
+		setTranslateY(0);
+		setAngle(0);
+	}
+	
 	@SuppressWarnings("resource")
 	private void ease(PaneComponent c, int buttonColor, int color) {
 		PaneEaser easer = new PaneEaser(c);
@@ -218,9 +247,7 @@ public class PaneTestHarness
 				
 				@Override
 				public void run() {
-					if (getAngle() == 180f) {
-						flipButton.activate();
-					}
+					unrotate();
 					gp.modalOverlay();
 				}
 			});

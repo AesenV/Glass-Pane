@@ -51,6 +51,7 @@ public class PaneTestOverlays
 				for (GlassPane pane : GlassPaneMod.inst.currentStickyOverlays) {
 					pane.hide();
 				}
+				PaneOverlayExample.nextId = 0;
 			}
 		});
 		createAndAddButton("Reset ID", new Runnable() {
