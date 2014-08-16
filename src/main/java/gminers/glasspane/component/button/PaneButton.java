@@ -134,8 +134,22 @@ public class PaneButton
 		}
 		// render the label
 		GL11.glTranslatef(0, 0, 0.001f);
+		if (alignmentX == HorzAlignment.RIGHT && !text.endsWith(" ")) {
+			text = text + " ";
+		} else if (alignmentX == HorzAlignment.LEFT && !text.startsWith(" ")) {
+			text = " " + text;
+		}
 		labelRender(mouseX, mouseY, partialTicks);
 		color = trueColor;
+	}
+	
+	@Override
+	public String getText() {
+		if (alignmentX == HorzAlignment.RIGHT && text.endsWith(" "))
+			return text.substring(0, text.length() - 1);
+		else if (alignmentX == HorzAlignment.LEFT && text.startsWith(" "))
+			return text.substring(1);
+		return text;
 	}
 	
 	protected void labelRender(final int mouseX, final int mouseY, final float partialTicks) {

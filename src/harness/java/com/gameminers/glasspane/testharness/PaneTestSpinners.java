@@ -10,6 +10,6 @@ public class PaneTestSpinners
 	public PaneTestSpinners() {
 		setName("Spinners");
 		add(PaneButton.createDoneButton());
-		add(PaneTestHarness.createGithubButton("PaneTestSpinners.java"));
+		add(PaneTestHarness.createGithubButton("PaneTestSpinners.java"), PaneTestHarness.createFlipButton());
 	}
 }

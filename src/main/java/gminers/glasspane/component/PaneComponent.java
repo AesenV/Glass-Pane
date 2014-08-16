@@ -68,6 +68,9 @@ import com.google.common.collect.Maps;
 public abstract class PaneComponent
 		extends PaneBB {
 
+
+
+
 	/**
 	 * The Z index of this component. Components with higher Z indexes render in front of components with lower.
 	 */
@@ -312,11 +315,12 @@ public abstract class PaneComponent
 				GL11.glEnable(GL11.GL_SCISSOR_TEST);
 			}
 			// translate to this component's coordinates
-			GL11.glTranslatef(x + translateX, y + translateY, zIndex);
+			GL11.glTranslatef(x, y, zIndex);
 		} else if (((GlassPane) this).isScreenClearedBeforeDrawing() && currentScreenIsThis()) {
 			GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		}
+		GL11.glTranslatef(translateX, translateY, 0);
 		// if we're a pane and have a shadowbox, this will be true
 		final boolean renderShadowbox = this instanceof GlassPane && !((GlassPane) this).getScreenMirror().isModal()
 				&& ((GlassPane) this).getShadowbox() != null

@@ -14,6 +14,7 @@ public class PaneTestSliders
 	public PaneTestSliders() {
 		setName("Sliders");
 		add(PaneButton.createDoneButton());
+		add(PaneTestHarness.createGithubButton("PaneTestSliders.java"), PaneTestHarness.createFlipButton());
 		
 		final PaneSlider basic = new PaneSlider();
 		basic.setText("Basic Slider: 0/200");

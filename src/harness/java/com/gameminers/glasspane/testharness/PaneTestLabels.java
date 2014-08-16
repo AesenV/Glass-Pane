@@ -12,7 +12,7 @@ public class PaneTestLabels
 	public PaneTestLabels() {
 		setName("Labels");
 		add(PaneButton.createDoneButton());
-		add(PaneTestHarness.createGithubButton("PaneTestLabels.java"));
+		add(PaneTestHarness.createGithubButton("PaneTestLabels.java"), PaneTestHarness.createFlipButton());
 		
 		PaneLabel basic = new PaneLabel("Basic Label");
 		basic.setX(10);

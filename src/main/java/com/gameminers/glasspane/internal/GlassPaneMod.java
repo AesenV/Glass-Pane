@@ -74,6 +74,8 @@ public class GlassPaneMod {
 	public static Map<Object, PaneEaser>		easers					= Collections
 																				.synchronizedMap(new HashMap<Object, PaneEaser>());
 	
+	public static boolean						invertMouseCoordinates	= false;
+	
 	@EventHandler
 	public void init(final FMLInitializationEvent e) {
 		FMLCommonHandler.instance().bus().register(this);
@@ -114,6 +116,7 @@ public class GlassPaneMod {
 	 */
 	@SubscribeEvent
 	public void onGuiShown(final GuiOpenEvent e) {
+		invertMouseCoordinates = false;
 		// first, clear the current overlays.
 		for (GlassPane gp : currentOverlays) {
 			gp.hide(); // we call hide instead of just clearing the list so the panes can do proper cleanup
@@ -253,8 +256,12 @@ public class GlassPaneMod {
 				final ByteBuffer buf = (ByteBuffer) mouseReadBuffer.get(null);
 				buf.mark();
 				while (Mouse.next()) {
-					final int mX = Mouse.getEventX() * width / mc.displayWidth;
-					final int mY = height - Mouse.getEventY() * height / mc.displayHeight - 1;
+					int mX = Mouse.getEventX() * width / mc.displayWidth;
+					int mY = height - Mouse.getEventY() * height / mc.displayHeight - 1;
+					if (invertMouseCoordinates) {
+						mX = width - mX;
+						mY = height - mY;
+					}
 					int button = Mouse.getEventButton();
 					
 					if (Minecraft.isRunningOnMac && button == 0
@@ -355,8 +362,13 @@ public class GlassPaneMod {
 				mc.entityRenderer.setupOverlayRendering();
 				// have to do weird maths with the mouse stuff because Minecraft's 0, 0 is top-left,
 				// but GL/LWJGL's 0, 0 is bottom-left, and since Minecraft does resolution scaling
-				pane.render(Mouse.getX() * res.getScaledWidth() / mc.displayWidth, res.getScaledHeight() - Mouse.getY()
-						* res.getScaledHeight() / mc.displayHeight - 1, e.renderTickTime);
+				int mouseX = Mouse.getX() * res.getScaledWidth() / mc.displayWidth;
+				int mouseY = res.getScaledHeight() - Mouse.getY() * res.getScaledHeight() / mc.displayHeight - 1;
+				if (invertMouseCoordinates) {
+					mouseX = res.getScaledWidth() - mouseX;
+					mouseY = res.getScaledHeight() - mouseY;
+				}
+				pane.render(mouseX, mouseY, e.renderTickTime);
 			}
 		}
 	}

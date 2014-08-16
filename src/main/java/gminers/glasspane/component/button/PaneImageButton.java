@@ -1,6 +1,7 @@
 package gminers.glasspane.component.button;
 
 
+import gminers.glasspane.HorzAlignment;
 import gminers.kitchensink.Rendering;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -84,13 +85,23 @@ public class PaneImageButton
 	 * The width of the image on the button.
 	 */
 	int					imageHeight			= 16;
+	/**
+	 * The side to put the image on.
+	 */
+	HorzAlignment		imageAlignment		= HorzAlignment.LEFT;
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {
 		super.doRender(mouseX, mouseY, partialTicks);
 		if (image == null) return;
 		// apply a transform
-		GL11.glTranslatef(2, 2, 0);
+		int imgX = 2;
+		if (imageAlignment == HorzAlignment.MIDDLE) {
+			imgX = (width / 2) - (imageWidth / 2);
+		} else if (imageAlignment == HorzAlignment.RIGHT) {
+			imgX = (width - imageWidth) - 2;
+		}
+		GL11.glTranslatef(imgX, 2, 0);
 		// apply a scale because for some asinine reason all textures in minecraft are 256x256
 		GL11.glScalef(imageWidth / ((float) imagePortionWidth), imageHeight / ((float) imagePortionHeight), 0.0f);
 		// if we want full transparency, enable blending

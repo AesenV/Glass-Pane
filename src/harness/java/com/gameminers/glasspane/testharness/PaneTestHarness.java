@@ -36,16 +36,70 @@ public class PaneTestHarness
 			new PaneTestMisc()
 										};
 	
+	private PaneButton	flipButton;
+	
 	public PaneTestHarness() {
 		setRevertAllowed(true);
+		setXRot(0);
+		setYRot(0);
+		setZRot(1);
+		setScreenClearedBeforeDrawing(true);
 		add(PaneLabel
 				.createTitleLabel("Glass Pane Test Harness\n\u00A77Useful for texturers or learning what Glass Pane can do."));
-		add(PaneTestHarness.createGithubButton("PaneTestHarness.java"));
+		add(PaneTestHarness.createGithubButton("PaneTestHarness.java"), flipButton = PaneTestHarness.createFlipButton());
 		add(PaneButton.createDoneButton());
 	}
 	
 	private static final ResourceLocation	github	= new ResourceLocation("glasspaneharness",
 															"textures/misc/github.png");
+	private static final ResourceLocation	flip	= new ResourceLocation("glasspaneharness",
+															"textures/misc/arrow-circle.png");
+	
+	static PaneButton createFlipButton() {
+		final PaneImageButton button = new PaneImageButton();
+		button.setText("Flip Screen");
+		button.setWidth(85);
+		button.setImage(flip);
+		button.setAutoPositionX(true);
+		button.setRelativeX(0.5);
+		button.setRelativeXOffset(-189);
+		button.setAutoPositionY(true);
+		button.setRelativeY(1.0);
+		button.setRelativeYOffset(-30);
+		button.setOneBitTransparency(false);
+		button.setAlignmentX(HorzAlignment.LEFT);
+		button.setImageAlignment(HorzAlignment.RIGHT);
+		button.setAngle(180f);
+		button.setXRot(0);
+		button.setYRot(0);
+		button.setZRot(1);
+		button.registerActivationListener(new Runnable() {
+			
+			@Override
+			public void run() {
+				GlassPane pane = button.getGlassPane();
+				pane.setRotationAllowed(true);
+				if (pane.getAngle() == 180f) {
+					button.setTranslateX(0);
+					button.setTranslateY(0);
+					pane.setTranslateX(0);
+					pane.setTranslateY(0);
+					pane.setAngle(0f);
+					button.setRotationAllowed(false);
+					GlassPaneMod.invertMouseCoordinates = false;
+				} else {
+					button.setTranslateX(button.getWidth());
+					button.setTranslateY(button.getHeight());
+					pane.setTranslateX(pane.getWidth());
+					pane.setTranslateY(pane.getHeight());
+					pane.setAngle(180f);
+					button.setRotationAllowed(true);
+					GlassPaneMod.invertMouseCoordinates = true;
+				}
+			}
+		});
+		return button;
+	}
 	
 	static PaneButton createGithubButton(String link) {
 		try {
@@ -54,6 +108,7 @@ public class PaneTestHarness
 							+ link);
 			PaneImageButton button = new PaneImageButton();
 			button.setEnabled(Desktop.isDesktopSupported());
+			button.setText("View Source");
 			button.setWidth(85);
 			button.setImage(github);
 			button.setAutoPositionX(true);
@@ -64,7 +119,6 @@ public class PaneTestHarness
 			button.setRelativeYOffset(-30);
 			button.setOneBitTransparency(false);
 			button.setAlignmentX(HorzAlignment.RIGHT);
-			button.setText("View Source ");
 			button.registerActivationListener(new Runnable() {
 				
 				@Override
@@ -157,13 +211,16 @@ public class PaneTestHarness
 			button.setX(x);
 			button.setY(y);
 			button.setButtonColor(0xAAAAAA);
-			if (gp.getComponents().size() <= 1) {
+			if (gp.getComponents().size() <= 3) {
 				button.setEnabled(false);
 			}
 			button.registerActivationListener(new Runnable() {
 				
 				@Override
 				public void run() {
+					if (getAngle() == 180f) {
+						flipButton.activate();
+					}
 					gp.modalOverlay();
 				}
 			});

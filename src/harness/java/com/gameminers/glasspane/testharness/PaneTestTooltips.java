@@ -10,6 +10,6 @@ public class PaneTestTooltips
 	public PaneTestTooltips() {
 		setName("Tooltips");
 		add(PaneButton.createDoneButton());
-		add(PaneTestHarness.createGithubButton("PaneTestTooltips.java"));
+		add(PaneTestHarness.createGithubButton("PaneTestTooltips.java"), PaneTestHarness.createFlipButton());
 	}
 }

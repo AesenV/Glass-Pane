@@ -31,7 +31,7 @@ public class PaneTestButtons
 	public PaneTestButtons() {
 		setName("Buttons");
 		add(PaneButton.createDoneButton());
-		add(PaneTestHarness.createGithubButton("PaneTestButtons.java"));
+		add(PaneTestHarness.createGithubButton("PaneTestButtons.java"), PaneTestHarness.createFlipButton());
 		
 		final PaneButton basic = new PaneButton("Basic Button");
 		basic.setX(10);

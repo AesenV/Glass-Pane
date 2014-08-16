@@ -91,21 +91,25 @@ public final class GlassPaneMirror
 	}
 	
 	@Override
-	public void drawScreen(final int par1, final int par2, final float par3) {
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		if (GlassPaneMod.invertMouseCoordinates) {
+			mouseX = width - mouseX;
+			mouseY = height - mouseY;
+		}
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthFunc(GL11.GL_LEQUAL);
 		if (isModal()) {
-			modal.drawScreen(-10, -10, par3);
+			modal.drawScreen(-10, -10, partialTicks);
 			for (final GlassPane gp : modalUnderlays) {
 				if (gp == null) {
 					continue;
 				}
-				gp.render(-10, -10, par3);
+				gp.render(-10, -10, partialTicks);
 			}
 			GL11.glTranslatef(0, 0, 20);
 			Rendering.drawGradientRect(0, 0, width, height, 0xC0101010, 0xD0101010);
 		}
-		mirrored.render(par1, par2, par3);
+		mirrored.render(mouseX, mouseY, partialTicks);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 	
@@ -121,7 +125,11 @@ public final class GlassPaneMirror
 	}
 	
 	@Override
-	protected void mouseClicked(final int mouseX, final int mouseY, final int button) {
+	protected void mouseClicked(int mouseX, int mouseY, final int button) {
+		if (GlassPaneMod.invertMouseCoordinates) {
+			mouseX = width - mouseX;
+			mouseY = height - mouseY;
+		}
 		mirrored.fireEvent(MouseDownEvent.class, mirrored, mouseX, mouseY, button);
 	}
 	

@@ -10,6 +10,6 @@ public class PaneTestPanels
 	public PaneTestPanels() {
 		setName("Panels");
 		add(PaneButton.createDoneButton());
-		add(PaneTestHarness.createGithubButton("PaneTestPanels.java"));
+		add(PaneTestHarness.createGithubButton("PaneTestPanels.java"), PaneTestHarness.createFlipButton());
 	}
 }
