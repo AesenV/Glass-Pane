@@ -35,6 +35,8 @@ public class PaneTestHarness
 			new PaneTestPanels(),
 			new PaneTestEasers(),
 			new PaneTestTooltips(),
+			new PaneTestTextFields(),
+			new PaneTestShadowboxes(),
 			new PaneTestMisc()
 										};
 	

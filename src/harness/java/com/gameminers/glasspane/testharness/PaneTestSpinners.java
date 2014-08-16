@@ -17,7 +17,9 @@ public class PaneTestSpinners
 	public PaneTestSpinners() {
 		setName("Spinners");
 		add(PaneButton.createDoneButton());
-		add(PaneTestHarness.createGithubButton("PaneTestSpinners.java"), PaneTestHarness.createFlipButton());
+		PaneButton flipButton = PaneTestHarness.createFlipButton();
+		flipButton.setEnabled(false);
+		add(PaneTestHarness.createGithubButton("PaneTestSpinners.java"), flipButton);
 		
 		PaneSpinner integer = new PaneSpinner();
 		integer.setIncrement(1);
