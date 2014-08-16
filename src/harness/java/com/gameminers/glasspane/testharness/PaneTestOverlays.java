@@ -10,5 +10,6 @@ public class PaneTestOverlays
 	public PaneTestOverlays() {
 		setName("Overlays");
 		add(PaneButton.createDoneButton());
+		add(PaneTestHarness.createGithubButton("PaneTestOverlays.java"));
 	}
 }

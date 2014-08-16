@@ -10,5 +10,6 @@ public class PaneTestEasers
 	public PaneTestEasers() {
 		setName("Easers");
 		add(PaneButton.createDoneButton());
+		add(PaneTestHarness.createGithubButton("PaneTestEasers.java"));
 	}
 }

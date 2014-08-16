@@ -25,6 +25,7 @@ public class PaneTestProgressBars
 	public PaneTestProgressBars() {
 		setName("Progress Bars");
 		add(PaneButton.createDoneButton());
+		add(PaneTestHarness.createGithubButton("PaneTestProgressBars.java"));
 		
 		final PaneProgressBar basic = new PaneProgressBar();
 		basic.setProgressTextShown(true);

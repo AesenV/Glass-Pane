@@ -10,5 +10,6 @@ public class PaneTestScrollPanels
 	public PaneTestScrollPanels() {
 		setName("Scroll Panels");
 		add(PaneButton.createDoneButton());
+		add(PaneTestHarness.createGithubButton("PaneTestScrollPanels.java"));
 	}
 }

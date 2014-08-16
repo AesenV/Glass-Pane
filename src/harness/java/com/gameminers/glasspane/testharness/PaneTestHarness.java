@@ -2,10 +2,19 @@ package com.gameminers.glasspane.testharness;
 
 
 import gminers.glasspane.GlassPane;
+import gminers.glasspane.HorzAlignment;
 import gminers.glasspane.component.PaneComponent;
 import gminers.glasspane.component.button.PaneButton;
+import gminers.glasspane.component.button.PaneImageButton;
 import gminers.glasspane.component.text.PaneLabel;
 import gminers.glasspane.ease.PaneEaser;
+
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import net.minecraft.util.ResourceLocation;
 
 import com.gameminers.glasspane.internal.GlassPaneMod;
 
@@ -31,7 +40,48 @@ public class PaneTestHarness
 		setRevertAllowed(true);
 		add(PaneLabel
 				.createTitleLabel("Glass Pane Test Harness\n\u00A77Useful for texturers or learning what Glass Pane can do."));
+		add(PaneTestHarness.createGithubButton("PaneTestHarness.java"));
 		add(PaneButton.createDoneButton());
+	}
+	
+	private static final ResourceLocation	github	= new ResourceLocation("glasspaneharness",
+															"textures/misc/github.png");
+	
+	static PaneButton createGithubButton(String link) {
+		try {
+			final URI url = new URI(
+					"http://github.com/AesenV/Glass-Pane/blob/master/src/harness/java/com/gameminers/glasspane/testharness/"
+							+ link);
+			PaneImageButton button = new PaneImageButton();
+			button.setEnabled(Desktop.isDesktopSupported());
+			button.setWidth(85);
+			button.setImage(github);
+			button.setAutoPositionX(true);
+			button.setRelativeX(0.5);
+			button.setRelativeXOffset(104);
+			button.setAutoPositionY(true);
+			button.setRelativeY(1.0);
+			button.setRelativeYOffset(-30);
+			button.setOneBitTransparency(false);
+			button.setAlignmentX(HorzAlignment.RIGHT);
+			button.setText("View Source ");
+			button.registerActivationListener(new Runnable() {
+				
+				@Override
+				public void run() {
+					Desktop desktop = Desktop.getDesktop();
+					try {
+						desktop.browse(url);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			return button;
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+		return null;
 	}
 	
 	@Override

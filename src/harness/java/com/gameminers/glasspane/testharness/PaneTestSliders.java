@@ -6,6 +6,7 @@ import gminers.glasspane.component.button.PaneButton;
 import gminers.glasspane.component.numeric.PaneSlider;
 import gminers.glasspane.event.StateChangedEvent;
 import gminers.glasspane.listener.PaneEventHandler;
+import gminers.kitchensink.Hues;
 
 
 public class PaneTestSliders
@@ -43,17 +44,16 @@ public class PaneTestSliders
 		add(low);
 		
 		final PaneSlider colored = new PaneSlider();
-		colored.setText("Colored Slider: 0/100");
+		colored.setText("Colored Slider: 0/360");
 		colored.registerListeners(new Object() {
 			@PaneEventHandler
 			public void onStateChanged(StateChangedEvent e) {
-				colored.setText("Colored Slider: " + colored.getValue() + "/100");
+				colored.setText("Colored Slider: " + colored.getValue() + "/360");
+				colored.setKnobColor(Hues.hueToRGB(colored.getValue()));
 			}
 		});
-		colored.setColor(0xFFFF00);
-		colored.setHoveredColor(0x00FFFF);
 		colored.setWidth(200);
-		colored.setMaximum(100);
+		colored.setMaximum(360);
 		colored.setKnobColor(0xFF0000);
 		colored.setX(10);
 		colored.setY(58);
