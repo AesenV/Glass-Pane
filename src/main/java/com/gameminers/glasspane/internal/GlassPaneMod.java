@@ -56,7 +56,7 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 @Mod(
 		name = "Glass Pane",
 		modid = "GlassPane",
-		version = "0.5 `Aluminosilicate' Beta",
+		version = "1.0 `Borosilicate' Beta",
 		dependencies = "required-after:KitchenSink")
 @Log4j2
 public class GlassPaneMod {
