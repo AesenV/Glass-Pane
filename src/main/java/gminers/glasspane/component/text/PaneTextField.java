@@ -182,14 +182,11 @@ public class PaneTextField
 		GL11.glColor3f(0.6f, 0.6f, 0.6f);
 		PaneButton.renderStretchyTexturedRect(0, 0, u, v, width, height, 220, 40);
 		
-		// render the icon
-		if (icon != null) {
-			PaneImage.render(icon, 0, 0, iconU, iconV, getHeight() - 4, getHeight() - 4, iconImageWidth,
-					iconImageHeight, iconColor, 1.0f, false);
-		}
-		
 		// translate to the right to make text less stupid looking
 		GL11.glTranslatef(4f, 0f, 0f);
+		if (icon != null) {
+			GL11.glTranslatef(getHeight() - 4, 0, 0);
+		}
 		// trim the text to the component width
 		final String oldText = text;
 		final int oldColor = color;
@@ -201,7 +198,8 @@ public class PaneTextField
 		if (viewPos > text.length()) {
 			viewPos = text.length() - trimmedLength;
 		}
-		text = trimmedText = renderer.trimStringToWidth(text.substring(viewPos), getWidth() - 8);
+		text = trimmedText = renderer.trimStringToWidth(text.substring(viewPos), getWidth() - 8
+				- (icon != null ? getHeight() - 4 : 0));
 		trimmedLength = text.length();
 		// shift the view pos if needed
 		if (cursorPos > viewPos + trimmedLength) {
@@ -224,6 +222,9 @@ public class PaneTextField
 				Rendering.drawRect(llw - 1, hHeight - ((renderer.FONT_HEIGHT / 2) + 1), llw, hHeight
 						+ (renderer.FONT_HEIGHT / 2), 0x00FFFFFF | opacity << 24);
 			}
+			if (icon != null) {
+				GL11.glTranslatef(-(getHeight() - 4), 0, 0);
+			}
 			GL11.glTranslatef(-4f, 0f, 0f);
 			GL11.glColor3f(1.0f, 1.0f, 1.0f);
 			// and ye olde blue outline
@@ -233,10 +234,14 @@ public class PaneTextField
 		} else {
 			// if we aren't focused, just undo the translate
 			GL11.glTranslatef(-4f, 0f, 0f);
+			if (icon != null) {
+				GL11.glTranslatef(-(getHeight() - 4), 0, 0);
+			}
 		}
 		// draw some indications there's more text if we're not showing it all
 		if (viewPos > 0) {
-			Rendering.drawHorzGradientRect(1, 1, 2, height - 1, 0x99FFFFFF, 0x33FFFFFF);
+			Rendering.drawHorzGradientRect(1, 1, 2 + (icon != null ? getHeight() - 4 : 0), height - 1, 0x99FFFFFF,
+					0x33FFFFFF);
 		}
 		if (viewPos + trimmedLength < str.length()) {
 			Rendering.drawHorzGradientRect(width - 1, height - 1, width - 2, 1, 0x99FFFFFF, 0x33FFFFFF);
@@ -245,6 +250,12 @@ public class PaneTextField
 		if (visualBellEnabled) {
 			final int blinkOpacity = (int) ((blink - (Math.min(blink, 0.1) * partialTicks)) * 255);
 			Rendering.drawRect(1, 1, width - 1, height - 1, blinkColor | (blinkOpacity << 24));
+		}
+		
+		// render the icon
+		if (icon != null) {
+			PaneImage.render(icon, 2, 2, iconU, iconV, getHeight() - 4, getHeight() - 4, iconImageWidth,
+					iconImageHeight, iconColor, 1.0f, false);
 		}
 	}
 	
@@ -259,9 +270,7 @@ public class PaneTextField
 	
 	@PaneEventHandler
 	public void onKeyType(final KeyTypedEvent e) {
-		if (getParent() == null || getParent().getFocusedComponent() != this) {
-			return;
-		}
+		if (getParent() == null || getParent().getFocusedComponent() != this) return;
 		// precalc the ctrl and shift values
 		final boolean ctrl = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
 		// shift is included for IBM-style shortcuts instead of Windows-style

@@ -50,7 +50,7 @@ public class PaneTestEasers
 			}
 		});
 		add(speed);
-		createEaserButton(boxEaser, "x", 200);
+		createEaserButton(boxEaser, "x", 300);
 		createEaserButton(boxEaser, "x", 10);
 		createEaserButton(boxEaser, "y", 180);
 		createEaserButton(boxEaser, "y", 10);
