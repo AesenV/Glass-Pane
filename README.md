@@ -45,6 +45,5 @@ Downloading
 ====
 Glass Pane comes in two flavors; normal and dev. The dev build must be used when developing against Glass Pane in a deobfuscated enviornment, and the normal version is what you put in your mods folder.
 You can get Glass Pane on the [releases page](http://github.com/AesenV/Glass-Pane/releases).
-Kitchen Sink is also required, and can be found at it's [GitHub repository](http://github.com/AesenV/Kitchen-Sink).
 
 You will also see PaneHarness.jar - this is a mod that implements a test harness for every component and feature in Glass Pane so you can play around with it. Just drop it in your mods folder, and then click the glass pane in the Options menu to go to it.
