@@ -4,4 +4,5 @@ All that should be required to compile is a simple 'gradle build', or a 'gradle 
 The Glass Pane build.gradle also adds a new task; 'delombok', as we use Project Lombok. To run it, just do 'gradle delombok'.
 A new folder will be created called 'delombok' with the delomboked sources in it.
 
-You will need Kitchen Sink, from http://github.com/AesenV/Kitchen-Sink to compile Glass Pane, as well as Project Lombok, from http://projectlombok.org
+You will need Kitchen Sink, from http://github.com/AesenV/Kitchen-Sink to compile Glass Pane, as well as Project Lombok, from http://projectlombok.org (this shouldn't be required, as our build.gradle uses a Maven dependency for Lombok, but here it is anyway)
+The build.gradle assumes Kitchen Sink is in ../KitchenSink/latest-dev.jar, so that's where you have to put the KitchenSink-dev.jar (unless you modify the build.gradle)
