@@ -1,6 +1,10 @@
 Contributions, as well as suggestions, are welcome on Glass Pane.
 
-If you'd like to contribute code, submit a pull request here on GitHub. If you have a suggestion or bug report, open an issue.
+If you'd like to contribute code, submit a pull request here on GitHub. If you 
+have a suggestion or bug report, open an issue.
 
-Code style is pretty close to Sun code conventions, but with tabs instead of spaces.
-Don't worry too much about it, I'm not going to reject PRs just for formatting. If I have that much of an issue with your formatting, I'll reformat it before pulling it.
+Code style is pretty close to Sun code conventions, but with tabs instead of 
+spaces.
+Don't worry too much about it, I'm not going to reject PRs just for formatting. 
+If I have that much of an issue with your formatting, I'll reformat it before 
+pulling it.
