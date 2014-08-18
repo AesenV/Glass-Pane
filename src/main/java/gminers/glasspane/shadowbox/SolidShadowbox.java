@@ -16,9 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SolidShadowbox
 		extends PaneShadowbox {
-	@Getter
-	@Setter
-	protected int	color	= 0xFF000000;
+	@Getter @Setter protected int color = 0xFF000000;
 	
 	@Override
 	public void render(final int mouseX, final int mouseY, final float partialTicks) {
@@ -26,11 +24,9 @@ public class SolidShadowbox
 	}
 	
 	@Override
-	public void tick() {
-	}
+	public void tick() {}
 	
 	@Override
-	public void winch() {
-	}
+	public void winch() {}
 	
 }

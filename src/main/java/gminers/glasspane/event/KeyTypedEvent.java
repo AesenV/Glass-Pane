@@ -17,26 +17,24 @@ import org.lwjgl.input.Keyboard;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PRIVATE,
-		makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ToString
 @Getter
 public class KeyTypedEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			PaneComponent.class,
 			char.class,
 			int.class
-												};
+	};
 	/**
 	 * A char representing the key being pressed.
 	 */
-	char							keyChar;
+	char keyChar;
 	/**
 	 * The {@link Keyboard} key code being pressed, or KEY_NONE if only keyChar can represent it properly.
 	 */
-	int								keyCode;
+	int keyCode;
 	
 	public KeyTypedEvent(final PaneComponent source, final char keyChar, final int keyCode) {
 		super(source);

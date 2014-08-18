@@ -29,31 +29,23 @@ public class PaneBlinker
 	/**
 	 * Whether or not this component is currently blinking.
 	 */
-	@Getter
-	@Setter
-	private boolean			blinking	= true;
+	@Getter @Setter private boolean blinking = true;
 	/**
 	 * The maximum distance to pulsate to.
 	 */
-	@Getter
-	@Setter
-	private int				distance	= 10;
+	@Getter @Setter private int distance = 10;
 	/**
 	 * The wave this component will use for pulsating.
 	 */
-	@Getter
-	@Setter
-	private WaveType		wave		= WaveType.ABSOLUTE_TANGENT;
+	@Getter @Setter private WaveType wave = WaveType.ABSOLUTE_TANGENT;
 	/**
 	 * The speed that this component will pulsate at.
 	 */
-	@Getter
-	@Setter
-	private double			speed		= 4;
+	@Getter @Setter private double speed = 4;
 	
-	private int				tickCounter	= 0;
+	private int tickCounter = 0;
 	
-	private PaneComponent	target		= null;
+	private PaneComponent target = null;
 	
 	public PaneBlinker() {
 		setColor(0xFF0000);
@@ -70,9 +62,9 @@ public class PaneBlinker
 			// a blinker floating in the middle of nowhere will look strange
 			if (target.isVisible()
 					&& targetPane != null
-					&& (Minecraft.getMinecraft().currentScreen == targetPane.getScreenMirror() ||
-							GlassPaneMod.inst.currentOverlays.contains(targetPane) ||
-					GlassPaneMod.inst.currentStickyOverlays.contains(targetPane))) {
+					&& (Minecraft.getMinecraft().currentScreen == targetPane.getScreenMirror()
+							|| GlassPaneMod.inst.currentOverlays.contains(targetPane) || GlassPaneMod.inst.currentStickyOverlays
+								.contains(targetPane))) {
 				// mimic it's size, translation, and rotation
 				setVisible(true);
 				mimic(target);

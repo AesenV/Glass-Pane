@@ -15,21 +15,19 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PRIVATE,
-		makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ToString
 @Getter
 public class PaneEventListenerUnregisterEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			PaneComponent.class,
 			Object.class
-												};
+	};
 	/**
 	 * The object being unregistered.
 	 */
-	Object							listener;
+	Object listener;
 	
 	public PaneEventListenerUnregisterEvent(final PaneComponent c, final Object o) {
 		super(c);

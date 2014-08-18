@@ -46,17 +46,13 @@ public abstract class GlassPane
 	/**
 	 * A mirror of this GlassPane that can be used for APIs that need a GuiScreen, or for Minecraft itself.
 	 */
-	@Getter(
-			lazy = true)
-	private final GlassPaneMirror			screenMirror				= new GlassPaneMirror(this);
+	@Getter(lazy = true) private final GlassPaneMirror screenMirror = new GlassPaneMirror(this);
 	/**
 	 * Whether or not the revert() method can be used.
 	 */
-	@Getter
-	@Setter
-	private boolean							revertAllowed				= false;
-	protected static final ResourceLocation	defaultShadowboxTex			= new ResourceLocation(
-																				"textures/gui/options_background.png");
+	@Getter @Setter private boolean revertAllowed = false;
+	protected static final ResourceLocation defaultShadowboxTex = new ResourceLocation(
+			"textures/gui/options_background.png");
 	/**
 	 * The shadowbox (background) used by this GlassPane.
 	 * 
@@ -64,36 +60,26 @@ public abstract class GlassPane
 	 * @see PanoramaShadowbox
 	 * @see AdaptivePanoramaShadowbox
 	 */
-	@Getter
-	@Setter
-	protected PaneShadowbox					shadowbox					= new ImageTileShadowbox(
-																				defaultShadowboxTex);
-	private List<GlassPane>					lastOverlays				= null;
-	private GuiScreen						lastScreen					= null;
+	@Getter @Setter protected PaneShadowbox shadowbox = new ImageTileShadowbox(defaultShadowboxTex);
+	private List<GlassPane> lastOverlays = null;
+	private GuiScreen lastScreen = null;
 	/**
 	 * Whether or not this GlassPane is currently being displayed with takeover mode.
 	 */
-	@Getter
-	protected boolean						takingOver					= false;
+	@Getter protected boolean takingOver = false;
 	/**
 	 * Whether or not the shadowbox should be affected by rotation applied to this GlassPane.
 	 */
-	@Getter
-	@Setter
-	protected boolean						shadowboxRotationAllowed	= true;
+	@Getter @Setter protected boolean shadowboxRotationAllowed = true;
 	/**
 	 * Whether or not the screen should be cleared before drawing this GlassPane. If the screen size or rotation changes on the fly, this
 	 * will remove any artifacts left by the previous frame.
 	 */
-	@Getter
-	@Setter
-	protected boolean						screenClearedBeforeDrawing	= false;
+	@Getter @Setter protected boolean screenClearedBeforeDrawing = false;
 	/**
 	 * Whether or not this GlassPane will render when the HUD is disabled. (Only applies if this GlassPane is displayed over a GuiIngame)
 	 */
-	@Getter
-	@Setter
-	protected boolean						renderedWhenHUDIsOff		= false;
+	@Getter @Setter protected boolean renderedWhenHUDIsOff = false;
 	
 	/**
 	 * Overrides the currently displaying GuiScreen with a screen dedicated to displaying this GlassPane, and stores the current GUI state
@@ -335,12 +321,9 @@ public abstract class GlassPane
 			throw new IllegalStateException("Attempt to use revert() on " + getClass().getName()
 					+ ", but there is no previous state to revert to!");
 		// if we're a modal overlay, let's use our modal metadata to revert instead
-		final GuiScreen screen = getScreenMirror().isModal() ?
-				getScreenMirror().getModal()
-				: lastScreen;
+		final GuiScreen screen = getScreenMirror().isModal() ? getScreenMirror().getModal() : lastScreen;
 		
-		final List<GlassPane> overlays = getScreenMirror().isModal() ?
-				getScreenMirror().getModalUnderlays()
+		final List<GlassPane> overlays = getScreenMirror().isModal() ? getScreenMirror().getModalUnderlays()
 				: lastOverlays;
 		// now, display the previous screen
 		Minecraft.getMinecraft().displayGuiScreen(screen);

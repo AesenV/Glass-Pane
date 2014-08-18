@@ -30,51 +30,38 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 public class PaneTextField
 		extends PaneLabel
 		implements Focusable {
-	int					counter				= 0;
+	int counter = 0;
 	/**
 	 * The current position of the carat.
 	 */
-	@Getter
-	@Setter
-	int					cursorPos			= 0;
+	@Getter @Setter int cursorPos = 0;
 	/**
 	 * The current opacity of the visual bell.
 	 */
-	@Getter
-	@Setter
-	float				blink				= 0.0f;
+	@Getter @Setter float blink = 0.0f;
 	/**
 	 * The current color of the visual bell.
 	 */
-	@Getter
-	@Setter
-	int					blinkColor			= 0xFFFFFF;
+	@Getter @Setter int blinkColor = 0xFFFFFF;
 	/**
 	 * The current offset of the view of the text.
 	 */
-	@Getter
-	@Setter
-	int					viewPos				= 0;
-	final StringBuilder	str					= new StringBuilder();
-	int					trimmedLength		= 0;
+	@Getter @Setter int viewPos = 0;
+	final StringBuilder str = new StringBuilder();
+	int trimmedLength = 0;
 	/**
 	 * The text to show when the TextField is empty.
 	 */
-	@Getter
-	@Setter
-	String				blankText			= "";
+	@Getter @Setter String blankText = "";
 	/**
 	 * The color to use when showing blankText.
 	 */
-	@Getter
-	@Setter
-	int					blankColor			= 0x888888;
+	@Getter @Setter int blankColor = 0x888888;
 	/**
 	 * Whether or not to blink the text field when something happens.<br/>
 	 * The following colors are used:
@@ -86,59 +73,41 @@ public class PaneTextField
 	 * </ul>
 	 * Other, custom, colors can also be used, but these four are the only ones used by default.
 	 */
-	@Getter
-	@Setter
-	boolean				visualBellEnabled	= true;
+	@Getter @Setter boolean visualBellEnabled = true;
 	/**
 	 * An icon to put to the left of the text. Can be used for identification purposes or decoration.<br/>
 	 * Null means 'do not show'.
 	 */
-	@Getter
-	@Setter
-	ResourceLocation	icon				= null;
+	@Getter @Setter ResourceLocation icon = null;
 	/**
 	 * The U (X texture offset) to use when rendering the icon
 	 */
-	@Getter
-	@Setter
-	int					iconU				= 0;
+	@Getter @Setter int iconU = 0;
 	/**
 	 * The V (Y texture offset) to use when rendering the icon
 	 */
-	@Getter
-	@Setter
-	int					iconV				= 0;
+	@Getter @Setter int iconV = 0;
 	/**
 	 * The width of the portion of the icon's image to use - 256 for the entire image
 	 */
-	@Getter
-	@Setter
-	int					iconImageWidth		= 256;
+	@Getter @Setter int iconImageWidth = 256;
 	/**
 	 * The height of the portion of the icon's image to use - 256 for the entire image.
 	 */
-	@Getter
-	@Setter
-	int					iconImageHeight		= 256;
+	@Getter @Setter int iconImageHeight = 256;
 	/**
 	 * A 24-bit packed color to use for the icon. (first 8 bits are ignored, see {@link #alpha})
 	 */
-	@Getter
-	@Setter
-	int					iconColor			= 0xFFFFFF;
+	@Getter @Setter int iconColor = 0xFFFFFF;
 	/**
 	 * The alpha transparency of the icon - 0.0 is completely transparent, 1.0 is opaque
 	 */
-	@Getter
-	@Setter
-	float				alpha				= 1.0f;
+	@Getter @Setter float alpha = 1.0f;
 	/**
 	 * Whether or not to use one-bit transparency for the icon. One-bit transparency is faster, but if your image is partially
 	 * transparent, it will render as fully opaque.
 	 */
-	@Getter
-	@Setter
-	boolean				oneBitTransparency	= true;
+	@Getter @Setter boolean oneBitTransparency = true;
 	
 	public PaneTextField() {
 		alignmentY = VertAlignment.MIDDLE;

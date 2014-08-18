@@ -16,20 +16,18 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Getter
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ToString
 public class ComponentRemovedEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			PaneComponent.class,
 			PaneComponent.class
-												};
+	};
 	/**
 	 * The component being removed.
 	 */
-	PaneComponent					affected;
+	PaneComponent affected;
 	
 	public ComponentRemovedEvent(final PaneComponent source, final PaneComponent added) {
 		super(source);

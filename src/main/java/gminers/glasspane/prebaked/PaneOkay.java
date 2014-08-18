@@ -17,8 +17,7 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 public class PaneOkay
@@ -27,11 +26,11 @@ public class PaneOkay
 		void onOkay(final PaneOkay pane);
 	}
 	
-	String			text;
-	String			okText;
-	OkayCallback	callback;
+	String text;
+	String okText;
+	OkayCallback callback;
 	
-	PaneButton		okButton;
+	PaneButton okButton;
 	
 	public PaneOkay(final String text, final String okText, final OkayCallback callback) {
 		setRevertAllowed(true);

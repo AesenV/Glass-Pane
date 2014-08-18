@@ -14,8 +14,8 @@ import gminers.kitchensink.Strings;
 
 public class PaneTestEasers
 		extends GlassPane {
-	private int	x	= 24;
-	private int	y	= 34;
+	private int x = 24;
+	private int y = 34;
 	
 	public PaneTestEasers() {
 		setName("Easers");

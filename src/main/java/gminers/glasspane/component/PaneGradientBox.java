@@ -14,8 +14,7 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public class PaneGradientBox
@@ -23,7 +22,7 @@ public class PaneGradientBox
 	/**
 	 * The second color of this component.
 	 */
-	int	color2	= 0xFFFFFF;
+	int color2 = 0xFFFFFF;
 	
 	public PaneGradientBox(final int color, final int color2) {
 		this.color = color;

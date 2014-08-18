@@ -14,15 +14,13 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ToString
 public class FocusLostEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
-													PaneComponent.class
-												};
+	public static final Class<?>[] SIGNATURE = {
+		PaneComponent.class
+	};
 	
 	public FocusLostEvent(final PaneComponent source) {
 		super(source);

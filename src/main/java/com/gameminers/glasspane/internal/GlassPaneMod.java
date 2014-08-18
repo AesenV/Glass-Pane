@@ -53,28 +53,22 @@ import cpw.mods.fml.common.gameevent.TickEvent;
  * @author Aesen Vismea
  * 
  */
-@Mod(
-		name = "Glass Pane",
-		modid = "GlassPane",
-		version = "1.0 `Borosilicate' Beta",
-		dependencies = "required-after:KitchenSink")
+@Mod(name = "Glass Pane", modid = "GlassPane", version = "1.0 `Borosilicate' Beta", dependencies = "required-after:KitchenSink")
 @Log4j2
 public class GlassPaneMod {
-	@Instance("GlassPane")
-	public static GlassPaneMod					inst;
+	@Instance("GlassPane") public static GlassPaneMod inst;
 	
-	public final Map<Class<?>, GlassPane>		overrides				= Maps.newHashMap();
-	public final Map<Class<?>, List<GlassPane>>	overlays				= Maps.newHashMap();
+	public final Map<Class<?>, GlassPane> overrides = Maps.newHashMap();
+	public final Map<Class<?>, List<GlassPane>> overlays = Maps.newHashMap();
 	
-	public final List<GlassPane>				currentOverlays			= Lists.newCopyOnWriteArrayList();
-	public final List<GlassPane>				currentStickyOverlays	= Lists.newCopyOnWriteArrayList();
+	public final List<GlassPane> currentOverlays = Lists.newCopyOnWriteArrayList();
+	public final List<GlassPane> currentStickyOverlays = Lists.newCopyOnWriteArrayList();
 	
-	public final List<Class<?>>					overrideExemptions		= Lists.newCopyOnWriteArrayList();
+	public final List<Class<?>> overrideExemptions = Lists.newCopyOnWriteArrayList();
 	
-	public static Map<Object, PaneEaser>		easers					= Collections
-																				.synchronizedMap(new HashMap<Object, PaneEaser>());
+	public static Map<Object, PaneEaser> easers = Collections.synchronizedMap(new HashMap<Object, PaneEaser>());
 	
-	public static boolean						invertMouseCoordinates	= false;
+	public static boolean invertMouseCoordinates = false;
 	
 	@EventHandler
 	public void init(final FMLInitializationEvent e) {
@@ -213,14 +207,14 @@ public class GlassPaneMod {
 		}
 	}
 	
-	private int				touchScreenCounter;
+	private int touchScreenCounter;
 	
-	private Class<Mouse>	mouseClass		= Mouse.class;
-	private Class<Keyboard>	keyboardClass	= Keyboard.class;
+	private Class<Mouse> mouseClass = Mouse.class;
+	private Class<Keyboard> keyboardClass = Keyboard.class;
 	
-	private Field			mouseReadBuffer;
-	private Field			mouseDWheel;
-	private Field			keyboardReadBuffer;
+	private Field mouseReadBuffer;
+	private Field mouseDWheel;
+	private Field keyboardReadBuffer;
 	
 	
 	/**

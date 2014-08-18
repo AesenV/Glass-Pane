@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
  */
 public class PaneCheckBox
 		extends PaneToggleButton {
-	protected int	u	= 220;
+	protected int u = 220;
 	
 	public PaneCheckBox() {
 		this("Checkbox");

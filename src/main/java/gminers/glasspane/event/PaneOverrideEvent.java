@@ -16,24 +16,22 @@ import net.minecraft.client.gui.GuiScreen;
  * 
  */
 @Getter
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ToString
 public class PaneOverrideEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			GlassPane.class,
 			GuiScreen.class
-												};
+	};
 	/**
 	 * The GlassPane being displayed. The same as 'source', but already cast to a GlassPane.
 	 */
-	GlassPane						pane;
+	GlassPane pane;
 	/**
 	 * The GuiScreen being overridden. If it was a GlassPane, this will be an instance of GlassPaneMirror.
 	 */
-	GuiScreen						orig;
+	GuiScreen orig;
 	
 	public PaneOverrideEvent(final GlassPane pane, final GuiScreen orig) {
 		super(pane);

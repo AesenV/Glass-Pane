@@ -23,25 +23,23 @@ import org.lwjgl.util.glu.Project;
  */
 public class PanoramaShadowbox
 		extends PaneShadowbox {
-	private static int						panoramaTimer;
-	private final Minecraft					mc					= Minecraft.getMinecraft();
-	private ResourceLocation				panoramaTexture;
-	private DynamicTexture					viewportTexture;
+	private static int panoramaTimer;
+	private final Minecraft mc = Minecraft.getMinecraft();
+	private ResourceLocation panoramaTexture;
+	private DynamicTexture viewportTexture;
 	/**
 	 * Whether or not this shadowbox should render with a layer of "fog" over it.
 	 */
-	@Getter
-	@Setter
-	private boolean							foggy				= true;
-	private static final ResourceLocation[]	titlePanoramaPaths	= new ResourceLocation[] {
+	@Getter @Setter private boolean foggy = true;
+	private static final ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {
 			new ResourceLocation("textures/gui/title/background/panorama_0.png"),
 			new ResourceLocation("textures/gui/title/background/panorama_1.png"),
 			new ResourceLocation("textures/gui/title/background/panorama_2.png"),
 			new ResourceLocation("textures/gui/title/background/panorama_3.png"),
 			new ResourceLocation("textures/gui/title/background/panorama_4.png"),
 			new ResourceLocation("textures/gui/title/background/panorama_5.png")
-																};
-	private ResourceLocation[]				overridePaths		= null;
+	};
+	private ResourceLocation[] overridePaths = null;
 	
 	/**
 	 * Returns a <b>clone</b> of the paths currently being used to override the default panorama.
@@ -90,8 +88,7 @@ public class PanoramaShadowbox
 			final float f2 = ((float) (k / b0) / (float) b0 - 0.5F) / 64.0F;
 			final float f3 = 0.0F;
 			GL11.glTranslatef(f1, f2, f3);
-			GL11.glRotatef(MathHelper.sin((panoramaTimer + partialTick) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F,
-					0.0F);
+			GL11.glRotatef(MathHelper.sin((panoramaTimer + partialTick) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F, 0.0F);
 			GL11.glRotatef(-(panoramaTimer + partialTick) * 0.1F, 0.0F, 1.0F, 0.0F);
 			
 			for (int l = 0; l < 6; ++l) {

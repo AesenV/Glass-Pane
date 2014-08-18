@@ -9,8 +9,8 @@ import com.gameminers.glasspane.internal.GlassPaneMod;
 
 public class PaneTestOverlays
 		extends GlassPane {
-	private int	x	= 10;
-	private int	y	= 10;
+	private int x = 10;
+	private int y = 10;
 	
 	public PaneTestOverlays() {
 		setName("Overlays");

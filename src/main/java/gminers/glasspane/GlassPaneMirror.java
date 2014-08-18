@@ -30,27 +30,17 @@ import com.gameminers.glasspane.internal.GlassPaneMod;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
 public final class GlassPaneMirror
 		extends GuiScreen {
 	/**
 	 * The GlassPane that this GlassPaneMirror is mirroring.
 	 */
-	@Getter
-	GlassPane		mirrored;
-	@NonFinal
-	boolean			shown	= false;
-	@Getter
-	@Setter(AccessLevel.PACKAGE)
-	@NonFinal
-	List<GlassPane>	modalUnderlays;
-	@Getter
-	@Setter(AccessLevel.PACKAGE)
-	@NonFinal
-	GuiScreen		modal;
+	@Getter GlassPane mirrored;
+	@NonFinal boolean shown = false;
+	@Getter @Setter(AccessLevel.PACKAGE) @NonFinal List<GlassPane> modalUnderlays;
+	@Getter @Setter(AccessLevel.PACKAGE) @NonFinal GuiScreen modal;
 	
 	@Override
 	public boolean doesGuiPauseGame() {

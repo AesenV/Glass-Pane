@@ -19,8 +19,7 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -29,32 +28,32 @@ public class PaneImage
 	/**
 	 * The image to render.
 	 */
-	ResourceLocation	image;
+	ResourceLocation image;
 	/**
 	 * The U (X texture offset) to use when rendering
 	 */
-	int					u					= 0;
+	int u = 0;
 	/**
 	 * The V (Y texture offset) to use when rendering
 	 */
-	int					v					= 0;
+	int v = 0;
 	/**
 	 * The width of the portion of the image to use - 256 for the entire image
 	 */
-	int					imageWidth			= 256;
+	int imageWidth = 256;
 	/**
 	 * The height of the portion of the image to use - 256 for the entire image.
 	 */
-	int					imageHeight			= 256;
+	int imageHeight = 256;
 	/**
 	 * The alpha transparency of this image - 0.0 is completely transparent, 1.0 is opaque
 	 */
-	float				alpha				= 1.0f;
+	float alpha = 1.0f;
 	/**
 	 * Whether or not to use one-bit transparency for this image. One-bit transparency is faster, but if your image is partially
 	 * transparent, it will render as fully opaque.
 	 */
-	boolean				oneBitTransparency	= true;
+	boolean oneBitTransparency = true;
 	
 	public PaneImage(final ResourceLocation image) {
 		this.image = image;

@@ -8,7 +8,7 @@ import gminers.glasspane.component.text.PaneLabel;
 
 public class PaneOverlayExample
 		extends GlassPane {
-	public static int	nextId;
+	public static int nextId;
 	
 	public PaneOverlayExample() {
 		PaneLabel label = new PaneLabel("Overlay Example #" + nextId);

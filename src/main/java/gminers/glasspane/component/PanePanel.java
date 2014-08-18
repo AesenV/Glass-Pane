@@ -21,8 +21,7 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -31,42 +30,42 @@ public class PanePanel
 	/**
 	 * The X alignment of the text in the border.
 	 */
-	HorzAlignment	borderAlignmentX	= HorzAlignment.LEFT;
+	HorzAlignment borderAlignmentX = HorzAlignment.LEFT;
 	/**
 	 * The Y alignment of the text in the border. Does not allow MIDDLE.
 	 */
-	VertAlignment	borderAlignmentY	= VertAlignment.TOP;
+	VertAlignment borderAlignmentY = VertAlignment.TOP;
 	/**
 	 * The font renderer to use for the text in the border.
 	 * 
 	 * @see Minecraft#fontRenderer
 	 * @see Minecraft#standardGalacticFontRenderer
 	 */
-	FontRenderer	renderer			= Minecraft.getMinecraft().fontRenderer;
+	FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
 	/**
 	 * The text to render in the border. <code>null</code> for a solid border with no text.
 	 */
-	String			borderText			= null;
+	String borderText = null;
 	/**
 	 * The thickness of the border, in 'big' pixels.
 	 */
-	int				borderThickness		= 1;
+	int borderThickness = 1;
 	/**
 	 * The color to use for the border and the border text.
 	 */
-	int				borderColor			= 0xFFFFFF;
+	int borderColor = 0xFFFFFF;
 	/**
 	 * Whether or not to render a shadow for the border.
 	 */
-	boolean			borderShadow		= true;
+	boolean borderShadow = true;
 	/**
 	 * Whether or not to render a shadow for the border text.
 	 */
-	boolean			borderTextShadow	= true;
+	boolean borderTextShadow = true;
 	/**
 	 * Whether or not to actually render a border - setting this to false makes this a dumb container that just renders it's children.
 	 */
-	boolean			showBorder			= true;
+	boolean showBorder = true;
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {

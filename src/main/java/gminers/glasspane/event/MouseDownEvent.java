@@ -16,27 +16,25 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PRIVATE,
-		makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ToString
 @Getter
 public class MouseDownEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			PaneComponent.class,
 			int.class,
 			int.class,
 			int.class
-												};
+	};
 	/**
 	 * The absolute X coordinate of the mouse.
 	 */
-	int								mouseX;
+	int mouseX;
 	/**
 	 * The absolute Y coordinate of the mouse.
 	 */
-	int								mouseY;
+	int mouseY;
 	/**
 	 * The button being pressed. Known values:
 	 * <ol start="0">
@@ -51,7 +49,7 @@ public class MouseDownEvent
 	 * Avoid using any values marked "only some mice" unless it's a user option or a non-essential feature, as many mice don't have those
 	 * buttons.
 	 */
-	int								mouseButton;
+	int mouseButton;
 	
 	public MouseDownEvent(final PaneComponent source, final int mouseX, final int mouseY, final int mouseButton) {
 		super(source);

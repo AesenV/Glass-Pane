@@ -15,35 +15,33 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Getter
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ToString
 public class WinchEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			PaneComponent.class,
 			int.class,
 			int.class,
 			int.class,
 			int.class
-												};
+	};
 	/**
 	 * The old width of the component.
 	 */
-	int								oldWidth;
+	int oldWidth;
 	/**
 	 * The old height of the component.
 	 */
-	int								oldHeight;
+	int oldHeight;
 	/**
 	 * The new width of the component.
 	 */
-	int								newWidth;
+	int newWidth;
 	/**
 	 * The new height of the component.
 	 */
-	int								newHeight;
+	int newHeight;
 	
 	public WinchEvent(final PaneComponent source, final int oldWidth, final int oldHeight, final int newWidth,
 			final int newHeight) {

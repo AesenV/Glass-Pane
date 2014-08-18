@@ -21,8 +21,7 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -31,64 +30,64 @@ public class PaneImageButton
 	/**
 	 * The image to render.
 	 */
-	ResourceLocation	image;
+	ResourceLocation image;
 	/**
 	 * The image to render, when the button is in hovered state. If null, defaults to image.
 	 */
-	ResourceLocation	imageHover;
+	ResourceLocation imageHover;
 	/**
 	 * The image to render, when the button is in disabled state. If null, defaults to image.
 	 */
-	ResourceLocation	imageDisabled;
+	ResourceLocation imageDisabled;
 	/**
 	 * The U (X texture offset) to use when rendering
 	 */
-	int					u					= 0;
+	int u = 0;
 	/**
 	 * The V (Y texture offset) to use when rendering
 	 */
-	int					v					= 0;
+	int v = 0;
 	/**
 	 * The width of the portion of the image to use - 256 for the entire image
 	 */
-	int					imagePortionWidth	= 256;
+	int imagePortionWidth = 256;
 	/**
 	 * The height of the portion of the image to use - 256 for the entire image.
 	 */
-	int					imagePortionHeight	= 256;
+	int imagePortionHeight = 256;
 	/**
 	 * The alpha transparency of this image - 0.0 is completely transparent, 1.0 is opaque
 	 */
-	float				alpha				= 1.0f;
+	float alpha = 1.0f;
 	/**
 	 * Whether or not to use one-bit transparency for this image. One-bit transparency is faster, but if your image is partially
 	 * transparent, it will render as fully opaque.
 	 */
-	boolean				oneBitTransparency	= true;
+	boolean oneBitTransparency = true;
 	/**
 	 * The tint to use for the image in it's normal state.
 	 */
-	int					imageColor			= 0xFFFFFF;
+	int imageColor = 0xFFFFFF;
 	/**
 	 * The tint to use for the image in it's hovered state.
 	 */
-	int					imageHoverColor		= 0xFFFFA0;
+	int imageHoverColor = 0xFFFFA0;
 	/**
 	 * The tint to use for the image in it's disabled state.
 	 */
-	int					imageDisabledColor	= 0xA0A0A0;
+	int imageDisabledColor = 0xA0A0A0;
 	/**
 	 * The width of the image on the button.
 	 */
-	int					imageWidth			= 16;
+	int imageWidth = 16;
 	/**
 	 * The width of the image on the button.
 	 */
-	int					imageHeight			= 16;
+	int imageHeight = 16;
 	/**
 	 * The side to put the image on.
 	 */
-	HorzAlignment		imageAlignment		= HorzAlignment.LEFT;
+	HorzAlignment imageAlignment = HorzAlignment.LEFT;
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {

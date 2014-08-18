@@ -11,8 +11,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class PaneTestShadowboxes
 		extends GlassPane {
-	private int	x	= 10;
-	private int	y	= 10;
+	private int x = 10;
+	private int y = 10;
 	
 	public PaneTestShadowboxes() {
 		setName("Shadowboxes");

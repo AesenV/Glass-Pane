@@ -55,55 +55,51 @@ import com.google.common.collect.Maps;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PRIVATE)
-@ToString(
-		exclude = {
-				"listeners",
-				"parent"
-		})
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString(exclude = {
+		"listeners",
+		"parent"
+})
 @Getter
 @Setter
 // TODO: this class is a bit oversized, needs refactoring
 public abstract class PaneComponent
 		extends PaneBB {
-
-
-
-
+	
+	
 	/**
 	 * The Z index of this component. Components with higher Z indexes render in front of components with lower.
 	 */
-	protected int	zIndex					= 0;
+	protected int zIndex = 0;
 	/**
 	 * The angle of this component, in degrees. Only listened to if rotationAllowed is true.
 	 */
-	float																	angle					= 0f;
+	float angle = 0f;
 	/**
 	 * The X multiplier for rotation
 	 */
-	float																	xRot					= 0f;
+	float xRot = 0f;
 	/**
 	 * The Y multiplier for rotation
 	 */
-	float																	yRot					= 0f;
+	float yRot = 0f;
 	/**
 	 * The Z multiplier for rotation (this points into the screen and is probably what you want)
 	 */
-	float																	zRot					= 0f;
+	float zRot = 0f;
 	/**
 	 * Whether or not rotation will be applied to this component.
 	 */
-	boolean																	rotationAllowed			= false;
+	boolean rotationAllowed = false;
 	/**
 	 * For debugging - if true, renders a solid color box encompassing this entire component, with it's color being this component's
 	 * identityHashCode.
 	 */
-	boolean																	drawBoundingBox			= false;
+	boolean drawBoundingBox = false;
 	/**
 	 * Whether or not this component will render.
 	 */
-	boolean																	visible					= true;
+	boolean visible = true;
 	/**
 	 * Whether or not to clip rendering of this component to it's bounding box.<br/>
 	 * 
@@ -111,108 +107,93 @@ public abstract class PaneComponent
 	 *             PaneComponents rely on it, but as such Clip To Size functionality may contain PaneComponent-specific workarounds and
 	 *             other such quirks, and it should not be depended upon for third-party components.
 	 */
-	@Deprecated
-	boolean																	clipToSize				= false;
+	@Deprecated boolean clipToSize = false;
 	/**
 	 * Whether or not to listen to the relative size set by relativeWidth. If this is true, width will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																	autoResizeWidth			= false;
+	boolean autoResizeWidth = false;
 	/**
 	 * Whether or not to listen to the relative size set by relativeHeight. If this is true, height will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																	autoResizeHeight		= false;
+	boolean autoResizeHeight = false;
 	/**
 	 * The multiplier to be applied to the parent container's width when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																	relativeWidth			= 1.0;
+	double relativeWidth = 1.0;
 	/**
 	 * The multiplier to be applied to the parent container's height when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																	relativeHeight			= 1.0;
+	double relativeHeight = 1.0;
 	/**
 	 * An offset to be applied to this component's width when it is resized due to autoResize.
 	 */
-	int																		relativeWidthOffset		= 0;
+	int relativeWidthOffset = 0;
 	/**
 	 * An offset to be applied to this component's height when it is resized due to autoResize.
 	 */
-	int																		relativeHeightOffset	= 0;
+	int relativeHeightOffset = 0;
 	/**
 	 * Whether or not to listen to the relative position set by relativeX. If this is true, X will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																	autoPositionX			= false;
+	boolean autoPositionX = false;
 	/**
 	 * Whether or not to listen to the relative position set by relativeY. If this is true, Y will be updated whenever the parent
 	 * container is resized.
 	 */
-	boolean																	autoPositionY			= false;
+	boolean autoPositionY = false;
 	/**
 	 * The multiplier to be applied to the parent container's width when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																	relativeX				= 1.0;
+	double relativeX = 1.0;
 	/**
 	 * The multiplier to be applied to the parent container's height when autoResize is enabled and a WinchEvent is fired.
 	 */
-	double																	relativeY				= 1.0;
+	double relativeY = 1.0;
 	/**
 	 * An offset to be applied to this component's width when it is resized due to autoResize.
 	 */
-	int																		relativeXOffset			= 0;
+	int relativeXOffset = 0;
 	/**
 	 * An offset to be applied to this component's height when it is resized due to autoResize.
 	 */
-	int																		relativeYOffset			= 0;
+	int relativeYOffset = 0;
 	/**
 	 * Whether or not a ComponentActivateEvent should be fired when this component is clicked.
 	 */
-	boolean																	activatedOnClick		= true;
+	boolean activatedOnClick = true;
 	/**
 	 * The tooltip to show when the mouse hovers over this component for a while.<br/>
 	 * Null is acceptable, and suppresses the tooltip. Newlines are allowed.
 	 */
-	@Setter(NONE)
-	String																	tooltip					= null;
+	@Setter(NONE) String tooltip = null;
 	/**
 	 * The font renderer to use for the tooltip.
 	 */
-	FontRenderer tooltipFontRenderer		= Minecraft.getMinecraft().fontRenderer;
+	FontRenderer tooltipFontRenderer = Minecraft.getMinecraft().fontRenderer;
 	/**
 	 * The distance to translate the position of this component on the X axis, in 'big' pixels.
 	 */
-	protected float	translateX				= 0f;
+	protected float translateX = 0f;
 	/**
 	 * The distance to translate the position of this component on the Y axis, in 'big' pixels.
 	 */
-	protected float	translateY				= 0f;
+	protected float translateY = 0f;
 	
-	@Getter(NONE)
-	@Setter(NONE)
-	protected static final ResourceLocation	RESOURCE				= new ResourceLocation("glasspane", "wadjets.png");
+	@Getter(NONE) @Setter(NONE) protected static final ResourceLocation RESOURCE = new ResourceLocation("glasspane",
+			"wadjets.png");
 	/**
 	 * The parent of this component.
 	 */
-	@PackagePrivate
-	@Setter(NONE)
-	PaneContainer	parent					= null;
-	@Getter(NONE)
-	@Setter(NONE)
-	protected int	mouseX;
-	@Getter(NONE)
-	@Setter(NONE)
-	protected int	mouseY;
-	@Getter(NONE)
-	@Setter(NONE)
-	private List<String> tooltipSplit			= null;
-	@Getter(NONE)
-	@Setter(NONE)
-	protected Map<String, String> metadata				= Maps.newHashMap();
+	@PackagePrivate @Setter(NONE) PaneContainer parent = null;
+	@Getter(NONE) @Setter(NONE) protected int mouseX;
+	@Getter(NONE) @Setter(NONE) protected int mouseY;
+	@Getter(NONE) @Setter(NONE) private List<String> tooltipSplit = null;
+	@Getter(NONE) @Setter(NONE) protected Map<String, String> metadata = Maps.newHashMap();
 	
-	// FORM off
-	@Getter(NONE) @Setter(NONE) protected Map<Class<? extends PaneEvent>, Map<Object, List<Method>>>	listeners				= new HashMap<Class<? extends PaneEvent>, Map<Object, List<Method>>>();
-	// FORM on
+	@Getter(NONE) @Setter(NONE) protected Map<Class<? extends PaneEvent>, Map<Object, List<Method>>> listeners = new HashMap<Class<? extends PaneEvent>, Map<Object, List<Method>>>();
 	
 	public PaneComponent() {
 		registerListeners(this);
@@ -351,10 +332,8 @@ public abstract class PaneComponent
 		if (hoverTime >= 30 && tooltip != null) {
 			// render a tooltip if we should
 			GL11.glTranslatef(0, 0, 5f);
-			Rendering.drawHoveringText(tooltipSplit, mouseX, mouseY,
-					getParent().getWidth(),
-					getGlassPane().getHeight(),
-					tooltipFontRenderer);
+			Rendering.drawHoveringText(tooltipSplit, mouseX, mouseY, getParent().getWidth(),
+					getGlassPane().getHeight(), tooltipFontRenderer);
 		}
 		GL11.glPopMatrix();
 	}
@@ -755,9 +734,7 @@ public abstract class PaneComponent
 		fireEvent(ComponentActivateEvent.class, this);
 	}
 	
-	@Getter(NONE)
-	@Setter(NONE)
-	private int	hoverTime	= 0;
+	@Getter(NONE) @Setter(NONE) private int hoverTime = 0;
 	
 	public final void tick() {
 		fireEvent(ComponentTickEvent.class, this);
@@ -778,36 +755,30 @@ public abstract class PaneComponent
 	/**
 	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	protected void mouseDown(final int mouseX, final int mouseY, final int button) {
-	}
+	protected void mouseDown(final int mouseX, final int mouseY, final int button) {}
 	
 	/**
 	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	protected void mouseUp(final int mouseX, final int mouseY, final int button) {
-	}
+	protected void mouseUp(final int mouseX, final int mouseY, final int button) {}
 	
 	/**
 	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	protected void mouseWheel(final int mouseX, final int mouseY, final int distance) {
-	}
+	protected void mouseWheel(final int mouseX, final int mouseY, final int distance) {}
 	
 	/**
 	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	protected void keyPressed(final char keyChar, final int keyCode) {
-	}
+	protected void keyPressed(final char keyChar, final int keyCode) {}
 	
 	/**
 	 * Shortcut for components to be able to get certain events without needing to create objects.
 	 */
-	protected void winch(final int oldWidth, final int oldHeight, final int newWidth, final int newHeight) {
-	}
+	protected void winch(final int oldWidth, final int oldHeight, final int newWidth, final int newHeight) {}
 	
 	/**
 	 * Called every tick. Good for doing animation.
 	 */
-	protected void doTick() {
-	}
+	protected void doTick() {}
 }

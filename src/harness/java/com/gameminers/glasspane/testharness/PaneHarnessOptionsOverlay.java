@@ -26,7 +26,7 @@ public class PaneHarnessOptionsOverlay
 		enter.setRelativeXOffset(-24);
 		enter.setRelativeYOffset(-24);
 		enter.registerListeners(new Object() {
-			private int	hue	= 0;
+			private int hue = 0;
 			
 			@PaneEventHandler
 			public void onClick(MouseDownEvent e) {

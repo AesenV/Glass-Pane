@@ -22,21 +22,17 @@ import org.lwjgl.opengl.GL11;
  */
 public class PaneScrollPanel
 		extends PaneContainer {
-	private float	momentum			= 0.0f;
-	private float	incomingMomentum	= 0.0f;
-	private float	offset				= 0.0f;
+	private float momentum = 0.0f;
+	private float incomingMomentum = 0.0f;
+	private float offset = 0.0f;
 	/**
 	 * Whether or not to draw a ShadowPanel-style shadow.
 	 */
-	@Getter
-	@Setter
-	private boolean	shadowed			= true;
+	@Getter @Setter private boolean shadowed = true;
 	/**
 	 * The depth of the shadow, if enabled.
 	 */
-	@Getter
-	@Setter
-	private int		shadowDepth			= 3;
+	@Getter @Setter private int shadowDepth = 3;
 	
 	@SuppressWarnings("deprecation")
 	public PaneScrollPanel() {
@@ -110,7 +106,7 @@ public class PaneScrollPanel
 		}
 	}
 	
-	private final PaneBB	goat	= new PaneBB();
+	private final PaneBB goat = new PaneBB();
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {

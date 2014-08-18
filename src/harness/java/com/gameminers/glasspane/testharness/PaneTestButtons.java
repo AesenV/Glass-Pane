@@ -17,7 +17,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class PaneTestButtons
 		extends GlassPane {
-	private String[]	textures	= {
+	private String[] textures = {
 			"textures/items/diamond_sword.png",
 			"textures/items/diamond_pickaxe.png",
 			"textures/items/diamond_axe.png",
@@ -26,7 +26,7 @@ public class PaneTestButtons
 			"textures/items/diamond_chestplate.png",
 			"textures/items/diamond_leggings.png",
 			"textures/items/diamond_boots.png"
-									};
+	};
 	
 	public PaneTestButtons() {
 		setName("Buttons");

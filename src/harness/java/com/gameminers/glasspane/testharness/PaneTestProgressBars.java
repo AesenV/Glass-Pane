@@ -15,12 +15,12 @@ import gminers.kitchensink.WaveType;
 
 public class PaneTestProgressBars
 		extends GlassPane {
-	private WaveType[]	waves	= {
+	private WaveType[] waves = {
 			WaveType.SINE,
 			WaveType.TANGENT,
 			WaveType.SECANT,
 			WaveType.TRIANGLE
-								};
+	};
 	
 	public PaneTestProgressBars() {
 		setName("Progress Bars");

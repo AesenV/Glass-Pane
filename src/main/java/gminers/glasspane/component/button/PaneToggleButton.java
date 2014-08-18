@@ -18,8 +18,7 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 public class PaneToggleButton
@@ -27,7 +26,7 @@ public class PaneToggleButton
 	/**
 	 * Whether or not this button is selected.
 	 */
-	boolean	selected	= false;
+	boolean selected = false;
 	
 	public PaneToggleButton() {
 		this("Toggle Button");

@@ -3,12 +3,12 @@ package gminers.glasspane.ease;
 
 public class FriendlyFieldAccessor<T>
 		implements FieldAccessor<T> {
-	private Object		access;
-	private Class<?>	clazz;
-	private String		field;
-	private Class<?>	setterClass;
-	private String		getterName;
-	private String		setterName;
+	private Object access;
+	private Class<?> clazz;
+	private String field;
+	private Class<?> setterClass;
+	private String getterName;
+	private String setterName;
 	
 	public FriendlyFieldAccessor(Object access, Class<?> clazz, Class<?> setterClass, String field) {
 		this.access = access;

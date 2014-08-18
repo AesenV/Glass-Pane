@@ -15,31 +15,29 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ToString
 @Getter
 public class PaneComponentPreRenderEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			PaneComponent.class,
 			int.class,
 			int.class,
 			float.class
-												};
+	};
 	/**
 	 * The absolute X of the mouse.
 	 */
-	int								mouseX;
+	int mouseX;
 	/**
 	 * The absolute Y of the mouse.
 	 */
-	int								mouseY;
+	int mouseY;
 	/**
 	 * The amount of the way into the next tick, as frames do not align to ticks. Useful for smoothing animations.
 	 */
-	float							partialTicks;
+	float partialTicks;
 	
 	public PaneComponentPreRenderEvent(final PaneComponent compo, final int mouseX, final int mouseY,
 			final float partialTicks) {

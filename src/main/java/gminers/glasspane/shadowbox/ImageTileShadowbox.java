@@ -19,8 +19,7 @@ import org.lwjgl.opengl.GL11;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
 public class ImageTileShadowbox
@@ -33,15 +32,15 @@ public class ImageTileShadowbox
 	 * Whether or not this shadowbox should render as a partially transparent gradient when the player is logged into a world, instead of
 	 * the texture.
 	 */
-	boolean				transparentWhenInWorld	= true;
+	boolean transparentWhenInWorld = true;
 	/**
 	 * Whether or not this texture should be darkened when rendered, similar to drawDefaultBackground.
 	 */
-	boolean				darkened				= true;
+	boolean darkened = true;
 	/**
 	 * The texture to tile for the background.
 	 */
-	ResourceLocation	texture;
+	ResourceLocation texture;
 	
 	@Override
 	public void render(final int mouseX, final int mouseY, final float partialTicks) {
@@ -69,11 +68,9 @@ public class ImageTileShadowbox
 	}
 	
 	@Override
-	public void tick() {
-	}
+	public void tick() {}
 	
 	@Override
-	public void winch() {
-	}
+	public void winch() {}
 	
 }

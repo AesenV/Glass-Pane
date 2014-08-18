@@ -16,8 +16,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class PaneTestMisc
 		extends GlassPane {
-	private int	x	= 20;
-	private int	y	= 10;
+	private int x = 20;
+	private int y = 10;
 	
 	public PaneTestMisc() {
 		setName("Miscellaneous");

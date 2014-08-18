@@ -23,8 +23,8 @@ import com.gameminers.glasspane.internal.GlassPaneMod;
 
 public class PaneTestHarness
 		extends GlassPane {
-	private int			ticks			= 0;
-	private GlassPane[]	testHarnesses	= {
+	private int ticks = 0;
+	private GlassPane[] testHarnesses = {
 			new PaneTestButtons(),
 			new PaneTestProgressBars(),
 			new PaneTestSliders(),
@@ -38,9 +38,9 @@ public class PaneTestHarness
 			new PaneTestTextFields(),
 			new PaneTestShadowboxes(),
 			new PaneTestMisc()
-										};
+	};
 	
-	private PaneButton	flipButton;
+	private PaneButton flipButton;
 	
 	public PaneTestHarness() {
 		setRevertAllowed(true);
@@ -51,10 +51,9 @@ public class PaneTestHarness
 		add(PaneButton.createDoneButton());
 	}
 	
-	private static final ResourceLocation	github	= new ResourceLocation("glasspaneharness",
-															"textures/misc/github.png");
-	private static final ResourceLocation	flip	= new ResourceLocation("glasspaneharness",
-															"textures/misc/arrow-circle.png");
+	private static final ResourceLocation github = new ResourceLocation("glasspaneharness", "textures/misc/github.png");
+	private static final ResourceLocation flip = new ResourceLocation("glasspaneharness",
+			"textures/misc/arrow-circle.png");
 	
 	static PaneButton createFlipButton() {
 		final PaneImageButton button = new PaneImageButton();

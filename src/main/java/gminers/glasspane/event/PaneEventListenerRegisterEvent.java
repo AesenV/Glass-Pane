@@ -17,26 +17,24 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PRIVATE,
-		makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ToString
 @Getter
 public class PaneEventListenerRegisterEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
+	public static final Class<?>[] SIGNATURE = {
 			PaneComponent.class,
 			Object.class,
 			Method.class
-												};
+	};
 	/**
 	 * The object being registered as a listener.
 	 */
-	Object							listener;
+	Object listener;
 	/**
 	 * The method on the listener object being registered as a handler.
 	 */
-	Method							handler;
+	Method handler;
 	
 	public PaneEventListenerRegisterEvent(final PaneComponent c, final Object o, final Method m) {
 		super(c);

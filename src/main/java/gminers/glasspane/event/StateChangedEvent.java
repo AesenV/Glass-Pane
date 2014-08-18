@@ -15,15 +15,13 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Getter
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ToString
 public class StateChangedEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
-													PaneComponent.class
-												};
+	public static final Class<?>[] SIGNATURE = {
+		PaneComponent.class
+	};
 	
 	public StateChangedEvent(final PaneComponent source) {
 		super(source);

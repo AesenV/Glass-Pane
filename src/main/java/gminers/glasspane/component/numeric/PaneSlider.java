@@ -25,8 +25,7 @@ import org.lwjgl.opengl.GL11;
  * @author aesen
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -44,46 +43,42 @@ public class PaneSlider
 	/**
 	 * Whether or not this slider should render as enabled, and should be allowed to be moved and have the focus.
 	 */
-	boolean			enabled				= true;
+	boolean enabled = true;
 	/**
 	 * The color of this slider's knob. If set to 0xFFFFFF, renders the same as a default Minecraft slider.
 	 */
-	int				knobColor			= 0xFFFFFF;
+	int knobColor = 0xFFFFFF;
 	/**
 	 * The color of the text of this slider when it is disabled.
 	 */
-	int				disabledColor		= 0xA0A0A0;
+	int disabledColor = 0xA0A0A0;
 	/**
 	 * The color of the text of this slider when hovering.
 	 */
-	int				hoveredColor		= 0xFFFFA0;
+	int hoveredColor = 0xFFFFA0;
 	/**
 	 * The current value of this slider.
 	 */
-	int				value				= 0;
+	int value = 0;
 	/**
 	 * The maximum value of this slider.
 	 */
-	int				maximum				= 16;
+	int maximum = 16;
 	/**
 	 * Whether or not to render a solid background on this slider. If set to false, this can be used to make a progress slider
 	 * by putting a slider in front of a progress bar.
 	 */
-	boolean			renderBackground	= true;
+	boolean renderBackground = true;
 	/**
 	 * The direction of this slider.
 	 */
-	Direction		direction			= Direction.HORIZONTAL;
+	Direction direction = Direction.HORIZONTAL;
 	/**
 	 * The length to use for the knob. If this slider is vertical, this is height. If it is horizontal, it is width.
 	 */
-	int				knobLength			= 8;
-	@Getter(AccessLevel.NONE)
-	@Setter(AccessLevel.NONE)
-	private float	stretch				= 0f;
-	@Getter(AccessLevel.NONE)
-	@Setter(AccessLevel.NONE)
-	private float	stretchTarget		= 0f;
+	int knobLength = 8;
+	@Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) private float stretch = 0f;
+	@Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) private float stretchTarget = 0f;
 	
 	@Override
 	protected void doRender(int mouseX, int mouseY, float partialTicks) {
@@ -169,9 +164,7 @@ public class PaneSlider
 		color = trueColor;
 	}
 	
-	@Getter(AccessLevel.NONE)
-	@Setter(AccessLevel.NONE)
-	private boolean	down	= false;
+	@Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) private boolean down = false;
 	
 	@Override
 	protected void doTick() {

@@ -6,9 +6,9 @@ import java.lang.reflect.AccessibleObject;
 
 public class AggressiveFieldAccessor<T>
 		implements FieldAccessor<T> {
-	private Object		access;
-	private Class<?>	clazz;
-	private String		field;
+	private Object access;
+	private Class<?> clazz;
+	private String field;
 	
 	public AggressiveFieldAccessor(Object access, Class<?> clazz, String field) {
 		this.access = access;

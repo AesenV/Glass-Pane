@@ -19,29 +19,26 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
 public class PaneSpinner
 		extends ColorablePaneComponent
 		implements Focusable {
-	public static final NumberFormat	DEFAULT_FORMAT	= NumberFormat.getInstance();
+	public static final NumberFormat DEFAULT_FORMAT = NumberFormat.getInstance();
 	
 	static {
 		DEFAULT_FORMAT.setGroupingUsed(true);
 	}
 	
-	float								value			= 0;
-	float								maximum			= Float.POSITIVE_INFINITY;
-	float								minimum			= Float.NEGATIVE_INFINITY;
-	float								increment		= 1;
-	NumberFormat						format			= DEFAULT_FORMAT;
-	@Getter(AccessLevel.NONE)
-	@Setter(AccessLevel.NONE)
-	float								lagValue		= 0;
-	FontRenderer						renderer		= Minecraft.getMinecraft().fontRenderer;
+	float value = 0;
+	float maximum = Float.POSITIVE_INFINITY;
+	float minimum = Float.NEGATIVE_INFINITY;
+	float increment = 1;
+	NumberFormat format = DEFAULT_FORMAT;
+	@Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) float lagValue = 0;
+	FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
 	
 	@SuppressWarnings("deprecation")
 	public PaneSpinner() {

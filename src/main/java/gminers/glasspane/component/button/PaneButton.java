@@ -34,8 +34,7 @@ import com.google.common.collect.Lists;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -45,19 +44,19 @@ public class PaneButton
 	/**
 	 * Whether or not this button should render as enabled, and should be allowed to be clicked and have the focus.
 	 */
-	boolean	enabled			= true;
+	boolean enabled = true;
 	/**
 	 * The color of this button. If set to 0xFFFFFF, renders the same as a default Minecraft button.
 	 */
-	int		buttonColor		= 0xFFFFFF;
+	int buttonColor = 0xFFFFFF;
 	/**
 	 * The color of the text of this button when it is disabled.
 	 */
-	int		disabledColor	= 0xA0A0A0;
+	int disabledColor = 0xA0A0A0;
 	/**
 	 * The color of the text of this button when hovering.
 	 */
-	int		hoveredColor	= 0xFFFFA0;
+	int hoveredColor = 0xFFFFA0;
 	
 	public PaneButton() {
 		this("Button");
@@ -147,8 +146,7 @@ public class PaneButton
 	public String getText() {
 		if (alignmentX == HorzAlignment.RIGHT && text.endsWith(" "))
 			return text.substring(0, text.length() - 1);
-		else if (alignmentX == HorzAlignment.LEFT && text.startsWith(" "))
-			return text.substring(1);
+		else if (alignmentX == HorzAlignment.LEFT && text.startsWith(" ")) return text.substring(1);
 		return text;
 	}
 	
@@ -156,7 +154,7 @@ public class PaneButton
 		super.doRender(mouseX, mouseY, partialTicks);
 	}
 	
-	private List<Runnable>	activationListeners	= Lists.newArrayList();
+	private List<Runnable> activationListeners = Lists.newArrayList();
 	
 	/**
 	 * Convenience method to easily register click listeners.

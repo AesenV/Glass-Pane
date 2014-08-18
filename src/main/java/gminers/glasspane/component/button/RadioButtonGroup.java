@@ -15,12 +15,11 @@ import com.google.common.collect.Lists;
  * 
  */
 public class RadioButtonGroup {
-	protected List<PaneRadioButton>	buttons		= Lists.newCopyOnWriteArrayList();
+	protected List<PaneRadioButton> buttons = Lists.newCopyOnWriteArrayList();
 	/**
 	 * The RadioButton that is currently selected in this group.
 	 */
-	@Getter
-	protected PaneRadioButton		selected	= null;
+	@Getter protected PaneRadioButton selected = null;
 	
 	/**
 	 * Removes a button from this group.

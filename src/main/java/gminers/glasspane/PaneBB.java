@@ -17,8 +17,7 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Data
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -28,19 +27,19 @@ public class PaneBB
 	/**
 	 * The X coordinate of this bounding box, in 'big' pixels.
 	 */
-	int	x		= 0;
+	int x = 0;
 	/**
 	 * The Y coordinate of this bounding box, in 'big' pixels.
 	 */
-	int	y		= 0;
+	int y = 0;
 	/**
 	 * The width of this bounding box, in 'big' pixels.
 	 */
-	int	width	= 0;
+	int width = 0;
 	/**
 	 * The height of this bounding box, in 'big' pixels.
 	 */
-	int	height	= 0;
+	int height = 0;
 	
 	/**
 	 * Clones the passed PaneBB into a new object.

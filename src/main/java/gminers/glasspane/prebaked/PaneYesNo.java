@@ -18,8 +18,7 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ToString
 @Getter
 @Setter
@@ -31,13 +30,13 @@ public class PaneYesNo
 		void onNo(final PaneYesNo pane);
 	}
 	
-	String			text;
-	String			yesText;
-	String			noText;
-	YesNoCallback	callback;
+	String text;
+	String yesText;
+	String noText;
+	YesNoCallback callback;
 	
-	PaneButton		yesButton;
-	PaneButton		noButton;
+	PaneButton yesButton;
+	PaneButton noButton;
 	
 	
 	public PaneYesNo(final String text, final String yesText, final String noText, final YesNoCallback callback) {

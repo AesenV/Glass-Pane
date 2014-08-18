@@ -15,19 +15,17 @@ import lombok.experimental.FieldDefaults;
  * 
  */
 @Getter
-@FieldDefaults(
-		makeFinal = true,
-		level = AccessLevel.PRIVATE)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @ToString
 public class PaneHideEvent
 		extends PaneEvent {
-	public static final Class<?>[]	SIGNATURE	= {
-													GlassPane.class
-												};
+	public static final Class<?>[] SIGNATURE = {
+		GlassPane.class
+	};
 	/**
 	 * The GlassPane being hidden. The same as 'source', but already cast to a GlassPane.
 	 */
-	GlassPane						pane;
+	GlassPane pane;
 	
 	public PaneHideEvent(final GlassPane pane) {
 		super(pane);

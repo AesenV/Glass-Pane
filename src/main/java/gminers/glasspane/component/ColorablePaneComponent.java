@@ -13,8 +13,7 @@ import lombok.experimental.FieldDefaults;
  * @author Aesen Vismea
  * 
  */
-@FieldDefaults(
-		level = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public abstract class ColorablePaneComponent
@@ -22,7 +21,7 @@ public abstract class ColorablePaneComponent
 	/**
 	 * The color of this component.
 	 */
-	int	color	= 0xFFFFFF;
+	int color = 0xFFFFFF;
 	
 	/**
 	 * Inverts the red, green, and blue components of this color, but preserves the alpha.

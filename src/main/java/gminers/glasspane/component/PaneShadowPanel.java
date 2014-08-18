@@ -20,9 +20,7 @@ public class PaneShadowPanel
 	/**
 	 * The depth of the shadow, if enabled.
 	 */
-	@Getter
-	@Setter
-	private int	shadowDepth	= 3;
+	@Getter @Setter private int shadowDepth = 3;
 	
 	public PaneShadowPanel() {
 		setShowBorder(false);

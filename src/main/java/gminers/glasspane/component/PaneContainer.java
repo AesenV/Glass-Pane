@@ -32,20 +32,16 @@ import com.google.common.collect.Lists;
 public abstract class PaneContainer
 		extends PaneComponent
 		implements Focusable {
-	protected List<PaneComponent>	components					= new CopyOnWriteArrayList<PaneComponent>();
-	private boolean					focusableComponentPresent	= false;
+	protected List<PaneComponent> components = new CopyOnWriteArrayList<PaneComponent>();
+	private boolean focusableComponentPresent = false;
 	/**
 	 * The component that currently has the focus.
 	 */
-	@Getter
-	@Setter
-	protected PaneComponent			focusedComponent			= null;
+	@Getter @Setter protected PaneComponent focusedComponent = null;
 	/**
 	 * Whether or not to allow using Tab and Shift+Tab to cycle the currently focused component.
 	 */
-	@Getter
-	@Setter
-	protected boolean				cycleFocusOnTabPress		= true;
+	@Getter @Setter protected boolean cycleFocusOnTabPress = true;
 	
 	/**
 	 * Adds multiple PaneComponents to this container, with their positions defined by the current PaneLayoutManager.<br/>

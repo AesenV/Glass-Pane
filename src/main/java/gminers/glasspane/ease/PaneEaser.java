@@ -36,32 +36,28 @@ import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 @SuppressWarnings("rawtypes")
 public class PaneEaser
 		implements Closeable {
-	protected final Object					toEase;
-	protected Map<String, Byte>				byteTargets		= Maps.newHashMap();
-	protected Map<String, Short>			shortTargets	= Maps.newHashMap();
-	protected Map<String, Integer>			integerTargets	= Maps.newHashMap();
-	protected Map<String, Long>				longTargets		= Maps.newHashMap();
+	protected final Object toEase;
+	protected Map<String, Byte> byteTargets = Maps.newHashMap();
+	protected Map<String, Short> shortTargets = Maps.newHashMap();
+	protected Map<String, Integer> integerTargets = Maps.newHashMap();
+	protected Map<String, Long> longTargets = Maps.newHashMap();
 	
 	
-	protected Map<String, Integer>			colorTargets	= Maps.newHashMap();
+	protected Map<String, Integer> colorTargets = Maps.newHashMap();
 	
 	
-	protected Map<String, Float>			floatTargets	= Maps.newHashMap();
-	protected Map<String, Double>			doubleTargets	= Maps.newHashMap();
+	protected Map<String, Float> floatTargets = Maps.newHashMap();
+	protected Map<String, Double> doubleTargets = Maps.newHashMap();
 	
 	
-	protected Map<String, FieldAccessor>	accessors		= Maps.newHashMap();
+	protected Map<String, FieldAccessor> accessors = Maps.newHashMap();
 	
-	@Getter
-	@Setter
-	protected double						speed			= 4D;
-	@Getter
-	@Setter
-	protected boolean						autoClose;
+	@Getter @Setter protected double speed = 4D;
+	@Getter @Setter protected boolean autoClose;
 	
-	protected boolean						closed			= false;
+	protected boolean closed = false;
 	
-	protected List<Runnable>				closeListeners	= Lists.newArrayList();
+	protected List<Runnable> closeListeners = Lists.newArrayList();
 	
 	
 	public PaneEaser(@NonNull Object toEase) {
@@ -128,14 +124,9 @@ public class PaneEaser
 				}
 			}
 		} else {
-			if (autoClose &&
-					byteTargets.isEmpty() &&
-					shortTargets.isEmpty() &&
-					integerTargets.isEmpty() &&
-					longTargets.isEmpty() &&
-					floatTargets.isEmpty() &&
-					doubleTargets.isEmpty() &&
-					colorTargets.isEmpty()) {
+			if (autoClose && byteTargets.isEmpty() && shortTargets.isEmpty() && integerTargets.isEmpty()
+					&& longTargets.isEmpty() && floatTargets.isEmpty() && doubleTargets.isEmpty()
+					&& colorTargets.isEmpty()) {
 				close();
 			}
 		}
