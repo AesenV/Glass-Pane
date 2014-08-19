@@ -47,3 +47,7 @@ Glass Pane comes in two flavors; normal and dev. The dev build must be used when
 You can get Glass Pane on the [releases page](http://github.com/AesenV/Glass-Pane/releases).
 
 You will also see PaneHarness.jar - this is a mod that implements a test harness for every component and feature in Glass Pane so you can play around with it. Just drop it in your mods folder, and then click the glass pane in the Options menu to go to it.
+
+Support (IRC)
+====
+You can catch Aesen in the #augment channel on [EsperNet](http://esper.net). [Click here to go to the webchat](http://webchat.esper.net/?nick=&channels=#augment).
