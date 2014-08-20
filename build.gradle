@@ -60,6 +60,6 @@ dependencies {
 		'org.projectlombok:lombok:1.12.6'
 	)
 	compile files (
-		"../KitchenSink/latest-dev.jar"
+		"./KitchenSink-dev.jar"
 	)
 }

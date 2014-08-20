@@ -12,6 +12,6 @@ You will need Kitchen Sink, from http://github.com/AesenV/Kitchen-Sink to
 compile Glass Pane, as well as Project Lombok, from http://projectlombok.org 
 (this shouldn't be required, as our build.gradle uses a Maven dependency for 
 Lombok, but here it is anyway)
-The build.gradle assumes Kitchen Sink is in ../KitchenSink/latest-dev.jar, so 
-that's where you have to put the KitchenSink-dev.jar (unless you modify the 
-build.gradle)
+The build.gradle assumes Kitchen Sink is at ./KitchenSink-dev.jar, so that's
+where you have to put the KitchenSink-dev.jar (unless you modify the gradle
+build file)

@@ -1,3 +1,5 @@
+[![Build Status](http://ci.gameminers.com/buildStatus/icon?job=Glass%20Pane)](http://ci.gameminers.com/job/Glass%20Pane/)
+
 Glass Pane
 ==========
 
