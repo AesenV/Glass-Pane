@@ -15,6 +15,13 @@ buildscript {
     }
 }
 
+repositories {
+    maven {
+        name = "gameminers"
+        url = "http://mvn.gameminers.com/artifactory/repo"
+    }
+}
+
 apply plugin: 'forge'
 
 version = "1.1"
@@ -57,9 +64,7 @@ processResources
 }
 dependencies {
 	compile (
-		'org.projectlombok:lombok:1.12.6'
-	)
-	compile files (
-		"./KitchenSink-dev.jar"
+		'org.projectlombok:lombok:1.12.6',
+		'com.gameminers:glasspane:1.0:dev'
 	)
 }
