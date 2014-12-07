@@ -48,6 +48,8 @@ Downloading
 Glass Pane comes in two flavors; normal and dev. The dev build must be used when developing against Glass Pane in a deobfuscated enviornment, and the normal version is what you put in your mods folder.
 You can get Glass Pane on the [releases page](http://github.com/AesenV/Glass-Pane/releases).
 
+If you're using ForgeGradle, or something else that supports Maven repositories, you can instead add the Maven repository `http://mvn.gameminers.com/artifactory/repo` and add `com.gameminers:glasspane:1.0:dev` as a dependency.
+
 You will also see PaneHarness.jar - this is a mod that implements a test harness for every component and feature in Glass Pane so you can play around with it. Just drop it in your mods folder, and then click the glass pane in the Options menu to go to it.
 
 Support (IRC)
