@@ -134,7 +134,7 @@ public class PaneImageButton
 		final int b = color & 255;
 		GL11.glColor4f(r / 255f, g / 255f, b / 255f, alpha);
 		// and finally render it
-		Rendering.drawTexturedModalRect(0, 0, u, v, imagePortionWidth, imagePortionHeight);
+		Rendering.drawTexturedModalRect(0, 0, u, v, imagePortionWidth, imagePortionHeight, 0);
 		// then disable blending if we enabled it for full transparency
 		if (!oneBitTransparency) {
 			GL11.glDisable(GL11.GL_BLEND);

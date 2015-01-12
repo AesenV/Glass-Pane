@@ -28,14 +28,6 @@ import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
-
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -43,6 +35,13 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 
 /**
@@ -53,7 +52,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  * @author Aesen Vismea
  * 
  */
-@Mod(name = "Glass Pane", modid = "GlassPane", version = "1.1 `Borosilicate' Beta", dependencies = "required-after:KitchenSink")
+@Mod(name = "Glass Pane", modid = "GlassPane", version = "1.1.1 `Borosilicate' Beta", dependencies = "required-after:KitchenSink")
 @Log4j2
 public class GlassPaneMod {
 	@Instance("GlassPane") public static GlassPaneMod inst;

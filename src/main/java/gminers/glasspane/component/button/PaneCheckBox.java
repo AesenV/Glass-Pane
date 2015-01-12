@@ -81,10 +81,10 @@ public class PaneCheckBox
 		// apply the button color
 		GL11.glColor3f(r / 255f, g / 255f, b / 255f);
 		// render the button
-		Rendering.drawTexturedModalRect(0, 0, u, v, 10, 10);
+		Rendering.drawTexturedModalRect(0, 0, u, v, 10, 10, 0);
 		// if we're selected, draw the selected overlay
 		if (selected) {
-			Rendering.drawTexturedModalRect(0, 0, u, v + 50, 10, 10);
+			Rendering.drawTexturedModalRect(0, 0, u, v + 50, 10, 10, 0);
 		}
 		
 		// if we're focused, draw a blue border over the normal black one
@@ -92,7 +92,7 @@ public class PaneCheckBox
 		if (getParent() != null) {
 			if (getParent().getFocusedComponent() == this) {
 				GL11.glColor3f(1.0f, 1.0f, 1.0f);
-				Rendering.drawTexturedModalRect(0, 0, u, v + 100, 10, 10);
+				Rendering.drawTexturedModalRect(0, 0, u, v + 100, 10, 10, 0);
 			}
 		}
 		// change the label's color, if needed
