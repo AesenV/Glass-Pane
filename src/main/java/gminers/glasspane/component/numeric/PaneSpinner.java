@@ -23,6 +23,10 @@ import org.lwjgl.opengl.GL11;
 @ToString
 @Getter
 @Setter
+@Deprecated
+/**
+ * @deprecated Hard to use, doesn't work well.
+ */
 public class PaneSpinner
 		extends ColorablePaneComponent
 		implements Focusable {
@@ -36,11 +40,10 @@ public class PaneSpinner
 	float maximum = Float.POSITIVE_INFINITY;
 	float minimum = Float.NEGATIVE_INFINITY;
 	float increment = 1;
-	NumberFormat format = DEFAULT_FORMAT;
+	NumberFormat format = (NumberFormat) DEFAULT_FORMAT.clone();
 	@Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE) float lagValue = 0;
-	FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
+	FontRenderer renderer = Minecraft.getMinecraft().fontRendererObj;
 	
-	@SuppressWarnings("deprecation")
 	public PaneSpinner() {
 		setClipToSize(true);
 	}
@@ -115,7 +118,6 @@ public class PaneSpinner
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {
 		// bind the widgets

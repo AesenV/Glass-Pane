@@ -38,10 +38,10 @@ public class PanePanel
 	/**
 	 * The font renderer to use for the text in the border.
 	 * 
-	 * @see Minecraft#fontRenderer
+	 * @see Minecraft#fontRendererObj
 	 * @see Minecraft#standardGalacticFontRenderer
 	 */
-	FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
+	FontRenderer renderer = Minecraft.getMinecraft().fontRendererObj;
 	/**
 	 * The text to render in the border. <code>null</code> for a solid border with no text.
 	 */

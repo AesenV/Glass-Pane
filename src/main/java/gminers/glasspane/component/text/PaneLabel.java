@@ -38,7 +38,7 @@ public class PaneLabel
 	 * @see Minecraft#fontRenderer
 	 * @see Minecraft#standardGalacticFontRenderer
 	 */
-	FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
+	FontRenderer renderer = Minecraft.getMinecraft().fontRendererObj;
 	/**
 	 * Whether or not to render a shadow for this text.
 	 */

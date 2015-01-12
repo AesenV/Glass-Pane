@@ -30,7 +30,7 @@ public abstract class PaneProgressIndicator
 	/**
 	 * The font renderer for this progress indicator.
 	 */
-	FontRenderer renderer = Minecraft.getMinecraft().fontRenderer;
+	FontRenderer renderer = Minecraft.getMinecraft().fontRendererObj;
 	/**
 	 * Whether or not the progress text for this indicator is shown.
 	 */

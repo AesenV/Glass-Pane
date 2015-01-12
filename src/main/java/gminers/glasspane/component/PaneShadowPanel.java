@@ -31,8 +31,8 @@ public class PaneShadowPanel
 		final int col = 0x88000000;
 		GL11.glPushMatrix();
 		Rendering.drawRect(0, 0, width, height, col);
-		Rendering.drawGradientRect(0, 0, width, shadowDepth, 0xFF000000, 0x00000000);
-		Rendering.drawGradientRect(0, height - shadowDepth, width, height, 0x00000000, 0xFF000000);
+		Rendering.drawGradientRect(0, 0, width, shadowDepth, 0xFF000000, 0x00000000, 0);
+		Rendering.drawGradientRect(0, height - shadowDepth, width, height, 0x00000000, 0xFF000000, 0);
 		GL11.glPopMatrix();
 		super.doRender(mouseX, mouseY, partialTicks);
 	}

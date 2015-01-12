@@ -97,7 +97,7 @@ public final class GlassPaneMirror
 				gp.render(-10, -10, partialTicks);
 			}
 			GL11.glTranslatef(0, 0, 20);
-			Rendering.drawGradientRect(0, 0, width, height, 0xC0101010, 0xD0101010);
+			Rendering.drawGradientRect(0, 0, width, height, 0xC0101010, 0xD0101010, 0);
 		}
 		mirrored.render(mouseX, mouseY, partialTicks);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);

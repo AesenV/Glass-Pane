@@ -17,7 +17,7 @@ import com.gameminers.glasspane.internal.GlassPaneMod;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
 
 /**

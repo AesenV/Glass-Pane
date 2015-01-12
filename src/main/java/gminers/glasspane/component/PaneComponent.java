@@ -172,7 +172,7 @@ public abstract class PaneComponent
 	/**
 	 * The font renderer to use for the tooltip.
 	 */
-	FontRenderer tooltipFontRenderer = Minecraft.getMinecraft().fontRenderer;
+	FontRenderer tooltipFontRenderer = Minecraft.getMinecraft().fontRendererObj;
 	/**
 	 * The distance to translate the position of this component on the X axis, in 'big' pixels.
 	 */
@@ -332,8 +332,7 @@ public abstract class PaneComponent
 		if (hoverTime >= 30 && tooltip != null) {
 			// render a tooltip if we should
 			GL11.glTranslatef(0, 0, 5f);
-			Rendering.drawHoveringText(tooltipSplit, mouseX, mouseY, getParent().getWidth(),
-					getGlassPane().getHeight(), tooltipFontRenderer);
+			Rendering.drawHoveringText(tooltipSplit, mouseX, mouseY, tooltipFontRenderer);
 		}
 		GL11.glPopMatrix();
 	}

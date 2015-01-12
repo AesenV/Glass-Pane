@@ -85,12 +85,12 @@ public class PaneBlinker
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {
 		if (blinking) {
 			final double wv = wave.calculate((tickCounter + partialTicks) / speed);
-			final float dist = (float) (wv * distance);
+			final int dist = (int)((float) (wv * distance));
 			final int col = color | (((int) ((1 - wv) * 255D) & 0xFF) << 24);
-			Rendering.drawRect(-dist, -dist, width + dist, (-dist) + 1, col, 0.0);
-			Rendering.drawRect(-dist, (-dist) + 1, (-dist) + 1, height + dist, col, 0.0);
-			Rendering.drawRect((-dist) + 1, height + dist, width + dist, (height + dist) - 1, col, 0.0);
-			Rendering.drawRect(width + dist, (-dist) + 1, (width + dist) - 1, (height + dist) - 1, col, 0.0);
+			Rendering.drawRect(-dist, -dist, width + dist, (-dist) + 1, col);
+			Rendering.drawRect(-dist, (-dist) + 1, (-dist) + 1, height + dist, col);
+			Rendering.drawRect((-dist) + 1, height + dist, width + dist, (height + dist) - 1, col);
+			Rendering.drawRect(width + dist, (-dist) + 1, (width + dist) - 1, (height + dist) - 1, col);
 		}
 	}
 	

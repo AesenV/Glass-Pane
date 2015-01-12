@@ -210,10 +210,10 @@ public class PaneTextField
 		// draw some indications there's more text if we're not showing it all
 		if (viewPos > 0) {
 			Rendering.drawHorzGradientRect(1, 1, 2 + (icon != null ? getHeight() - 4 : 0), height - 1, 0x99FFFFFF,
-					0x33FFFFFF);
+					0x33FFFFFF, 0);
 		}
 		if (viewPos + trimmedLength < str.length()) {
-			Rendering.drawHorzGradientRect(width - 1, height - 1, width - 2, 1, 0x99FFFFFF, 0x33FFFFFF);
+			Rendering.drawHorzGradientRect(width - 1, height - 1, width - 2, 1, 0x99FFFFFF, 0x33FFFFFF, 0);
 		}
 		// if we are allowing visual bell, draw the current visual bell values
 		if (visualBellEnabled) {

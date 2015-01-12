@@ -178,7 +178,7 @@ public class PaneButton
 				r.run();
 			}
 			Minecraft.getMinecraft().getSoundHandler()
-					.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+					.playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
 		} else {
 			e.consume();
 		}
@@ -199,12 +199,12 @@ public class PaneButton
 		// for comparison, a GuiButton can only go up to 390x30
 		
 		// rendering nine-patch style with a tiled center would allow theoretically infinite button sizes, but that's unnecessary
-		Rendering.drawTexturedModalRect(x, y, u, v, hWidth, hHeight);
-		Rendering.drawTexturedModalRect(x + hWidth, y, u + (texWidth - hWidth), v, hWidth, hHeight);
+		Rendering.drawTexturedModalRect(x, y, u, v, hWidth, hHeight, 0);
+		Rendering.drawTexturedModalRect(x + hWidth, y, u + (texWidth - hWidth), v, hWidth, hHeight, 0);
 		
-		Rendering.drawTexturedModalRect(x, y + hHeight, u, v + (texHeight - hHeight), hWidth, hHeight);
+		Rendering.drawTexturedModalRect(x, y + hHeight, u, v + (texHeight - hHeight), hWidth, hHeight, 0);
 		Rendering.drawTexturedModalRect(x + hWidth, y + hHeight, u + (texWidth - hWidth), v + (texHeight - hHeight),
-				hWidth, hHeight);
+				hWidth, hHeight, 0);
 	}
 	
 	/**

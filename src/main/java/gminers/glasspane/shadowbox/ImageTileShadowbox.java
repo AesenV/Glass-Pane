@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -45,24 +46,25 @@ public class ImageTileShadowbox
 	@Override
 	public void render(final int mouseX, final int mouseY, final float partialTicks) {
 		if (transparentWhenInWorld && Minecraft.getMinecraft().theWorld != null) {
-			Rendering.drawGradientRect(0, 0, width, height, -1072689136, -804253680);
+			Rendering.drawGradientRect(0, 0, width, height, -1072689136, -804253680, 0);
 		} else {
 			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glDisable(GL11.GL_FOG);
-			final Tessellator tess = Tessellator.instance;
+			final Tessellator tess = Tessellator.getInstance();
+			final WorldRenderer wr = tess.getWorldRenderer();
 			Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			final float divisor = 32.0F;
-			tess.startDrawingQuads();
+			wr.startDrawingQuads();
 			if (darkened) {
-				tess.setColorOpaque_I(0x404040);
+				wr.setColorOpaque_I(0x404040);
 			} else {
-				tess.setColorOpaque_I(0xFFFFFF);
+				wr.setColorOpaque_I(0xFFFFFF);
 			}
-			tess.addVertexWithUV(0.0D, this.height, 0.0D, 0.0D, this.height / divisor);
-			tess.addVertexWithUV(this.width, this.height, 0.0D, this.width / divisor, this.height / divisor);
-			tess.addVertexWithUV(this.width, 0.0D, 0.0D, this.width / divisor, 0);
-			tess.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, 0);
+			wr.addVertexWithUV(0.0D, this.height, 0.0D, 0.0D, this.height / divisor);
+			wr.addVertexWithUV(this.width, this.height, 0.0D, this.width / divisor, this.height / divisor);
+			wr.addVertexWithUV(this.width, 0.0D, 0.0D, this.width / divisor, 0);
+			wr.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, 0);
 			tess.draw();
 		}
 	}

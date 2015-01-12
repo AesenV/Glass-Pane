@@ -128,8 +128,8 @@ public class PaneScrollPanel
 		GL11.glPopMatrix();
 		if (shadowed) {
 			GL11.glDisable(GL11.GL_SCISSOR_TEST);
-			Rendering.drawGradientRect(0, 0, width, shadowDepth, 0xFF000000, 0x00000000);
-			Rendering.drawGradientRect(0, height - shadowDepth, width, height, 0x00000000, 0xFF000000);
+			Rendering.drawGradientRect(0, 0, width, shadowDepth, 0xFF000000, 0x00000000, 0);
+			Rendering.drawGradientRect(0, height - shadowDepth, width, height, 0x00000000, 0xFF000000, 0);
 			GL11.glEnable(GL11.GL_SCISSOR_TEST);
 		}
 		GL11.glScissor(getAbsoluteX(getGlassPane().getWidth()), getAbsoluteY(getGlassPane().getHeight()),
@@ -142,12 +142,12 @@ public class PaneScrollPanel
 		}
 		final float viewportPercentage = Math.min(1.0f, diff > 0 ? (float) height / (float) diff : 1);
 		final int barHeight = height - 2;
-		float segHeight = (int) (barHeight * viewportPercentage);
+		int segHeight = (int) (barHeight * viewportPercentage);
 		if (segHeight <= 0) {
-			segHeight = 0.5f;
+			segHeight = 1;
 		}
-		final float segY = (float) (Math.floor((barHeight * percentage) * 2f) / 2f);
-		Rendering.drawRect(width - 3, segY + 1, width - 1, segY + 1 + segHeight, 0x88FFFFFF, 0);
+		final int segY = (int) (Math.floor((barHeight * percentage) * 2f) / 2f);
+		Rendering.drawRect(width - 3, segY + 1, width - 1, segY + 1 + segHeight, 0x88FFFFFF);
 	}
 	
 	@Override

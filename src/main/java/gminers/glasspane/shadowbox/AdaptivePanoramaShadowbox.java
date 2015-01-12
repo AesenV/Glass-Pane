@@ -17,7 +17,7 @@ public class AdaptivePanoramaShadowbox
 	@Override
 	public void render(final int mouseX, final int mouseY, final float partialTicks) {
 		if (Minecraft.getMinecraft().theWorld != null) {
-			Rendering.drawGradientRect(0, 0, width, height, -1072689136, -804253680);
+			Rendering.drawGradientRect(0, 0, width, height, -1072689136, -804253680, 0);
 		} else {
 			super.render(mouseX, mouseY, partialTicks);
 		}

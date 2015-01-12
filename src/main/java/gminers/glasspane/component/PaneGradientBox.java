@@ -31,7 +31,7 @@ public class PaneGradientBox
 	
 	@Override
 	protected void doRender(final int mouseX, final int mouseY, final float partialTicks) {
-		Rendering.drawGradientRect(0, 0, width, height, color, color2);
+		Rendering.drawGradientRect(0, 0, width, height, color, color2, 0);
 	}
 	
 	/**

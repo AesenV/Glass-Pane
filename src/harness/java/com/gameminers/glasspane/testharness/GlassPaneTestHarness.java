@@ -2,9 +2,9 @@ package com.gameminers.glasspane.testharness;
 
 
 import net.minecraft.client.gui.GuiOptions;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 
 @Mod(name = "Glass Pane Test Harness", version = "0.1", modid = "GlassPaneTH", dependencies = "required-after:GlassPane")
