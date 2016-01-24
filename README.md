@@ -1,7 +1,7 @@
-[![Build Status](http://ci.gameminers.com/buildStatus/icon?job=Glass%20Pane)](http://ci.gameminers.com/job/Glass%20Pane/)
-
 Glass Pane
 ==========
+
+#### *WARNING*: Glass Pane is deprecated and no longer maintained. It's 1.8 port is a sloppy mess that screws up GL state regularly. *Do not use it.* Use [Laminate](https://github.com/unascribed/Laminate) instead.
 
 Glass Pane is a versatile GUI framework for Minecraft Forge.
 
